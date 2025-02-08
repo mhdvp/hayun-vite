@@ -1,6 +1,6 @@
 import './style.css'
 
-import AudiogramChart from "./Audiogram"
+import AudiogramChart from "./Audiogram/Audiogram.js"
 import dims from './dims.js'
 
 
@@ -30,8 +30,8 @@ import dims from './dims.js'
 
 
 document.querySelector('#app').innerHTML = `
-
     <button>Ok</button>
+    <button>Tok</button>
     <p>Mahdi</p>
     <p>Ali Moosavi</p>
     <div id="audiogram-div"></div>

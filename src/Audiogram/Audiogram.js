@@ -1,9 +1,9 @@
-import putLine from "./common/putLine.js";
-import putPoint from "./common/putPoint.js";
-import putRect from "./common/putRect.js";
-import getAllSymbolsSVG from "./Symbol/getAllSymbolsSVG.js";
+import putLine from "../common/putLine.js";
+import putPoint from "../common/putPoint.js";
+import putRect from "../common/putRect.js";
+import getAllSymbolsSVG from "../Symbol/getAllSymbolsSVG.js";
 // import dims from "./dims.js";
-import './style.css'
+import '../style.css'
 
 
 const svgNS = "http://www.w3.org/2000/svg";
