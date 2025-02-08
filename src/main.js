@@ -1,7 +1,8 @@
 import './style.css'
 
 import AudiogramChart from "./Audiogram/Audiogram.js"
-import dims from './dims.js'
+import dims from './Audiogram/dims.js'
+import Forms from './Form/Forms.js'
 
 
 // import javascriptLogo from './javascript.svg'
@@ -74,3 +75,5 @@ LAudiogram.update({
   },
   side: 'L',
 })
+
+
