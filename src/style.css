@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -11,36 +11,36 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
-a {
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
 a:hover {
   color: #535bf2;
-}
+} */
 
-body {
+/* body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
+} */
 
-h1 {
+/* h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
+} */
 
-#app {
+/* #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
+} */
 
 .logo {
   height: 6em;
@@ -48,9 +48,11 @@ h1 {
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vanilla:hover {
   filter: drop-shadow(0 0 2em #f7df1eaa);
 }
@@ -74,9 +76,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -87,10 +91,67 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* hayun Styles */
+
+@font-face {
+  /* src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2"); */
+  src:
+    /* Path to the font file */
+    url("./fonts/Vazirmatn-Regular.woff2") format("woff2"),
+    /* Fallback font file */
+    url('./fonts/Vazirmatn-Regular.woff') format('woff');
+
+  font-family: vazirmatn;
+}
+
+body {
+  font-family: vazirmatn;
+}
+
+
+button {
+  background-color: #4CAF50;
+  /* Green background */
+  border: none;
+  /* Remove borders */
+  color: white;
+  /* White text */
+  padding: 15px 32px;
+  /* Some padding */
+  text-align: center;
+  /* Centered text */
+  text-decoration: none;
+  /* Remove underline */
+  display: inline-block;
+  /* Make the button inline */
+  font-size: 16px;
+  /* Increase font size */
+  margin: 4px 2px;
+  /* Add some margin */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  border-radius: 8px;
+  /* Rounded corners */
+  transition: background-color 0.3s;
+  /* Smooth transition */
+}
+
+button:hover {
+  background-color: #45a049;
+  /* Darker green on hover */
+}
+
+button:active {
+  background-color: #3e8e41;
+  /* Even darker green when clicked */
 }

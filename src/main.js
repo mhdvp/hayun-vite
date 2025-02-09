@@ -1,8 +1,9 @@
-import './style.css'
+// import './style.css'
 
 import AudiogramChart from "./Audiogram/Audiogram.js"
 import dims from './Audiogram/dims.js'
-import Forms from './Form/Forms.js'
+import Forms from "./Form/Forms.js";
+import { officeData, patientData } from "../data/sampleData.js"
 
 
 // import javascriptLogo from './javascript.svg'
@@ -34,9 +35,14 @@ document.querySelector('#app').innerHTML = `
     <button>Ok</button>
     <button>Tok</button>
     <p>Mahdi</p>
-    <p>Ali Moosavi</p>
+    <h1>مهدی جاویدی پرنده پرکلاغی</h1>
+    <div id="forms-div"></div>
     <div id="audiogram-div"></div>
  `
+
+const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
+forms.update({ officeData, patientData, sessionIndex: 0 })
+
 
 const RAudiogram = new AudiogramChart({
   container: document.getElementById('audiogram-div'),
@@ -75,5 +81,7 @@ LAudiogram.update({
   },
   side: 'L',
 })
+
+
 
 

@@ -5,6 +5,8 @@ import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasaAud.js";
 import rasaAudImage from './templates/rasaAud.png'
+import '../fonts/Vazirmatn-Regular.woff2'
+import '../style.css'
  
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
@@ -14,7 +16,7 @@ export default class Forms {
         div.style = 'border: 1px solid brown; margin: 0; padding: 0;'
         container.appendChild(div);
         // اضافه کردن دکمه به دیو فرم
-        const btn1 = this.putButton({ container: div, text: rasaAud.label });
+        const btn1 = this.putButton({ container: div, text: 'پرنده پرپر' });
         const btn2 = this.putButton({ container: div, text: combo.label });
         const printBtn = this.putButton({ container: div, text: 'Print', id: 'print' });
 
@@ -87,43 +89,44 @@ export default class Forms {
     }
     // توابع داخلی ایجاد دکمه و لینک های بالای فرم
     putButton({ container, id, text, }) {
-        let style = `
-            background-color:rgb(0, 149, 149);
-            /* Green background */
-            border: none;
-            /* Remove borders */
-            color: white;
-            /* White text */
-            padding: 15px 32px;
-            /* Some padding */
-            text-align: center;
-            /* Centered text */
-            text-decoration: none;
-            /* Remove underline */
-            display: inline-block;
-            /* Make the button inline */
-            font-size: 16px;
-            /* Increase font size */
-            margin: 4px 2px;
-            /* Add some margin */
-            cursor: pointer;
-            /* Pointer cursor on hover */
-            border-radius: 8px;
-            /* Rounded corners */
-            transition: background-color 0.3s;
-            /* Smooth transition */
-        `;
+        let style
+        //     style = `
+        //     background-color:rgb(0, 149, 149);
+        //     /* Green background */
+        //     border: none;
+        //     /* Remove borders */
+        //     color: white;
+        //     /* White text */
+        //     padding: 15px 32px;
+        //     /* Some padding */
+        //     text-align: center;
+        //     /* Centered text */
+        //     text-decoration: none;
+        //     /* Remove underline */
+        //     display: inline-block;
+        //     /* Make the button inline */
+        //     font-size: 16px;
+        //     /* Increase font size */
+        //     margin: 4px 2px;
+        //     /* Add some margin */
+        //     cursor: pointer;
+        //     /* Pointer cursor on hover */
+        //     border-radius: 8px;
+        //     /* Rounded corners */
+        //     transition: background-color 0.3s;
+        //     /* Smooth transition */
+        // `;
         const button = document.createElement('button');
         button.setAttribute('id', id);
         button.setAttribute('style', style);
         button.innerHTML = text;
 
-        button.addEventListener('mouseenter', () => {
-            button.style.backgroundColor = 'rgb(54, 115, 115)'; // Change color on hover
-        });
-        button.addEventListener('mouseleave', () => {
-            button.style.backgroundColor = 'rgb(0, 149, 149)'; // Revert color when not hovering
-        });
+        // button.addEventListener('mouseenter', () => {
+        //     button.style.backgroundColor = 'rgb(54, 115, 115)'; // Change color on hover
+        // });
+        // button.addEventListener('mouseleave', () => {
+        //     button.style.backgroundColor = 'rgb(0, 149, 149)'; // Revert color when not hovering
+        // });
 
         container.appendChild(button);
         return button;
