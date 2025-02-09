@@ -8,7 +8,7 @@ import rasaAudImage from './templates/rasaAud.png'
 // خط کد زیر لازم هست
 import '../fonts/Vazirmatn-Regular.woff2'
 import '../style.css'
- 
+
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
     constructor({ assets, container } = {}) {
@@ -17,11 +17,11 @@ export default class Forms {
         div.style = 'border: 1px solid brown; margin: 0; padding: 0;'
         container.appendChild(div);
         // اضافه کردن دکمه به دیو فرم
-        let className = 'persian';
-        const btn =[];
+        let className = 'button-form persian';
+        const btn = [];
         btn[0] = this.putButton({ container: div, text: rasaAud.label, className });
         btn[1] = this.putButton({ container: div, text: combo.label, className });
-        const printBtn = this.putButton({ container: div, text: 'Print', id: 'print' });
+        const printBtn = this.putButton({ container: div, text: 'چاپ', className });
 
         // یک دیو تعریف میکنیم که سمت ادیولاگ برای تعریف لیستنر استفاده می‌شود
         this.div = document.createElement('div'); // این بخش فقط شامل بخش اس‌وی‌جی هست
@@ -43,7 +43,7 @@ export default class Forms {
         btn[0].addEventListener('click', () => {
             this.forms[1].form.style.display = 'none'
             btn[1].style.backgroundColor = ' #7472e2'
-             
+
             // this.forms[2].form.style.display = 'none'
             this.forms[0].form.style.display = 'block';
             btn[0].style.backgroundColor = ' #1c15e1'
@@ -102,7 +102,7 @@ export default class Forms {
     }
     // توابع داخلی ایجاد دکمه و لینک های بالای فرم
     putButton({ container, id, text, className }) {
-       
+
         const button = document.createElement('button');
         button.setAttribute('id', id);
         className && button.setAttribute('class', className);

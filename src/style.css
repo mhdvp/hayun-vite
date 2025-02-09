@@ -99,7 +99,7 @@ a:hover {
   color: #888;
 } */
 
-button {
+.button-form {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -114,7 +114,7 @@ button {
 
 }
 
-button:hover {
+.button-form:hover {
   background-color: #1c15e1;
 
   border-color: #fefefe;
@@ -150,41 +150,3 @@ button:focus-visible {
 /* body {
   font-family: vazirmatn;
 } */
-
-
-button1 {
-  background-color: #4CAF50;
-  /* Green background */
-  border: none;
-  /* Remove borders */
-  color: white;
-  /* White text */
-  padding: 15px 32px;
-  /* Some padding */
-  text-align: center;
-  /* Centered text */
-  text-decoration: none;
-  /* Remove underline */
-  display: inline-block;
-  /* Make the button inline */
-  font-size: 16px;
-  /* Increase font size */
-  margin: 4px 2px;
-  /* Add some margin */
-  cursor: pointer;
-  /* Pointer cursor on hover */
-  border-radius: 8px;
-  /* Rounded corners */
-  transition: background-color 0.3s;
-  /* Smooth transition */
-}
-
-button1:hover {
-  background-color: #45a049;
-  /* Darker green on hover */
-}
-
-button1:active {
-  background-color: #3e8e41;
-  /* Even darker green when clicked */
-}
