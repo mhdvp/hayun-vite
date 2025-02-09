@@ -5,7 +5,7 @@ import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasaAud.js";
 import rasaAudImage from './templates/rasaAud.png'
-import '../fonts/Vazirmatn-Regular.woff2'
+// import '../fonts/Vazirmatn-Regular.woff2'
 import '../style.css'
  
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد

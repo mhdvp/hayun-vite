@@ -28,6 +28,7 @@ export default class TextBox {
 
         style = `
             font-family: Arial, Helvetica, sans-serif !important;
+            font-family: vazirmatn;
             font-size: 0.8mm;
             font-weight: bold;
             text-anchor: start; /*تراز افقی*/
@@ -50,7 +51,8 @@ export default class TextBox {
         }
 
         style = `
-            font-family: Arial, Helvetica, sans-serif !important;
+            font-family: Arial, Helvetica, sans-serif;
+            font-family: vazirmatn;
             font-size: 0.8mm;
             text-anchor: start; /*تراز افقی*/
             /* dominant-baseline: middle; /* تراز عمودی*/       
