@@ -1,10 +1,11 @@
 const svgNS = "http://www.w3.org/2000/svg";
 
 // متن اس‌وی‌جی
-export default function putText({ container, value = '', x, y, id, dx = 0, dy = 0, style, name }) {
+export default function putText({ container, value = '', x, y, id, dx = 0, dy = 0, style, name, className }) {
     let text = document.createElementNS(svgNS, "text");
-    text.setAttribute("data-name", name)
-    text.setAttribute("style", style);
+    name && text.setAttribute("data-name", name)
+    className && text.setAttribute("class", className);
+    style && text.setAttribute("style", style);
     // text.setAttribute("dominant-baseline", "middle"); // تراز عمودی
     // text.setAttribute("fill", color);
     text.setAttribute("x", x + dx);

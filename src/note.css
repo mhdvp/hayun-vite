@@ -1,0 +1,62 @@
+@font-face {
+    font-family: vazirmatn;
+    src:
+        url("../fonts/Vazirmatn-Regular.woff2") format("woff2"),
+        url('../fonts/Vazirmatn-Regular.woff') format('woff');
+}
+@page {
+
+    size: a4;
+    margin: 0;
+    padding: 0;
+    break-inside: avoid;
+    height: 100%;
+}
+@media print {
+    header,
+    footer {
+        display: none;
+    }
+
+    button {
+        display: none !important;
+    }
+
+    svg {
+        margin: 0;
+        padding: 0;
+        break-inside: avoid;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        break-inside: avoid;
+    }
+
+    html {
+        margin: 0;
+        padding: 0;
+        break-inside: avoid;
+    }
+
+}
+
+.text-box {
+    font-size: 0.8mm;
+    direction: rtl !important;
+    user-select: none;
+}
+
+.persian {
+    font-family: Roboto;
+    font-size: 1.2mm;
+}
+
+.align {
+    text-anchor: start;
+}
+
+.bold {
+    font-weight: bold;
+}

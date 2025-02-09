@@ -1,6 +1,3 @@
-// import Audiogram from "../Audiogram/Audiogram_N.js";
-import putLine from "../common/putLine.js";
-import drawTopLayer from "../common/putTopLayer.js";
 import Symbols from "../Symbol/Symbols.js";
 import TextBox from "./TextBox.js";
 import Header from "./Header.js";
@@ -8,14 +5,9 @@ import Reflex from "./Reflex.js";
 import Sections from "./Sections.js";
 import Speech from "./Speech.js";
 import Tympanogram from "./Tympanogram.js";
-// import AudiogramChart from "../Audiogram/AudiogramChart_N.js";
-
-import dims from "../Audiogram/dims.js";
 import putRect from "../common/putRect.js";
 import AudiogramChart from "../Audiogram/Audiogram.js";
 const svgNS = "http://www.w3.org/2000/svg";
-
-
 
 
 export default class Form {

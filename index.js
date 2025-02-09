@@ -8,4 +8,4 @@ import Forms from './src/Form/Forms'
 
 
 
-export { logo, AudiogramChart,Forms, dims, officeData, patientData } 
+export { logo, AudiogramChart, Forms, dims, officeData, patientData } 

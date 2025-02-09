@@ -17,30 +17,22 @@ export default class TextBox {
         let x = dims.margin.left;
         let y = dims.margin.top;
 
-        let style;
+        let style, className;
         // بوردر کل چارت
         const svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("x", x);
         svg.setAttribute("y", y);
         svg.setAttribute("width", width);
         svg.setAttribute("height", height);
-        svg.setAttribute('style', 'direction: rtl !important; user-select: none;')
+        svg.setAttribute('class', 'text-box')
 
-        style = `
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-family: vazirmatn;
-            font-size: 0.8mm;
-            font-weight: bold;
-            text-anchor: start; /*تراز افقی*/
-            /* dominant-baseline: middle; /* تراز عمودی*/       
-        `;
         // اگر مقدار استروک درست بود لیبل ها را چاپ کن
         if (!dims.hideContext) {
             dims.elements.forEach(element => {
                 switch (element.type) {
                     case 'text':
                         ({ x, y, value } = element);
-                        putText({ container: svg, value, x, y, style: style });
+                        putText({ container: svg, value, x, y, className: 'persian bold' });
                         break;
                     case 'line':
                         let { x1, y1, x2, y2 } = element;
@@ -50,26 +42,18 @@ export default class TextBox {
             });
         }
 
-        style = `
-            font-family: Arial, Helvetica, sans-serif;
-            font-family: vazirmatn;
-            font-size: 0.8mm;
-            text-anchor: start; /*تراز افقی*/
-            /* dominant-baseline: middle; /* تراز عمودی*/       
-        `;
         // محل اینپوت‌های دیتا
-
         let name;
         this.inputs.forEach(input => {
             ({ name, x, y } = input);
-            putText({ container: svg, x, y, style: style, name });
+            putText({ container: svg, x, y, className: 'persian', name });
         });
 
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
         const borderRect = putRect({ container: svg, x: 0, y: 0, width, height, name: dims.name });
         this.borderRect = borderRect;
         // console.log(dims);
-        
+
         this.container.appendChild(svg)
         // this.patient = svg;
 

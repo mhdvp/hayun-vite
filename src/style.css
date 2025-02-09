@@ -1,3 +1,37 @@
+@font-face {
+  font-family: vazirmatn;
+  src:
+    url("./fonts/Vazirmatn-Regular.woff2") format("woff2"),
+    url('./fonts/Vazirmatn-Regular.woff') format('woff');
+
+}
+
+.text-box {
+  /* font-family: Arial, Helvetica, sans-serif !important; */
+  font-size: 0.8mm;
+  /* font-weight: bold; */
+  direction: rtl !important;
+  user-select: none;
+  /* dominant-baseline: middle; /* تراز عمودی*/
+}
+
+.persian {
+  font-family: vazirmatn;
+  /* font-size: 0.8mm; */
+  /* text-anchor: start; */
+
+
+}
+
+/*تراز افقی*/
+.align {
+  text-anchor: start;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -42,28 +76,28 @@ a:hover {
   text-align: center;
 } */
 
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
+} */
 
-.logo:hover {
+/* .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
-}
-
+} */
+/* 
 .logo.vanilla:hover {
   filter: drop-shadow(0 0 2em #f7df1eaa);
-}
+} */
 
-.card {
+/* .card {
   padding: 2em;
-}
+} */
 
-.read-the-docs {
+/* .read-the-docs {
   color: #888;
-}
+} */
 
 button {
   border-radius: 8px;
@@ -72,21 +106,28 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #7472e2;
+  color: #ffffff;
   cursor: pointer;
   transition: border-color 0.25s;
+  border-color: #fefefe;
+
 }
 
 button:hover {
-  border-color: #646cff;
+  background-color: #1c15e1;
+
+  border-color: #fefefe;
 }
 
-button:focus,
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+  background-color: #1c15e1;
 
-@media (prefers-color-scheme: light) {
+} */
+
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -99,27 +140,19 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
 /* hayun Styles */
+/* @import './fonts/Vazirmatn-Regular.woff2'; */
 
-@font-face {
-  /* src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2"); */
-  src:
-    /* Path to the font file */
-    url("./fonts/Vazirmatn-Regular.woff2") format("woff2"),
-    /* Fallback font file */
-    url('./fonts/Vazirmatn-Regular.woff') format('woff');
 
+
+/* body {
   font-family: vazirmatn;
-}
-
-body {
-  font-family: vazirmatn;
-}
+} */
 
 
-button {
+button1 {
   background-color: #4CAF50;
   /* Green background */
   border: none;
@@ -146,12 +179,12 @@ button {
   /* Smooth transition */
 }
 
-button:hover {
+button1:hover {
   background-color: #45a049;
   /* Darker green on hover */
 }
 
-button:active {
+button1:active {
   background-color: #3e8e41;
   /* Even darker green when clicked */
 }

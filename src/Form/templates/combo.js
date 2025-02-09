@@ -2,7 +2,7 @@ import audDims from "../../Audiogram/dims.js";
 
 const combo = {
     name: 'combo',
-    label: 'Combo',
+    label: 'ادیومتری و تمپانوتری',
     // backgroundImage: 'backgroundImage',
     margin: { left: 5, top: 5, right: 5, bottom: 5 },
     paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },

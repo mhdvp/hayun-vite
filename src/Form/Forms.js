@@ -5,7 +5,8 @@ import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasaAud.js";
 import rasaAudImage from './templates/rasaAud.png'
-// import '../fonts/Vazirmatn-Regular.woff2'
+// خط کد زیر لازم هست
+import '../fonts/Vazirmatn-Regular.woff2'
 import '../style.css'
  
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
@@ -16,8 +17,10 @@ export default class Forms {
         div.style = 'border: 1px solid brown; margin: 0; padding: 0;'
         container.appendChild(div);
         // اضافه کردن دکمه به دیو فرم
-        const btn1 = this.putButton({ container: div, text: 'پرنده پرپر' });
-        const btn2 = this.putButton({ container: div, text: combo.label });
+        let className = 'persian';
+        const btn =[];
+        btn[0] = this.putButton({ container: div, text: rasaAud.label, className });
+        btn[1] = this.putButton({ container: div, text: combo.label, className });
         const printBtn = this.putButton({ container: div, text: 'Print', id: 'print' });
 
         // یک دیو تعریف میکنیم که سمت ادیولاگ برای تعریف لیستنر استفاده می‌شود
@@ -29,25 +32,35 @@ export default class Forms {
         this.forms.push(new Form({ container: this.div, template: combo }));
 
         // انتخاب فرم پیش‌فرض  
-        this.forms[0].form.style.display = 'block';
-        this.selectedForm = this.forms[0]
+        this.forms[1].form.style.display = 'block';
+        this.selectedForm = this.forms[1]
+        btn[1].style.backgroundColor = ' #1c15e1'
+
 
         // تعریف رویداد دکمه چاپ فرم نمایشی
         printBtn.addEventListener('click', () => { printForm({ container: this.selectedForm.form }) })
 
-        btn1.addEventListener('click', () => {
+        btn[0].addEventListener('click', () => {
             this.forms[1].form.style.display = 'none'
+            btn[1].style.backgroundColor = ' #7472e2'
+             
             // this.forms[2].form.style.display = 'none'
             this.forms[0].form.style.display = 'block';
+            btn[0].style.backgroundColor = ' #1c15e1'
+
             this.selectedForm = this.forms[0];
             this.update(this.allData);
 
         });
 
-        btn2.addEventListener('click', () => {
+        btn[1].addEventListener('click', () => {
             this.forms[0].form.style.display = 'none'
+            btn[0].style.backgroundColor = ' #7472e2'
+
             // this.forms[2].form.style.display = 'none'
             this.forms[1].form.style.display = 'block';
+            btn[1].style.backgroundColor = ' #1c15e1'
+
             this.selectedForm = this.forms[1];
             // آپدیت فرم انتخاب شده
             this.update(this.allData);
@@ -88,37 +101,11 @@ export default class Forms {
         })
     }
     // توابع داخلی ایجاد دکمه و لینک های بالای فرم
-    putButton({ container, id, text, }) {
-        let style
-        //     style = `
-        //     background-color:rgb(0, 149, 149);
-        //     /* Green background */
-        //     border: none;
-        //     /* Remove borders */
-        //     color: white;
-        //     /* White text */
-        //     padding: 15px 32px;
-        //     /* Some padding */
-        //     text-align: center;
-        //     /* Centered text */
-        //     text-decoration: none;
-        //     /* Remove underline */
-        //     display: inline-block;
-        //     /* Make the button inline */
-        //     font-size: 16px;
-        //     /* Increase font size */
-        //     margin: 4px 2px;
-        //     /* Add some margin */
-        //     cursor: pointer;
-        //     /* Pointer cursor on hover */
-        //     border-radius: 8px;
-        //     /* Rounded corners */
-        //     transition: background-color 0.3s;
-        //     /* Smooth transition */
-        // `;
+    putButton({ container, id, text, className }) {
+       
         const button = document.createElement('button');
         button.setAttribute('id', id);
-        button.setAttribute('style', style);
+        className && button.setAttribute('class', className);
         button.innerHTML = text;
 
         // button.addEventListener('mouseenter', () => {
