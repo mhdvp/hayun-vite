@@ -59,6 +59,9 @@ export default function printForm({ container }) {
                         padding: 0;
                         break-inside: avoid;
                     }
+                    .non-print {
+                      display: none;
+                    }
 
                 }
 

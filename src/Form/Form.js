@@ -137,6 +137,7 @@ export default class Form {
         svg.setAttribute("style", "background-color: BlanchedAlmond");
         if (this.image) {
             let image = document.createElementNS(svgNS, "image");
+            image.setAttribute('class', 'non-print')
             image.setAttribute('width', width);
             image.setAttribute('height', height);
 
