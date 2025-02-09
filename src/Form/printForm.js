@@ -1,25 +1,8 @@
-// import '../style.css'
-// import '../fonts/Vazirmatn-Regular.woff2'
-
-
 export default function printForm({ container }) {
-  // const paperForm = document.getElementById(elementID);
-  const paperForm = container;
-
-  print(paperForm);
-
-  function print(paperForm) {
-    iframePrint(paperForm);
-    return new Date().toLocaleString("fa-IR");
-  }
-
-  function iframePrint(paperForm) {
-    const hideFrame = document.createElement("iframe");
-    let printDateTime;
-    hideFrame.onload = setPrint;
-    hideFrame.style.display = "block"; // hide iframe
-
-    let style = `
+  const iframe = document.createElement("iframe");
+  iframe.onload = setPrint;
+  iframe.style.display = "block";
+  let style = `
                 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 
                 @page {
@@ -88,39 +71,27 @@ export default function printForm({ container }) {
                     font-weight: bold;
               }
 
-          `;
-    hideFrame.srcdoc = `
-    <!DOCTYPE html>
-    <html lang="en">
+  `;
+  iframe.srcdoc = `
+      <!DOCTYPE html>
+      <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>${style}</style>
+      </head>
 
-       
-        
-        <style>${style}</style>
-    </head>
+      <body>${container.outerHTML}</body>
 
-    <body>${paperForm.outerHTML}</body>
+      </html>
+  `;
+  document.body.appendChild(iframe);
+}
 
-    <script type="module">
-      console.log('fdfd')
-    </script>
-
-    </html>
-    `;
-    document.body.appendChild(hideFrame);
-   
-    return 1;
-    function setPrint() {
-      const closePrint = () => { document.body.removeChild(this); };
-      this.contentWindow.onbeforeunload = () => closePrint();
-      this.contentWindow.onafterprint = () => {
-        closePrint();
-      }
-      this.contentWindow.print();
-    }
-  }
+function setPrint() {
+  const closePrint = () => { document.body.removeChild(this); };
+  this.contentWindow.onbeforeunload = closePrint;
+  this.contentWindow.onafterprint = closePrint;
+  this.contentWindow.print();
 }
