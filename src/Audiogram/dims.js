@@ -43,7 +43,7 @@ const dims = {
             juncLine: `stroke-width: 1; stroke-opacity: 0.8;`,
         }
     },
-    rasa: {
+    rasa_audiometry: {
         // width: 70.6,
         // height: 70,
         // margin: { left: 17, top: 18.5, },

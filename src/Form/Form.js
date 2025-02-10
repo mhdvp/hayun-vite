@@ -142,7 +142,7 @@ export default class Form {
             image.setAttribute('height', height);
 
             image.setAttribute('x', 0)
-            image.setAttribute('y', 0)
+            image.setAttribute('y', -0.6)
             // image.setAttribute('height', height);
             image.setAttribute('href', this.image);
             

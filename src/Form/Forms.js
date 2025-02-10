@@ -4,7 +4,9 @@ import printForm from "./printForm.js";
 import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasaAud.js";
-import rasaAudImage from './templates/rasaAud.png'
+// import rasaAudImage from './templates/rasaAud.png'
+import rasaAudImage from './templates/rasa_audiometry.png'
+
 // خط کد زیر لازم هست
 import '../fonts/Vazirmatn-Regular.woff2'
 import '../style.css'
@@ -32,9 +34,9 @@ export default class Forms {
         this.forms.push(new Form({ container: this.div, template: combo }));
 
         // انتخاب فرم پیش‌فرض  
-        this.forms[1].form.style.display = 'block';
-        this.selectedForm = this.forms[1]
-        btn[1].style.backgroundColor = ' #1c15e1'
+        this.forms[0].form.style.display = 'block';
+        this.selectedForm = this.forms[0]
+        btn[0].style.backgroundColor = ' #1c15e1'
 
 
         // تعریف رویداد دکمه چاپ فرم نمایشی
