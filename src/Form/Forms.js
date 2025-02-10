@@ -5,7 +5,7 @@ import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasa_audiometry.js";
 // import rasaAudImage from './templates/rasaAud.png'
-import rasaAudImage from './templates/rasa_audiometry.png'
+import rasaAudImage from './templates/rasa_audiometry.jpg'
 
 // خط کد زیر لازم هست
 import '../fonts/Vazirmatn-Regular.woff2'
