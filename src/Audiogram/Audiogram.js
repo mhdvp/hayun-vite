@@ -2,14 +2,11 @@ import putLine from "../common/putLine.js";
 import putPoint from "../common/putPoint.js";
 import putRect from "../common/putRect.js";
 import getAllSymbolsSVG from "../Symbol/getAllSymbolsSVG.js";
-
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class AudiogramChart {
   constructor({ container, side, x = 0, y = 0, pname, events = true, dims }) {
-    
     const { width, height, chartPadding, symbolDims, vFrequency, vToFreq, freqToV, intensity, styles } = dims;
-
     x = dims.margin.left
     y = dims.margin.top
 
@@ -25,34 +22,27 @@ export default class AudiogramChart {
     this.side = side;
     let style;
 
-
     const xArea = { min: chartPadding.left, max: width - (chartPadding.right) }
-
     const yArea = { min: chartPadding.top, max: height - (chartPadding.bottom) }
     const xAxiosLength = { mm: width - (chartPadding.left + chartPadding.right), hz: 14 }
     const yAxiosLength = height
-
     const vFrequencyAxiosLength = {
       mm: width - (chartPadding.left + chartPadding.right),
       hz: vFrequency.max - vFrequency.min
     }
     this.vFrequencyAxiosLength = vFrequencyAxiosLength;
-
     const intensityAxiosLength = {
       mm: height - (chartPadding.top + chartPadding.bottom),
       db: intensity.max - intensity.min,
     }
     this.intensityAxiosLength = intensityAxiosLength;
-
     const svg = document.createElementNS(svgNS, "svg");
-    this.svg = svg;
-    
+    this.svg = svg; // کل نودی که به کانتینر اپند میشه
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
     svg.setAttribute("x", x);
     svg.setAttribute("y", y);
     svg.setAttribute("viewBox", [-chartPadding.left, -chartPadding.top, width, height]);
-
     // محدوده مختصات خطوط جدول
     const chartArea = putRect({
       container: svg,
@@ -63,7 +53,6 @@ export default class AudiogramChart {
 
     const currentPointer = putPoint({ container: svg, x: 0, y: 0, r: 4, color: 'black' });
     this.currentPointer = currentPointer;
-
     // رسم خطوط افقی از بالا به پایین
     let x1 = this.getX(vFrequency.min);
     let x2 = this.getX(vFrequency.max);
@@ -72,7 +61,6 @@ export default class AudiogramChart {
       const y2 = y1
       putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
     }
-
     // رسم خطوط عمودی از چپ به راست
     let y1 = this.getY(intensity.min)
     let y2 = this.getY(intensity.max)
@@ -81,44 +69,25 @@ export default class AudiogramChart {
       const x2 = x1
       putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
     }
-
     // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
     // این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی ریودادها درست عمل کند
     const borderRect = putRect({ container: svg, x: -chartPadding.left, y: -chartPadding.top, width, height, name: 'RAudiogram' });
     this.borderRect = borderRect;
-
     // ایجاد رویدادها روی فقط چارت جدول
     borderRect.addEventListener('mousemove', (e) => {
       const x = e.offsetX
       const y = e.offsetY
-
       currentPointer.setAttribute('cx', x - chartPadding.left)
       currentPointer.setAttribute('cy', y - chartPadding.top)
       console.log('x:', x, 'f:', getFreq(x));
-      // تبدیل مختصات به مختصات فرکانس و شدت
-
     })
+
+    container && container.appendChild(svg);
 
     // تبدیل مقدار ایکس مختصات به فرکانس 
     function getFreq(x) {
       return vToFreq[Math.round((x - xArea.min) * (xAxiosLength.hz / xAxiosLength.mm))]
     }
-
-    container && container.appendChild(svg);
-
-    // تست تابع آپدیت
-    // this.update({
-    //   data: {
-    //     // R_AC_M: { 8000: 25, 2000: 5, 1500: 0, },
-    //     R_AC: { 1000: 25, 500: 15, 750: 20, 250: 10, 6000: 35, 2000: 45 },
-    //     R_AC_NR: { 1500: 85 },
-    //     R_BC_M: { 2000: 25, 6000: 25 },
-    //     R_BC_M_NR: { 3000: 85 },
-    //     R_BC: { 1000: 20, 500: 10, 750: 15, 250: 5, 4000: 20 },
-    //   },
-    //   side: this.side,
-    // })
-
   }
 
   getX(f) {
@@ -132,12 +101,15 @@ export default class AudiogramChart {
   }
 
   update({ data, side }) {
+    // پاک کردن نودهای سمبل دیتای قبلی در صورت وجود از نود مربوطه
+    this.svg.querySelectorAll('[data-name=symbol]').forEach(symbol => symbol.remove())
+    // پاک کردن خطوط اتصال دیتای قبلی در صورت وجود از نود مربوطه
+    this.svg.querySelectorAll('[data-name=junction]').forEach(symbol => symbol.remove())
+
+
     const junctions = { AC: {}, BC: {}, side };
     this.junctions = junctions;
-    // console.log(data);
-
     for (const symbolName in data) {
-
       for (const freq in data[symbolName]) {
         const x = this.getX(this.freqToV[freq]);
         const y = this.getY(data[symbolName][freq]);
@@ -150,10 +122,8 @@ export default class AudiogramChart {
       }
     }
     this.drawJunctions();
-
     // بالا آوردن مستطیل احاطه کننده به بالاترین لایه برای دریافت صحیح رویدادهای موس
     this.svg.appendChild(this.borderRect)
-
   }
 
   drawJunctions() {
@@ -173,7 +143,7 @@ export default class AudiogramChart {
           type === "BC"
             ? this.styles.juncDashLine + `stroke: ${color}`
             : this.styles.juncLine + `stroke: ${color}`;
-        x1 && !NR1 && !NR2 && putLine({ container: this.svg, x1, y1, x2, y2, style });
+        x1 && !NR1 && !NR2 && putLine({ container: this.svg, x1, y1, x2, y2, style, name: 'junction' });
       }
     }
   }
@@ -190,6 +160,7 @@ export default class AudiogramChart {
 
   getSymbol(symbolName) {
     const point = this.symbols[symbolName].cloneNode(true);
+    
     return point
   }
 }

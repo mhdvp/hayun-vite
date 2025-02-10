@@ -76,13 +76,7 @@ export default class Forms {
 
         // });
         // for Develop
-        this.event();
-    }
-
-    event() {
-        this.div.addEventListener('click', (e) => {
-            console.log(e.target);
-        })
+        // this.event();
     }
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
     update({ data, officeData, patientData, sessionIndex = 0 }) {
@@ -102,21 +96,11 @@ export default class Forms {
     }
     // توابع داخلی ایجاد دکمه و لینک های بالای فرم
     putButton({ container, id, text, className }) {
-
         const button = document.createElement('button');
         button.setAttribute('id', id);
         className && button.setAttribute('class', className);
         button.innerHTML = text;
-
-        // button.addEventListener('mouseenter', () => {
-        //     button.style.backgroundColor = 'rgb(54, 115, 115)'; // Change color on hover
-        // });
-        // button.addEventListener('mouseleave', () => {
-        //     button.style.backgroundColor = 'rgb(0, 149, 149)'; // Revert color when not hovering
-        // });
-
         container.appendChild(button);
         return button;
-
     }
 }
