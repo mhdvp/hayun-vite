@@ -2,11 +2,11 @@ import audDims from "../../Audiogram/dims.js";
 
 
 const templateRasaAud = {
-    name: 'rasa',
+    name: 'rasa_audiometry',
     label: 'ادیومتری رسا',
     backgroundImage: 'backgroundImage',
     margin: { left: 0, top: 0, right: 0, bottom: 0 },
-    paper: { type: 'A4', case: 'portrait', width: 210, height: 296 },
+    paper: { type: 'A4', case: 'portrait', width: 209, height: 294.5 },
 
     // Printable Dimention
     calc1: function () {
