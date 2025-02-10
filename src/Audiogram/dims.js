@@ -44,6 +44,7 @@ const dims = {
         }
     },
     rasa_audiometry: {
+        blank: true, // define Blank Chart for PrePrinted Chart, Lines do not draw
         // width: 70.6,
         // height: 70,
         // margin: { left: 17, top: 18.5, },

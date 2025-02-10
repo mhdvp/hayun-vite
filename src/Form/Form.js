@@ -174,6 +174,7 @@ export default class Form {
                     gender: patientData?.gender,
                     age: patientData.sessions[sessionIndex]?.age,
                     referrer: patientData.sessions[sessionIndex]?.referrer,
+                    date: new Date().toLocaleDateString('fa-IR'),
 
                 },
                 footer: {

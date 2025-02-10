@@ -55,8 +55,8 @@ const templateRasaAud = {
             audDims[this.name],
             {
                 name: 'RAudiogram',
-                w: width / 2, h: 100,
-                margin: { left: 17, top: 18.5, right: 17.2, bottom: 11.5 },
+                w: width / 2, h: 99,
+                margin: { left: 18.1, top: 18.5, right: 16.4, bottom: 11.2 },
                 display: 'inline',
             });
 
@@ -65,8 +65,8 @@ const templateRasaAud = {
             audDims[this.name],
             {
                 name: 'LAudiogram',
-                w: width / 2, h: 100, // پهنای سکشن هست
-                margin: { left: 17.7, top: 18.5, right: 16.8, bottom: 11.5 },
+                w: width / 2, h: 99, // پهنای سکشن هست
+                margin: { left: 18.2, top: 18.5, right: 16.4, bottom: 11.2 },
                 display: 'block',
             });
 
@@ -74,7 +74,7 @@ const templateRasaAud = {
 
         this.RSpeech = {
             name: 'RSpeech',
-            w: width / 2, h: 38.2,
+            w: width / 2, h: 37.6,
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'inline',
             hideContext: true,
@@ -82,39 +82,16 @@ const templateRasaAud = {
         }
         this.LSpeech = {
             name: 'LSpeech',
-            w: width / 2, h: 38.2,
+            w: width / 2, h: 37.6,
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
             hideContext: true,
             forceInsert: true,
         }
-        this.RTympanogram = {
-            name: 'RTympanogram',
-            w: width / 2, h: 60,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
-            display: 'inline',
-        }
-        this.LTympanogram = {
-            name: 'LTympanogram',
-            w: width / 2, h: 60,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
-            display: 'block',
-        }
-        this.RReflex = {
-            name: 'RReflex',
-            w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
-            display: 'inline'
-        }
-        this.LReflex = {
-            name: 'LReflex',
-            w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
-            display: 'block'
-        }
+
         this.report = {
             name: 'report',
-            w: width, h: 37.4,
+            w: width, h: 36.9,
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
             hideContext: true,
@@ -131,13 +108,7 @@ const templateRasaAud = {
     calc2: function () {
         // let dims = this.dims;
         let width, height;
-        //آیتم های روی این تمپلت
-        // روش جدید محاسبه ابعاد منطقی تر و تمیز تر
-        // Object.assign(this.header, {
-        //     width: this.getWidth(this.header),
-        //     height: this.getHeight(this.header),
-        // })
-        // New
+
         width = this.header.width = this.getWidth(this.header)
         height = this.header.height = this.getHeight(this.header)
 
@@ -169,7 +140,8 @@ const templateRasaAud = {
             { name: 'name', x: width - 45, y: 12 },
             { name: 'lastName', x: width - 75, y: 12 },
             { name: 'age', x: width - 105, y: 12 },
-            { name: 'referrer', x: width - 150, y: 12 }
+            { name: 'referrer', x: width - 150, y: 12 },
+            { name: 'date', x: width - 185, y: 12 }
         ]
 
         width = this.history.width = this.getWidth(this.history)
@@ -192,31 +164,21 @@ const templateRasaAud = {
         this.RSpeech.height = this.getHeight(this.RSpeech)
         this.RSpeech.labels = ["SRT", "MCL", "SDS", 'UCL']
         this.RSpeech.forceInputs = [
-            { name: 'SRT', x: 23, y: 26 },
-            { name: 'MCL', x: 35, y: 26 },
-            { name: 'SDS', x: 47, y: 26 },
-            { name: 'UCL', x: 59, y: 26 },
+            { name: 'SRT', x: 24, y: 26 },
+            { name: 'MCL', x: 36, y: 26 },
+            { name: 'SDS', x: 48, y: 26 },
+            { name: 'UCL', x: 60, y: 26 },
         ]
 
         width = this.LSpeech.width = this.getWidth(this.LSpeech)
         this.LSpeech.height = this.getHeight(this.LSpeech)
         this.LSpeech.labels = ["SRT", "MCL", "SDS", 'UCL']
         this.LSpeech.forceInputs = [
-            { name: 'SRT', x: 33, y: 26 },
-            { name: 'MCL', x: 45, y: 26 },
-            { name: 'SDS', x: 57, y: 26 },
-            { name: 'UCL', x: 69, y: 26 },
+            { name: 'SRT', x: 34, y: 26 },
+            { name: 'MCL', x: 46, y: 26 },
+            { name: 'SDS', x: 58, y: 26 },
+            { name: 'UCL', x: 70, y: 26 },
         ]
-
-        width = this.RTympanogram.width = this.getWidth(this.RTympanogram)
-        this.RTympanogram.height = this.getHeight(this.RTympanogram)
-        width = this.LTympanogram.width = this.getWidth(this.LTympanogram)
-        this.LTympanogram.height = this.getHeight(this.LTympanogram)
-
-        width = this.RReflex.width = this.getWidth(this.RReflex)
-        this.RReflex.height = this.getHeight(this.RReflex)
-        width = this.LReflex.width = this.getWidth(this.LReflex)
-        this.LReflex.height = this.getHeight(this.LReflex)
 
         width = this.report.width = this.getWidth(this.report)
         this.report.height = this.getHeight(this.report)
@@ -230,7 +192,6 @@ const templateRasaAud = {
             { name: 'description', x: width - 20, y: 14 },
 
         ]
-
 
         width = this.footer.width = this.getWidth(this.footer)
         this.footer.height = this.getHeight(this.footer)

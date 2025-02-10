@@ -3,7 +3,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 import printForm from "./printForm.js";
 import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
-import rasaAud from "./templates/rasaAud.js";
+import rasaAud from "./templates/rasa_audiometry.js";
 // import rasaAudImage from './templates/rasaAud.png'
 import rasaAudImage from './templates/rasa_audiometry.png'
 
@@ -37,7 +37,6 @@ export default class Forms {
         this.forms[0].form.style.display = 'block';
         this.selectedForm = this.forms[0]
         btn[0].style.backgroundColor = ' #1c15e1'
-
 
         // تعریف رویداد دکمه چاپ فرم نمایشی
         printBtn.addEventListener('click', () => { printForm({ container: this.selectedForm.form }) })

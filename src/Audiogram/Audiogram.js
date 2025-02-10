@@ -43,35 +43,39 @@ export default class AudiogramChart {
     svg.setAttribute("x", x);
     svg.setAttribute("y", y);
     svg.setAttribute("viewBox", [-chartPadding.left, -chartPadding.top, width, height]);
-    // محدوده مختصات خطوط جدول
-    const chartArea = putRect({
-      container: svg,
-      x: this.getX(vFrequency.min), y: this.getY(intensity.min),
-      width: vFrequencyAxiosLength.mm, height: intensityAxiosLength.mm,
-      style: 'stroke-width: 0.4; stroke: gray; fill: transparent'
-    })
+
 
     const currentPointer = putPoint({ container: svg, x: 0, y: 0, r: 4, color: 'black' });
     this.currentPointer = currentPointer;
-    // رسم خطوط افقی از بالا به پایین
-    let x1 = this.getX(vFrequency.min);
-    let x2 = this.getX(vFrequency.max);
-    for (let i = intensity.min; i <= intensity.max; i += intensity.step) {
-      const y1 = this.getY(i)
-      const y2 = y1
-      putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
-    }
-    // رسم خطوط عمودی از چپ به راست
-    let y1 = this.getY(intensity.min)
-    let y2 = this.getY(intensity.max)
-    for (let f = vFrequency.min; f <= vFrequency.max; f += vFrequency.step) {
-      const x1 = this.getX(f)
-      const x2 = x1
-      putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
+    // برای فرم‌های پیش چاپ شده
+    if (!dims.blank) {
+      // محدوده مختصات خطوط جدول
+      const chartArea = putRect({
+        container: svg,
+        x: this.getX(vFrequency.min), y: this.getY(intensity.min),
+        width: vFrequencyAxiosLength.mm, height: intensityAxiosLength.mm,
+        style: 'stroke-width: 0.4; stroke: gray; fill: transparent'
+      })
+      // رسم خطوط افقی از بالا به پایین
+      let x1 = this.getX(vFrequency.min);
+      let x2 = this.getX(vFrequency.max);
+      for (let i = intensity.min; i <= intensity.max; i += intensity.step) {
+        const y1 = this.getY(i)
+        const y2 = y1
+        putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
+      }
+      // رسم خطوط عمودی از چپ به راست
+      let y1 = this.getY(intensity.min)
+      let y2 = this.getY(intensity.max)
+      for (let f = vFrequency.min; f <= vFrequency.max; f += vFrequency.step) {
+        const x1 = this.getX(f)
+        const x2 = x1
+        putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
+      }
     }
     // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
     // این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی ریودادها درست عمل کند
-    const borderRect = putRect({ container: svg, x: -chartPadding.left, y: -chartPadding.top, width, height, name: 'RAudiogram' });
+    const borderRect = putRect({ container: svg, x: -chartPadding.left, y: -chartPadding.top, width, height, name: 'RAudiogram', style: style = 'fill: transparent;' });
     this.borderRect = borderRect;
     // ایجاد رویدادها روی فقط چارت جدول
     borderRect.addEventListener('mousemove', (e) => {
@@ -160,7 +164,6 @@ export default class AudiogramChart {
 
   getSymbol(symbolName) {
     const point = this.symbols[symbolName].cloneNode(true);
-    
     return point
   }
 }
