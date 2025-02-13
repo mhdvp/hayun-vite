@@ -11,9 +11,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 
 export default class Form {
-    constructor({ container, template, image } = {}) {
-        this.image = image;
-        // const dims = template;
+    constructor({ container, template } = {}) {
         this.template = template;
         this.container = container;
         this.data = {};
@@ -132,10 +130,11 @@ export default class Form {
         const { left, top } = margin;
 
         const backgroundImage = this.template.backgroundImage;
+
         let svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("viewBox", [-left, -top, width, height])
         svg.setAttribute("style", "background-color: BlanchedAlmond");
-        if (this.image) {
+        if (backgroundImage) {
             let image = document.createElementNS(svgNS, "image");
             image.setAttribute('class', 'non-print')
             image.setAttribute('width', width);
@@ -144,8 +143,8 @@ export default class Form {
             image.setAttribute('x', 0)
             image.setAttribute('y', -0.6)
             // image.setAttribute('height', height);
-            image.setAttribute('href', this.image);
-            
+            image.setAttribute('href', backgroundImage);
+
             svg.appendChild(image);
         }
 
@@ -267,5 +266,16 @@ export default class Form {
         //     container: container, x1: width / 2, y1: 0,
         //     x2: width / 2, y2: height, style: style, name: 'form-border'
         // })
+    }
+
+    // ایجاد دکمه تاگل خطوط مرزی فرم و سکشن و المان
+    toggleBorders({ activeForm, container = 'form' }) {
+        const borders = activeForm.querySelectorAll(`[data-name="${container}-border"]`);
+        // آبجکت نگهداری رنگ بوردرها
+        const color = { form: 'black', section: 'blue', element: 'green' }
+        borders.forEach(border => {
+            // console.log(border.style.stroke);
+            border.style.stroke = (border.style.stroke === 'transparent') ? color[container] : 'transparent';
+        })
     }
 }

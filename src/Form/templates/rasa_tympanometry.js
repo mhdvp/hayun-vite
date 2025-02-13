@@ -1,12 +1,11 @@
-import audDims from "../../Audiogram/dims.js"
-import image from './rasa_audiometry.jpg'
+import audDims from "../../Audiogram/dims.js";
 
-const rasaAud = {
-    name: 'rasa_audiometry',
-    label: 'ادیومتری رسا',
-    backgroundImage: image, // Just Path of image
-    margin: { left: 0, top: 0, right: 0, bottom: 0 },
-    paper: { type: 'A4', case: 'portrait', width: 209, height: 294.5 },
+const rasaTymp = {
+    name: 'combo',
+    label: 'تمپانومتری رسا',
+    // backgroundImage: 'backgroundImage',
+    margin: { left: 5, top: 5, right: 5, bottom: 5 },
+    paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },
 
     // Printable Dimention
     calc1: function () {
@@ -17,13 +16,7 @@ const rasaAud = {
         // فضای خالی
         this.blank = {
             name: 'blank',
-            w: width, h: 21,
-            margin: { left: 0, top: 0, right: 0, bottom: 0 },
-            display: 'block',
-        }
-        this.blank1 = {
-            name: 'blank',
-            w: width, h: 99,
+            w: width, h: 10,
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
@@ -35,15 +28,12 @@ const rasaAud = {
             display: 'block',
         }
         this.patient = {
-            hideContext: true, // برچسب ها را ایجاد نمیکند
-            forceInsert: true, // مقادیر مختصات ورودی ها را از آبجکت جداگانه ای میگیرد
             name: 'patient',
-            w: width, h: 22,
-            margin: { left: 0, top: 0, right: 0, bottom: 0 },
+            w: width, h: 10,
+            margin: { left: 1, top: 1, right: 1, bottom: 1 },
             display: 'block',
         }
         this.history = {
-            // hideContext: true,
             name: 'history',
             w: width, h: 10,
             margin: { left: 1, top: 1, right: 1, bottom: 1 },
@@ -55,8 +45,8 @@ const rasaAud = {
             audDims[this.name],
             {
                 name: 'RAudiogram',
-                w: width / 2, h: 99,
-                margin: { left: 18.1, top: 18.5, right: 16.4, bottom: 11.2 },
+                w: width / 2, h: 100,
+                margin: { left: 1, top: 1, right: 1, bottom: 1 },
                 display: 'inline',
             });
 
@@ -65,38 +55,61 @@ const rasaAud = {
             audDims[this.name],
             {
                 name: 'LAudiogram',
-                w: width / 2, h: 99, // پهنای سکشن هست
-                margin: { left: 18.2, top: 18.5, right: 16.4, bottom: 11.2 },
+                w: width / 2, h: 100, // پهنای سکشن هست
+                margin: { left: 1, top: 1, right: 1, bottom: 1 },
                 display: 'block',
             });
 
-
-
         this.RSpeech = {
             name: 'RSpeech',
-            w: width / 2, h: 37.6,
-            margin: { left: 0, top: 0, right: 0, bottom: 0 },
+            w: width / 2, h: 15,
+            margin: { left: 5, top: 1, right: 5, bottom: 1 },
             display: 'inline',
-            hideContext: true,
-            forceInsert: true,
+            stroke: true,
         }
+
         this.LSpeech = {
             name: 'LSpeech',
-            w: width / 2, h: 37.6,
-            margin: { left: 0, top: 0, right: 0, bottom: 0 },
+            w: width / 2, h: 15,
+            margin: { left: 5, top: 1, right: 5, bottom: 1 },
             display: 'block',
-            hideContext: true,
-            forceInsert: true,
+            stroke: true
+        }
+
+        this.RTympanogram = {
+            name: 'RTympanogram',
+            w: width / 2, h: 60,
+            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            display: 'inline',
+        }
+
+        this.LTympanogram = {
+            name: 'LTympanogram',
+            w: width / 2, h: 60,
+            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            display: 'block',
+        }
+        this.RReflex = {
+            name: 'RReflex',
+            w: width / 2, h: 30,
+            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            display: 'inline'
+        }
+
+        this.LReflex = {
+            name: 'LReflex',
+            w: width / 2, h: 30,
+            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            display: 'block'
         }
 
         this.report = {
             name: 'report',
-            w: width, h: 36.9,
-            margin: { left: 0, top: 0, right: 0, bottom: 0 },
-            display: 'block',
-            hideContext: true,
-            forceInsert: true
+            w: width, h: 20,
+            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            display: 'block'
         }
+
         this.footer = {
             name: 'footer',
             w: width, h: 10,
@@ -137,11 +150,10 @@ const rasaAud = {
             { name: 'referrer', x: width - 142, y: 5 }
         ]
         this.patient.forceInputs = [
-            { name: 'name', x: width - 45, y: 12 },
-            { name: 'lastName', x: width - 75, y: 12 },
-            { name: 'age', x: width - 105, y: 12 },
-            { name: 'referrer', x: width - 150, y: 12 },
-            { name: 'date', x: width - 185, y: 12 }
+            { name: 'name', x: width - 10, y: 4 },
+            { name: 'lastName', x: width - 47, y: 5 },
+            { name: 'age', x: width - 97, y: 5 },
+            { name: 'referrer', x: width - 142, y: 5 }
         ]
 
         width = this.history.width = this.getWidth(this.history)
@@ -162,23 +174,21 @@ const rasaAud = {
 
         width = this.RSpeech.width = this.getWidth(this.RSpeech)
         this.RSpeech.height = this.getHeight(this.RSpeech)
-        this.RSpeech.labels = ["SRT", "MCL", "SDS", 'UCL']
-        this.RSpeech.forceInputs = [
-            { name: 'SRT', x: 24, y: 26 },
-            { name: 'MCL', x: 36, y: 26 },
-            { name: 'SDS', x: 48, y: 26 },
-            { name: 'UCL', x: 60, y: 26 },
-        ]
+        this.RSpeech.labels = ["SAT", "SRT", "MCL", "UCL", "SDS"]
 
         width = this.LSpeech.width = this.getWidth(this.LSpeech)
         this.LSpeech.height = this.getHeight(this.LSpeech)
-        this.LSpeech.labels = ["SRT", "MCL", "SDS", 'UCL']
-        this.LSpeech.forceInputs = [
-            { name: 'SRT', x: 34, y: 26 },
-            { name: 'MCL', x: 46, y: 26 },
-            { name: 'SDS', x: 58, y: 26 },
-            { name: 'UCL', x: 70, y: 26 },
-        ]
+        this.LSpeech.labels = ["SAT", "SRT", "MCL", "UCL", "SDS"]
+
+        width = this.RTympanogram.width = this.getWidth(this.RTympanogram)
+        this.RTympanogram.height = this.getHeight(this.RTympanogram)
+        width = this.LTympanogram.width = this.getWidth(this.LTympanogram)
+        this.LTympanogram.height = this.getHeight(this.LTympanogram)
+
+        width = this.RReflex.width = this.getWidth(this.RReflex)
+        this.RReflex.height = this.getHeight(this.RReflex)
+        width = this.LReflex.width = this.getWidth(this.LReflex)
+        this.LReflex.height = this.getHeight(this.LReflex)
 
         width = this.report.width = this.getWidth(this.report)
         this.report.height = this.getHeight(this.report)
@@ -187,10 +197,6 @@ const rasaAud = {
         ]
         this.report.inputs = [
             { name: 'description', x: width - 10, y: 5 },
-        ]
-        this.report.forceInputs = [
-            { name: 'description', x: width - 20, y: 14 },
-
         ]
 
         width = this.footer.width = this.getWidth(this.footer)
@@ -206,7 +212,6 @@ const rasaAud = {
         ]
     },
 
-
     getWidth: function (element) {
         return (element.w - (element.margin.left + element.margin.right))
     },
@@ -217,32 +222,27 @@ const rasaAud = {
     calcSectionsArray: function () {
         // این آرایه دقیقا ترتیب قرارگیری سکشن ها را بدون اون اوردر قبلی تعیین میکند
         this.sections = [
-
-            // this.blank,
-            this.blank,
-            this.patient,
-            // this.blank1,
-
+            this.header,
+            // this.patient,
             // this.history,
-            this.RAudiogram,
-            this.LAudiogram,
-            this.RSpeech, this.LSpeech,
-            // this.RTympanogram, this.LTympanogram,
-            // this.RReflex, this.LReflex,
+            // this.RAudiogram,
+            // this.LAudiogram,
+            // this.RSpeech,
+            // this.LSpeech,
+            this.RTympanogram, this.LTympanogram,
+            this.RReflex, this.LReflex,
             this.report,
             // this.footer
 
         ]
     },
 
-
 }
 
-rasaAud.calc1()
-rasaAud.calc2()
-rasaAud.calcSectionsArray()
-
+rasaTymp.calc1()
+rasaTymp.calc2()
+rasaTymp.calcSectionsArray()
 // پهنا و ارتفاع قابل استفاده منهای پد ها میشه پهنا و ارتفاع اصلی
 
-export default rasaAud;
+export default rasaTymp;
 

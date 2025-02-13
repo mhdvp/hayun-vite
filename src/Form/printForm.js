@@ -4,6 +4,7 @@ export default function printForm({ container }) {
   iframe.style.display = "block";
   let style = `
                 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
+                font-display: auto;
 
                 @page {
 
