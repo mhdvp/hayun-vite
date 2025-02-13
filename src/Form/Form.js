@@ -65,11 +65,11 @@ export default class Form {
             this.LSpeech.draw({ dims: template.LSpeech, });
         }
         if (sections.RTympanogram) {
-            this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, dims: template.RTympanogram })
+            this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R' })
             this.RTympanogram.draw({ dims: template.RTympanogram });
         }
         if (sections.LTympanogram) {
-            this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, dims: template.LTympanogram })
+            this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L' })
             this.LTympanogram.draw({ dims: template.LTympanogram });
         }
         if (sections.RReflex) {
@@ -135,21 +135,19 @@ export default class Form {
         svg.setAttribute("viewBox", [-left, -top, width, height])
         svg.setAttribute("style", "background-color: BlanchedAlmond");
         if (backgroundImage) {
-            let image = document.createElementNS(svgNS, "image");
-            image.setAttribute('class', 'non-print')
-            image.setAttribute('width', width);
-            image.setAttribute('height', height);
+            let image = document.createElementNS(svgNS, "image")
+            image.setAttribute('class', 'no-print')
+            image.setAttribute('width', width)
+            // image.setAttribute('height', height)
 
             image.setAttribute('x', 0)
-            image.setAttribute('y', -0.6)
+            image.setAttribute('y', 0)
             // image.setAttribute('height', height);
-            image.setAttribute('href', backgroundImage);
+            image.setAttribute('href', backgroundImage)
 
-            svg.appendChild(image);
+            svg.appendChild(image)
         }
-
-        // div.appendChild(svg);
-        return svg;
+        return svg
     }
 
     update({ data, officeData, patientData, sessionIndex = 0 }) {
@@ -242,30 +240,7 @@ export default class Form {
             stroke-dasharray: 0.5;
             fill: transparent;
         `;
-        putRect({ container, x: 0, y: 0, width, height, style })
-        // Horizontal Lines
-        // putLine({
-        //     container: container, x1: 0, y1: margin.top,
-        //     x2: width, y2: margin.top, style: style, name: 'form-border'
-        // })
-        // putLine({
-        //     container: container, x1: 0, y1: height - margin.bottom,
-        //     x2: width, y2: height - margin.bottom, style: style, name: 'form-border'
-        // })
-        // // Vertical Lines
-        // putLine({
-        //     container: container, x1: margin.left, y1: 0,
-        //     x2: margin.left, y2: height, style: style, name: 'form-border'
-        // })
-        // putLine({
-        //     container: container, x1: width - margin.right, y1: 0,
-        //     x2: width - margin.right, y2: height, style: style, name: 'form-border'
-        // })
-        // // Middle Line
-        // putLine({
-        //     container: container, x1: width / 2, y1: 0,
-        //     x2: width / 2, y2: height, style: style, name: 'form-border'
-        // })
+        putRect({ container, x: 0, y: 0, width, height, style, className: 'no-print' })
     }
 
     // ایجاد دکمه تاگل خطوط مرزی فرم و سکشن و المان

@@ -4,7 +4,7 @@ import printForm from "./printForm.js";
 import Form from "./Form.js";
 import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 import rasaAud from "./templates/rasa_audiometry.js";
-import rasaTymp from './templates/rasa_tympanometry.js'
+import rasaTymp from './templates/rasa_tymp_reflex.js'
 
 // خط کد زیر لازم هست
 import './fonts/Vazirmatn-Regular.woff2'
@@ -14,11 +14,11 @@ import '../style.css'
 export default class Forms {
     constructor({ assets, container } = {}) {
         this.container = container
-        this.addForm({ templates: [rasaAud, rasaTymp, combo] })
+        this.addForms({ templates: [rasaAud, rasaTymp, combo] })
     }
 
     // افزودن فرم 
-    addForm({ templates }) {
+    addForms({ templates }) {
         const container = this.container
         // ایجاد یک دیو برای قرار دادن دکمه ها و لینک های فرم
         const div = document.createElement('div');

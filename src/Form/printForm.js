@@ -43,7 +43,7 @@ export default function printForm({ container }) {
                         padding: 0;
                         break-inside: avoid;
                     }
-                    .non-print {
+                    .no-print {
                       display: none;
                     }
 

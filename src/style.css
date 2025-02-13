@@ -3,7 +3,7 @@
   src:
     url("fonts/Vazirmatn-Regular.woff2") format("woff2"),
     url('fonts/Vazirmatn-Regular.woff') format('woff');
-  font-display: auto;
+  font-display: swap;
 
 }
 
@@ -32,6 +32,28 @@
 .bold {
   font-weight: bold;
 }
+
+.container {
+  display: flex;
+  /* Use flexbox to align items */
+  align-items: center;
+  /* Center items vertically */
+}
+
+.left {
+  /* background-color: lightblue; */
+  padding: 20px;
+  margin-right: 10px;
+  /* Space between the two divs */
+}
+
+.right {
+  /* background-color: lightgreen; */
+  margin-left: 10px;
+  
+  /* padding: 20px; */
+}
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

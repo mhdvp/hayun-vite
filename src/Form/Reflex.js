@@ -6,8 +6,6 @@ const svgNS = "http://www.w3.org/2000/svg";
 export default class Reflex {
     constructor({ container }) {
         this.container = container;
-        // this.left = dims.pad.left;
-        // this.top = dims.pad.top;
     }
 
     draw({ dims }) {
@@ -16,14 +14,8 @@ export default class Reflex {
         let x = dims.margin.left;
         let y = dims.margin.top;
         let style;
-        // جدولی با ۳ سطر و ۵ ستون
-
-        // تقسیم بر ۶ کردم تا با عرض باکس‌های گفتار یکی باشه. وگرنه اینجا ۵ تا ستون داریم. یک ستون میدیم کپشن عمودی ستون اول
-        const cw = width / 6; // پهنای هر خانه
-        const ch = height / 3; // ارتفاع هر خانه
 
         const svg = document.createElementNS(svgNS, "svg");
-        // svg.setAttribute("id", id);
         svg.setAttribute("x", x);
         svg.setAttribute("y", y);
         svg.setAttribute("width", width);
@@ -31,7 +23,8 @@ export default class Reflex {
         svg.setAttribute("class", "reflex");
 
         let lable = ["", "500", "1000", "2000", "4000"]; // مقادیر برچسب‌های سطر اول
-        let cw1 = width / 6; // پهنای خانه‌های سطر اول
+        // جدولی با ۳ سطر و ۵ ستون
+        let cw1 = width / 5; // پهنای خانه‌های سطر اول
         let ch1 = height / 3; // ارتفاع خانه‌های سطر اول
         let ch2 = height / 3; // ارتفاع خانه‌های سطر دوم
 
@@ -48,7 +41,7 @@ export default class Reflex {
         `;
         lable.forEach((value, i) => {
             if (value != "") {
-                let x = cw1 / 2 + cw1 * (i + 1);
+                let x = cw1 / 2 + cw1 * i;
                 let y = ch1 / 2;
                 // putText(value, x, y, "", "middle", "middle"); // با استایل تراز عمودی پایین نسبت به خط پایه
                 putText({ container: svg, value, x, y, style })
@@ -68,13 +61,13 @@ export default class Reflex {
         `;
         lable = ["Freq", "IPSI", "CONTRA"];
         // چاپ برچسب‌های ستون اول
-        putText({ container: svg, value: "Freq", x: cw1 * 2, y: ch1 / 2, style: style })
-        putText({ container: svg, value: "IPSI", x: cw1 * 2, y: ch1 * 3 / 2, style: style })
-        putText({ container: svg, value: "CONTRA", x: cw1 * 2, y: ch1 * 5 / 2, style: style })
+        putText({ container: svg, value: "Freq", x: cw1, y: ch1 / 2, style: style })
+        putText({ container: svg, value: "IPSI", x: cw1, y: ch1 * 3 / 2, style: style })
+        putText({ container: svg, value: "CONTRA", x: cw1, y: ch1 * 5 / 2, style: style })
 
         //چاپ ده باکس سطر دوم و سوم
         for (let j = 1; j <= 2; j++) {
-            for (let i = 2; i <= 5; i++) {
+            for (let i = 1; i <= 4; i++) {
                 let x = cw1 / 2 + cw1 * i;
                 let y = ch1 * j + ch2 / 2;
                 let bw = cw1 * 0.80; // پهنای هر باکس
@@ -95,7 +88,7 @@ export default class Reflex {
         `;
         let names = ["IPSI_500", "IPSI_1000", "IPSI_2000", "IPSI_4000"];
         for (let index = 0; index < 4; index++) {
-            x = cw1 / 2 + cw1 * (index + 2);
+            x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 + ch2 / 2;
             putText({ container: svg, value: "", x: x, y: y, style: style, name: names[index] })
         }
@@ -106,11 +99,11 @@ export default class Reflex {
 
         for (let index = 0; index < 4; index++) {
             // const idValue = idValues[index];
-            x = cw1 / 2 + cw1 * (index + 2);
+            x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 * 2 + ch2 / 2;
             putText({ container: svg, value: "", x: x, y: y, style: style, name: names[index] })
         }
-        // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
+        // مربع احاطه‌کننده کل جدول برای راهنمای توسعه و دریافت رویداد کلیک روی فرم
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
         putRect({ container: svg, x: 0, y: 0, width, height, style, name: dims.name })
         this.container.appendChild(svg);
@@ -130,13 +123,10 @@ export default class Reflex {
     }
 
     update(data) {
-        this.chart.querySelector(`text[data-name="IPSI_500"]`).innerHTML = data?.IPSI?.["500"] || "";
-        this.chart.querySelector(`text[data-name="IPSI_1000"]`).innerHTML = data?.IPSI?.["1000"] || "";
-        this.chart.querySelector(`text[data-name="IPSI_2000"]`).innerHTML = data?.IPSI?.["2000"] || "";
-        this.chart.querySelector(`text[data-name="IPSI_4000"]`).innerHTML = data?.IPSI?.["4000"] || "";
-        this.chart.querySelector(`text[data-name="CONTRA_500"]`).innerHTML = data?.CONTRA?.["500"] || "";
-        this.chart.querySelector(`text[data-name="CONTRA_1000"]`).innerHTML = data?.CONTRA?.["1000"] || "";
-        this.chart.querySelector(`text[data-name="CONTRA_2000"]`).innerHTML = data?.CONTRA?.["2000"] || "";
-        this.chart.querySelector(`text[data-name="CONTRA_4000"]`).innerHTML = data?.CONTRA?.["4000"] || "";
+        for (const key in data) {
+            for (const freq in data[key]) {
+                this.chart.querySelector(`text[data-name=${key}_${freq}]`).innerHTML = data?.[key]?.[freq] || "";
+            }
+        }
     }
 }

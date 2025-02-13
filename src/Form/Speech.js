@@ -82,7 +82,6 @@ export default class Speech {
         // اینپوت‌ها
         style += 'text-anchor: middle; dominant-baseline: middle; /* تراز عمودی*/ ';
 
-
         // New
         if (!dims.forceInsert) {
             let index = 0;
@@ -102,7 +101,8 @@ export default class Speech {
         }
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
-        putRect({ container: svg, x: 0, y: 0, width, height, style, name: dims.name })
+        let className = 'no-print'
+        putRect({ container: svg, x: 0, y: 0, width, height, style, name: dims.name, className })
         this.chart = svg;
         this.container.appendChild(svg);
 

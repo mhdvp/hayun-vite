@@ -1,11 +1,12 @@
-import audDims from "../../Audiogram/dims.js";
+import audDims from "../../Audiogram/dims.js"
+import image from './rasa_tymp_reflex.jpg'
 
 const rasaTymp = {
     name: 'combo',
     label: 'تمپانومتری رسا',
-    // backgroundImage: 'backgroundImage',
-    margin: { left: 5, top: 5, right: 5, bottom: 5 },
-    paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },
+    backgroundImage: image, // Just Path of image
+    margin: { left: 0, top: 0, right: 0, bottom: 0 },
+    paper: { type: 'A4', case: 'portrait', width: 209, height: 294.5 },
 
     // Printable Dimention
     calc1: function () {
@@ -16,7 +17,7 @@ const rasaTymp = {
         // فضای خالی
         this.blank = {
             name: 'blank',
-            w: width, h: 10,
+            w: width, h: 20,
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
@@ -24,13 +25,13 @@ const rasaTymp = {
             // hideContext: true,
             name: 'header',
             w: width, h: 20,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
         this.patient = {
             name: 'patient',
             w: width, h: 10,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            margin: { left: 5, top: 1, right: 5, bottom: 1},
             display: 'block',
         }
         this.history = {
@@ -40,66 +41,30 @@ const rasaTymp = {
             display: 'block',
         }
 
-        this.RAudiogram = {}
-        Object.assign(this.RAudiogram,
-            audDims[this.name],
-            {
-                name: 'RAudiogram',
-                w: width / 2, h: 100,
-                margin: { left: 1, top: 1, right: 1, bottom: 1 },
-                display: 'inline',
-            });
-
-        this.LAudiogram = {}
-        Object.assign(this.LAudiogram,
-            audDims[this.name],
-            {
-                name: 'LAudiogram',
-                w: width / 2, h: 100, // پهنای سکشن هست
-                margin: { left: 1, top: 1, right: 1, bottom: 1 },
-                display: 'block',
-            });
-
-        this.RSpeech = {
-            name: 'RSpeech',
-            w: width / 2, h: 15,
-            margin: { left: 5, top: 1, right: 5, bottom: 1 },
-            display: 'inline',
-            stroke: true,
-        }
-
-        this.LSpeech = {
-            name: 'LSpeech',
-            w: width / 2, h: 15,
-            margin: { left: 5, top: 1, right: 5, bottom: 1 },
-            display: 'block',
-            stroke: true
-        }
-
         this.RTympanogram = {
             name: 'RTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            margin: { left: 5, top: 2, right: 3, bottom: 2 },
             display: 'inline',
         }
 
         this.LTympanogram = {
             name: 'LTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            margin: { left: 3, top: 2, right: 5, bottom: 2 },
             display: 'block',
         }
         this.RReflex = {
             name: 'RReflex',
             w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            margin: { left: 5, top: 2, right: 3, bottom: 2 },
             display: 'inline'
         }
 
         this.LReflex = {
             name: 'LReflex',
             w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            margin: { left: 3, top: 2, right: 5, bottom: 2 },
             display: 'block'
         }
 
@@ -166,20 +131,6 @@ const rasaTymp = {
             { name: 'description', x: width - 13, y: 5 },
         ]
 
-        width = this.RAudiogram.width = this.getWidth(this.RAudiogram)
-        this.RAudiogram.height = this.getHeight(this.RAudiogram)
-
-        width = this.LAudiogram.width = this.getWidth(this.LAudiogram)
-        this.LAudiogram.height = this.getHeight(this.LAudiogram)
-
-        width = this.RSpeech.width = this.getWidth(this.RSpeech)
-        this.RSpeech.height = this.getHeight(this.RSpeech)
-        this.RSpeech.labels = ["SAT", "SRT", "MCL", "UCL", "SDS"]
-
-        width = this.LSpeech.width = this.getWidth(this.LSpeech)
-        this.LSpeech.height = this.getHeight(this.LSpeech)
-        this.LSpeech.labels = ["SAT", "SRT", "MCL", "UCL", "SDS"]
-
         width = this.RTympanogram.width = this.getWidth(this.RTympanogram)
         this.RTympanogram.height = this.getHeight(this.RTympanogram)
         width = this.LTympanogram.width = this.getWidth(this.LTympanogram)
@@ -222,8 +173,8 @@ const rasaTymp = {
     calcSectionsArray: function () {
         // این آرایه دقیقا ترتیب قرارگیری سکشن ها را بدون اون اوردر قبلی تعیین میکند
         this.sections = [
-            this.header,
-            // this.patient,
+            this.blank,
+            this.patient,
             // this.history,
             // this.RAudiogram,
             // this.LAudiogram,
@@ -231,7 +182,7 @@ const rasaTymp = {
             // this.LSpeech,
             this.RTympanogram, this.LTympanogram,
             this.RReflex, this.LReflex,
-            this.report,
+            // this.report,
             // this.footer
 
         ]

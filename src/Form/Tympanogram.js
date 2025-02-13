@@ -3,11 +3,12 @@ import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Tympanogram {
-    constructor({ container } = {}) {
+    constructor({ container, side }) {
         this.pressure = { min: -600, max: +400, step: 200 };
         this.compliance = { min: -0.50, max: 3, step: 0.50 };
         this.padding = { right: 5, left: 8, top: 7, bottom: 14 };
         this.container = container;
+        this.side = side
     }
 
     draw({ dims }) {
@@ -30,7 +31,7 @@ export default class Tympanogram {
         svg.setAttribute("x", x);
         svg.setAttribute("y", y);
         svg.setAttribute("viewBox", [-padding.left, -padding.top, width, height]);
-       
+
 
 
         const pressureAxiosLength = {
@@ -191,8 +192,8 @@ export default class Tympanogram {
         // console.log(this.container);
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
-         // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
-         putRect({ container: svg, x: -padding.left, y: -padding.top, width, height, name: dims.name, style })
+        // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
+        putRect({ container: svg, x: -padding.left, y: -padding.top, width, height, name: dims.name, style })
         this.chart = svg;
         this.container.appendChild(svg);
 
@@ -236,13 +237,10 @@ export default class Tympanogram {
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
         this.chart.querySelector(`text[data-name="Type"]`).innerHTML = data?.type || "";
-        // container.getElementById(container.id + "_Type").innerHTML = data?.Type || "";
         this.chart.querySelector(`text[data-name="ECV"]`).innerHTML = data?.ECV || "";
         this.chart.querySelector(`text[data-name="MEP"]`).innerHTML = data?.MEP || "";
         this.chart.querySelector(`text[data-name="SC"]`).innerHTML = data?.SC || "";
         this.chart.querySelector(`text[data-name="G"]`).innerHTML = data?.G || "";
-        // container.getElementById(container.id + "_SC").innerHTML = data?.SC || "";
-        // document.getElementById(container + "_G").innerHTML = data.G;
         // پاک کردن منحنی قبلی از کانتینر جاری
         this.chart.querySelector(`path[data-name="curve"]`)?.remove();
         // رسم منحنی
@@ -312,7 +310,7 @@ export default class Tympanogram {
         let path = document.createElementNS(svgNS, "path");
         path.setAttribute("fill", "none");
         path.setAttribute("data-name", "curve");
-        let color = ("R" == "R") ? "brown" : "blue";
+        let color = (this.side == "R") ? "red" : "blue";
         path.setAttribute("stroke", color);
         path.setAttribute("stroke-width", "0.5px");
         path.setAttribute(

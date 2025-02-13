@@ -1,3 +1,5 @@
+import putRect from "../common/putRect";
+
 export default class Sections {
     constructor({ container, dims }) {
         this.dims = dims
@@ -44,17 +46,11 @@ export default class Sections {
             // نگهداری مختصات رسم بوردر هر سکشن برای استفاده در متد داخلی رسم بودر تاپ لایر 
             this.cords.push({ name: name, width: width, height: height, x: this.left, y: this.top });
 
-            // بوردر راهنما
-            let rect = document.createElementNS(svgNS, "rect");
-            rect.setAttribute("x", 0);
-            rect.setAttribute("y", 0);
-            rect.setAttribute("width", width);
-            rect.setAttribute("height", height);
-            rect.setAttribute("fill", "transparent");
-            rect.setAttribute("stroke", "blue");
-            rect.setAttribute("stroke-width", "0.1mm");
-            rect.setAttribute("data-name", "section-border");
-            svg.appendChild(rect);
+            putRect({
+                container: svg, x: 0, y: 0, width, height,
+                style: 'fill: transparent; stroke: blue; stroke-width: 0.2',
+                className: 'no-print'
+            })
             this[name] = svg;
             this.container.appendChild(svg)
 
