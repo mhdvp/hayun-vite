@@ -50,7 +50,11 @@ export default class TextBox {
         });
 
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
-        const borderRect = putRect({ container: svg, x: 0, y: 0, width, height, name: dims.name, className: 'no-print' });
+        const borderRect = putRect({
+            container: svg, x: 0, y: 0, width, height,
+            name: dims.name, className: 'no-print',
+            style: 'stroke: transparent; fill: transparent '
+        });
         this.borderRect = borderRect;
         // console.log(dims);
 

@@ -1,4 +1,4 @@
-import Symbols from "../Symbol/Symbols.js";
+// import Symbols from "../Symbol/Symbols.js";
 import TextBox from "./TextBox.js";
 import Header from "./Header.js";
 import Reflex from "./Reflex.js";
@@ -40,13 +40,14 @@ export default class Form {
             this.history.draw({ dims: template.history });
         }
 
-        this.symbols = new Symbols();
+        // this.symbols = new Symbols();
 
         if (sections.RAudiogram) {
             this.RAudiogram = new AudiogramChart({
                 container: sections.RAudiogram,
                 dims: template.RAudiogram,
                 side: 'R',
+                events: false
             });
         }
         if (sections.LAudiogram) {
@@ -54,6 +55,7 @@ export default class Form {
                 container: sections.LAudiogram,
                 dims: template.LAudiogram,
                 side: 'L',
+                events: false
             });
         }
         if (sections.RSpeech) {
@@ -73,11 +75,11 @@ export default class Form {
             this.LTympanogram.draw({ dims: template.LTympanogram });
         }
         if (sections.RReflex) {
-            this.RReflex = new Reflex({ container: sections.RReflex, dims: template.RReflex })
+            this.RReflex = new Reflex({ container: sections.RReflex })
             this.RReflex.draw({ dims: template.RReflex });
         }
         if (sections.LReflex) {
-            this.LReflex = new Reflex({ container: sections.LReflex, dims: template.LReflex })
+            this.LReflex = new Reflex({ container: sections.LReflex })
             this.LReflex.draw({ dims: template.LReflex });
         }
         if (sections.report) {
@@ -85,45 +87,13 @@ export default class Form {
             this.report.draw({ dims: template.report });
         }
         if (sections.footer) {
-
             this.footer = new TextBox({ container: sections.footer })
             this.footer.draw({ dims: template.footer });
         }
 
         this.container.appendChild(this.form);
-
     }
 
-    draw() {
-
-        let pad;
-        let style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1.3mm;
-            font-weight: bold;
-            color: red;
-             text-anchor: middle; /*تراز افقی*/
-             dominant-baseline: middle; /* تراز عمودی*/       
-        `;
-        // Draw Titles first
-        // putText({ container: this.sections.audiograms, value: "Right Ear", x: 42.5, y: 4, style: style })
-        // putText({ container: this.sections.speechs, value: "Speech Tests", x: this.sectionWidth / 2, y: 4, style: style })
-        // putText({ container: this.sections.tympanograms, value: "Tympanometry", x: this.sectionWidth / 2, y: 4, style: style })
-        // putText({ container: this.sections.reflexes, value: "Acoustic Reflexes", x: this.sectionWidth / 2, y: 4, style: style })
-
-
-        // برای مخفی کردن بوردرها تابع تاگل بوردر همین جا فراخوانی شود
-        // this.toggleBorders({ container: 'form' })
-        // this.toggleBorders({ container: 'section' })
-        // this.toggleBorders({ container: 'element' })
-
-
-        // بعد از رسم همه المنت ها یک المنت مستطیل تاپ لایر
-        // drawTopLayer({ container: this.form, dims: this.sections.dims });
-    }
 
     create({ paper, margin }) {
         const { width, height } = paper;
@@ -241,16 +211,5 @@ export default class Form {
             fill: transparent;
         `;
         putRect({ container, x: 0, y: 0, width, height, style, className: 'no-print' })
-    }
-
-    // ایجاد دکمه تاگل خطوط مرزی فرم و سکشن و المان
-    toggleBorders({ activeForm, container = 'form' }) {
-        const borders = activeForm.querySelectorAll(`[data-name="${container}-border"]`);
-        // آبجکت نگهداری رنگ بوردرها
-        const color = { form: 'black', section: 'blue', element: 'green' }
-        borders.forEach(border => {
-            // console.log(border.style.stroke);
-            border.style.stroke = (border.style.stroke === 'transparent') ? color[container] : 'transparent';
-        })
     }
 }

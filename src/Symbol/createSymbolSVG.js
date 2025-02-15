@@ -19,7 +19,7 @@ export default function createSymbolSVG({ side = "R", type = "AC", masked = fals
   svg.setAttribute("data-side", side);
   svg.setAttribute("data-type", type);
   svg.setAttribute("data-masked", masked);
-  svg.setAttribute("data-NR", NR);
+  svg.setAttribute("data-nr", NR);
 
 
   if (side == "R" && type == "AC" && !masked) {

@@ -1,62 +1,26 @@
 // import './style.css'
-
 import AudiogramChart from "./Audiogram/Audiogram.js"
 import dims from './Audiogram/dims.js'
 import Forms from "./Form/Forms.js";
 import { officeData, patientData } from "../data/sampleData.js"
 
-
-
-// import javascriptLogo from './javascript.svg'
-// import viteLogo from '/vite.svg'
-// import { setupCounter } from './counter.js'
-
-// document.querySelector('#app').innerHTML = `
-//   <div>
-//     <a href="https://vite.dev" target="_blank">
-//       <img src="${viteLogo}" class="logo" alt="Vite logo" />
-//     </a>
-//     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-//       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-//     </a>
-//     <h1>Hello Vite!</h1>
-//     <div class="card">
-//       <button id="counter" type="button"></button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click on the Vite logo to learn more
-//     </p>
-//   </div>
-// `
-
-// setupCounter(document.querySelector('#counter'))
-
-
 document.querySelector('#app').innerHTML = `
-    <button>Ok</button>
-    <button>Tok</button>
-    <p>Mahdi</p>
-    <h1>مهدی جاویدی پرنده پرکلاغی</h1>
+    <div id="audiogram-div" style="max-width: 700px;"></div>
     <div id="forms-div"></div>
-    <div id="audiogram-div"></div>
- `
-
+`
 const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
-
 
 const RAudiogram = new AudiogramChart({
   container: document.getElementById('audiogram-div'),
   dims: dims.display,
-  side: 'R', x: 0, y: 0,
-  width: 700, height: 800, events: true
+  side: 'R',
 })
 
 const LAudiogram = new AudiogramChart({
   container: document.getElementById('audiogram-div'),
   dims: dims.display,
-  side: 'L', x: 0, y: 0,
-  width: 700, height: 800, events: true
+  side: 'L',
 })
 
 RAudiogram.update({
@@ -84,5 +48,30 @@ LAudiogram.update({
 })
 
 
+
+
+// import javascriptLogo from './javascript.svg'
+// import viteLogo from '/vite.svg'
+// import { setupCounter } from './counter.js'
+
+// document.querySelector('#app').innerHTML = `
+//   <div>
+//     <a href="https://vite.dev" target="_blank">
+//       <img src="${viteLogo}" class="logo" alt="Vite logo" />
+//     </a>
+//     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
+//       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
+//     </a>
+//     <h1>Hello Vite!</h1>
+//     <div class="card">
+//       <button id="counter" type="button"></button>
+//     </div>
+//     <p class="read-the-docs">
+//       Click on the Vite logo to learn more
+//     </p>
+//   </div>
+// `
+
+// setupCounter(document.querySelector('#counter'))
 
 

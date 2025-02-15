@@ -22,6 +22,10 @@ export default class Forms {
         const container = this.container
         // ایجاد یک دیو برای قرار دادن دکمه ها و لینک های فرم
         const div = document.createElement('div');
+        container.addEventListener('click', e => {
+            console.log(e.target);
+        })
+
         div.style = 'border: 1px solid brown; margin: 0; padding: 0;'
         container.appendChild(div);
 
@@ -41,10 +45,14 @@ export default class Forms {
         // تعریف رویداد دکمه چاپ فرم نمایشی
         printBtn.addEventListener('click', () => { printForm({ container: this.selectedForm.form }) });
 
+
+
         // انتخاب فرم پیش‌فرض  
-        forms[1].form.style.display = 'block';
-        this.selectedForm = this.forms[1]
-        btns[1].style.backgroundColor = ' #1c15e1'
+        let selectedIndex = 1
+        forms[selectedIndex].form.style.display = 'block';
+        this.selectedForm = this.forms[selectedIndex]
+        btns[selectedIndex].style.backgroundColor = ' #1c15e1'
+
 
         btns.forEach((btn, index) => {
             btn.addEventListener('click', () => {
@@ -59,10 +67,15 @@ export default class Forms {
                 btns[index].style.backgroundColor = ' #1c15e1'
 
                 this.selectedForm = forms[index];
+                selectedIndex = index
                 this.update(this.allData);
 
             })
         })
+
+
+        this.putButton({ container: div, text: 'Show/Hide', className })
+            .addEventListener('click', () => { this.toggleDisplay({ container: forms[selectedIndex].form }) });
     }
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
@@ -80,5 +93,14 @@ export default class Forms {
         button.innerHTML = text;
         container.appendChild(button);
         return button;
+    }
+
+    // تابع تاگل نمایش و مخفی کردن خطوط راهنمای طراحی
+    toggleDisplay({ container }) {
+        container.querySelectorAll(`[data-name='guide-border']`)
+            .forEach(element => {
+                element.style.display = (element.style.display === '') ? 'none' : '';
+            });
+
     }
 }
