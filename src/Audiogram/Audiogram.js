@@ -11,10 +11,9 @@ export default class Audiogram {
     this.container = container;
     this.dims = {}
     Object.assign(this.dims, mainDims)
-    
+    dims = { blank: false }
     // اضافه کردن ابعاد جایگزین و یا اختصاصی دیگر به آبجکت ابعاد
-    // dims && Object.assign(this.dims, dims)
-    console.log(this.dims);
+    dims && Object.assign(this.dims, dims)
 
     this.events = events;
     this.side = side;
@@ -29,8 +28,8 @@ export default class Audiogram {
     const [container, dims] = [this.container, this.dims]
     const
       {
-        width, height, chartPadding, symbolDims, iFrequency,
-        iToFreq, freqToi, intensity, styles, frequencies
+        width, height, chartPadding, symbolDims, vf, vfArray,
+        vfToF, fToVf, intensity, styles, frequencies
       }
         = dims;
 
@@ -38,9 +37,10 @@ export default class Audiogram {
     let y = dims.margin.top
 
     this.symbolDims = symbolDims;
-    this.iFrequency = iFrequency;
-    this.freqToi = freqToi; // index of coresponding frequency
-    this.iToFreq = iToFreq;
+    this.vf = vf;
+    this.vfArray = vfArray;
+    this.fToVf = fToVf; // index of coresponding frequency
+    this.vfToF = vfToF;
     this.intensity = intensity;
     this.styles = styles;
     this.chartPadding = chartPadding;
@@ -52,7 +52,7 @@ export default class Audiogram {
 
     const xAxisLength = {
       vb: width - (chartPadding.left + chartPadding.right),
-      hzi: iFrequency.max - iFrequency.min // 0, 1, 2, ... instead 125, ...
+      hzi: vf.max - vf.min // 0, 1, 2, ... instead 125, ...
     }
     this.xAxisLength = xAxisLength
 
@@ -72,40 +72,44 @@ export default class Audiogram {
       // محدوده مختصات خطوط جدول
       const chartArea = putRect({
         container: svg,
-        x: this.getX(iFrequency.min), y: this.getY(intensity.min),
+        x: this.getX(vf.min), y: this.getY(intensity.min),
         width: xAxisLength.vb, height: yAxisLength.vb,
         style: 'stroke-width: 0.4; stroke: gray; fill: transparent'
       })
       // رسم خطوط افقی از بالا به پایین
-      let x1 = this.getX(iFrequency.min);
-      let x2 = this.getX(iFrequency.max);
+      let x1 = this.getX(vf.min);
+      let x2 = this.getX(vf.max);
       for (let i = intensity.min; i <= intensity.max; i += intensity.step) {
         const y1 = this.getY(i)
-        const y2 = y1
-        putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
+        const y2 = y1;
+        style = (i === 0) ? styles.boldLine : styles.line;
+        putLine({ container: svg, x1, y1, x2, y2, style })
       }
+
       // رسم خطوط عمودی از چپ به راست
       let y1 = this.getY(intensity.min)
       let y2 = this.getY(intensity.max)
-      for (let f = iFrequency.min; f <= iFrequency.max; f += iFrequency.step) {
-        const x1 = this.getX(f)
+      frequencies.forEach(item => {
+        const x1 = this.getX(item.vf)
         const x2 = x1
-        putLine({ container: svg, x1, y1, x2, y2, style: styles.line })
-      }
-
+        style = (item.semiOctav) ? styles.semiOctavFreqline : styles.mainFreqline;
+        (item.f === 1000) && (style = styles.boldLine);
+        putLine({ container: svg, x1, y1, x2, y2, style })
+      })
       // برچسب های اعداد فرکانس
       style = styles.frequency
       const y = this.getY(-25)
-      frequencies.forEach(freq => {
-        const value = freq.value
-        const x = this.getX(freq.x)
-        !freq.semiOctav && putText({ container: svg, value, x, y, style })
+      frequencies.forEach(item => {
+        const value = item.f
+        const x = this.getX(item.vf)
+        !item.semiOctav && item.f != 125 && item.f != 16000 &&
+          putText({ container: svg, value, x, y, style });
       })
 
       // رسم اعداد شدت محور عمودی
       style = styles.intensity
       const x = this.getX(-0.1)
-      for (let i = -20; i <= 140; i += 10) {
+      for (let i = -10; i <= 120; i += 10) {
         const y = this.getY(i)
         const value = i
         putText({ container: svg, x, y, value, style })
@@ -134,7 +138,7 @@ export default class Audiogram {
       style: 'fill: transparent; stroke: transparent;',
       name: 'RAudiogram',
     });
-    
+
     this.chartArea = chartArea
     this.events && this.drawSymbolsChart();
     container.appendChild(svg);
@@ -164,32 +168,38 @@ export default class Audiogram {
     this.svg.addEventListener('keydown', e => {
       e.preventDefault();
       console.log(e.code)
-      let f, fi, i, x, y
+      let f, vf, i, x, y, index
       switch (e.code) {
         case 'ArrowDown':
-          i = this.currentCordinate.i += 5
+          i = this.currentCordinate.i;
+          (this.currentCordinate.i != 125) && (i = this.currentCordinate.i += 5);
           y = this.getY(i)
           this.pointer.setAttribute('cy', y)
           break;
         case 'ArrowUp':
-          i = this.currentCordinate.i -= 5
+          i = this.currentCordinate.i;
+          (this.currentCordinate.i != -15) && (i = this.currentCordinate.i -= 5);
           y = this.getY(i)
           this.pointer.setAttribute('cy', y)
           break;
         case 'ArrowRight':
           f = this.currentCordinate.f;
-          fi = this.freqToi[f];
-          fi++;
-          this.currentCordinate.f = this.iToFreq[fi]
-          x = this.getX(fi)
+          vf = this.fToVf[f];
+          index = this.vfArray.indexOf(vf);
+          (f != 8000) && index++;
+          vf = this.vfArray[index]
+          this.currentCordinate.f = this.vfToF[vf]
+          x = this.getX(vf)
           this.pointer.setAttribute('cx', x)
           break;
         case 'ArrowLeft':
           f = this.currentCordinate.f;
-          fi = this.freqToi[f];
-          fi--;
-          this.currentCordinate.f = this.iToFreq[fi]
-          x = this.getX(fi)
+          vf = this.fToVf[f];
+          index = this.vfArray.indexOf(vf);
+          (f != 250) && index--;
+          vf = this.vfArray[index]
+          this.currentCordinate.f = this.vfToF[vf]
+          x = this.getX(vf)
           this.pointer.setAttribute('cx', x)
           break;
         case 'Space':
@@ -263,20 +273,33 @@ export default class Audiogram {
       const { kx, ky } = calcK();
       let x = e.offsetX * kx
       let y = e.offsetY * ky
-
-      const f = this.currentCordinate.f = this.getFreq(x);
+      const f = this.currentCordinate.f = this.getFreq(x).f;
+      const vf = this.getFreq(x).vf;
       const i = this.currentCordinate.i = this.getIntensity(y)
-      if (this.lastCordinate.f != this.currentCordinate.f) {
-        x = this.getX(this.freqToi[f])
+      if (this.lastCordinate.f != this.currentCordinate.f || this.lastCordinate.i != this.currentCordinate.i) {
+        x = this.getX(vf)
         this.pointer.setAttribute('cx', x)
-      }
-      if (this.lastCordinate.i != this.currentCordinate.i) {
         y = this.getY(i)
         this.pointer.setAttribute('cy', y)
       }
+
       this.lastCordinate.f = this.currentCordinate.f
       this.lastCordinate.i = this.currentCordinate.i
     })
+  }
+
+  // تبدیل مقدار ایکس مختصات به فرکانس 
+  getFreq(x) {
+    let vf = ((x - this.xArea.min) * (this.xAxisLength.hzi / this.xAxisLength.vb));
+    // یافتن نزدیک ترین 
+    // const vfArray = [0, 2, 4, 5.2, 6, 7.2, 8, 9.2, 10, 11.2, 12];
+    let i = 0;
+    while (vf > this.vfArray[i]) {
+      i++;
+    }
+    // حالا بین دو ایندکس پیدا شده
+    const index = ((vf - this.vfArray[i - 1]) > (this.vfArray[i] - vf)) ? i : i - 1;
+    return { f: this.vfToF[this.vfArray[index]], vf: this.vfArray[index] };
   }
 
   click() {
@@ -292,12 +315,15 @@ export default class Audiogram {
     let symbolname = this.currentSymbolName;
     const f = this.currentCordinate.f
     const i = this.currentCordinate.i
+    // console.log(f,i);
+
     const type = symbolname.slice(2, 4)
     const side = symbolname[0]
     const masked = symbolname[5] === 'M' ? true : false;
     nr && (symbolname += '_NR');
 
-    const x = this.getX(this.freqToi[f])
+
+    const x = this.getX(this.fToVf[f])
     const y = this.getY(i)
     const dataset = { f, i, symbolname, type, side, masked, nr }
     // اینجا رل های رسم را چک میکنیم 
@@ -339,11 +365,6 @@ export default class Audiogram {
     })
   }
 
-  // تبدیل مقدار ایکس مختصات به فرکانس 
-  getFreq(x) {
-    return this.iToFreq[Math.round((x - this.xArea.min) * (this.xAxisLength.hzi / this.xAxisLength.vb))]
-  }
-
   // تبدیل مختصات ایگرگ سیستمی به مقدار شدت
   getIntensity(y) {
     let i = (this.intensity.min) + (y - this.chartPadding.top) * (this.yAxisLength.db / this.yAxisLength.vb)
@@ -353,9 +374,9 @@ export default class Audiogram {
 
     return (Math.round(i / roundStep) * roundStep)
   }
-  // fi = f index ~ 125: 0, 250: 2, 500: 4, 750:5, ...
-  getX(fi) {
-    return ((fi - this.iFrequency.min) * (this.xAxisLength.vb / this.xAxisLength.hzi)
+  // vf = f index ~ 125: 0, 250: 2, 500: 4, 750:5, ...
+  getX(vf) {
+    return ((vf - this.vf.min) * (this.xAxisLength.vb / this.xAxisLength.hzi)
     )
   }
   // تبدیل مقدار شدت به دسی بل به مقدار مختصات ایگرگ سیستم
@@ -376,7 +397,7 @@ export default class Audiogram {
     for (const symbolName in data) {
       for (const f in data[symbolName]) {
         const i = data[symbolName][f];
-        const x = this.getX(this.freqToi[f]);
+        const x = this.getX(this.fToVf[f]);
         const y = this.getY(i);
         const dataset = { f: f, i: i, symbolname: symbolName }
         this.insertSymbol({ container: this.svg, symbolName, x, y, dataset });
