@@ -204,14 +204,16 @@ export default class Audiogram {
           break;
         case 'Space':
           this.updateFreqLine({ shiftKey: e.shiftKey })
-
+          break;
+        case 'Delete':
+          const container = this.svg
+          const dataset = { f: this.currentCordinate.f, i: this.currentCordinate.i }
+          this.removeSymbol({ container, dataset })
+          break;
         default:
           break;
       }
-
-
     })
-
 
   }
 
@@ -273,10 +275,18 @@ export default class Audiogram {
       const { kx, ky } = calcK();
       let x = e.offsetX * kx
       let y = e.offsetY * ky
-      const f = this.currentCordinate.f = this.getFreq(x).f;
+      const f = this.currentCordinate.f = +this.getFreq(x).f;
       const vf = this.getFreq(x).vf;
       const i = this.currentCordinate.i = this.getIntensity(y)
-      if (this.lastCordinate.f != this.currentCordinate.f || this.lastCordinate.i != this.currentCordinate.i) {
+      console.log(f);
+
+      if (
+        f >= 250 && i >= -15 && i <= 125 &&
+        (
+          this.lastCordinate.f != this.currentCordinate.f ||
+          this.lastCordinate.i != this.currentCordinate.i
+        )
+      ) {
         x = this.getX(vf)
         this.pointer.setAttribute('cx', x)
         y = this.getY(i)
@@ -325,11 +335,12 @@ export default class Audiogram {
 
     const x = this.getX(this.fToVf[f])
     const y = this.getY(i)
-    const dataset = { f, i, symbolname, type, side, masked, nr }
+    let dataset = { f, type }
     // اینجا رل های رسم را چک میکنیم 
     // اگر در این خط فرکانسی سمبل با تایپ مشابه داریم اول اون رو پاک کن
     // دیتا رو چک ببین این فرکانس هست
     this.removeSymbol({ container: this.svg, dataset })
+    dataset = { f, i, symbolname, type, side, masked, nr }
     this.insertSymbol({ container: this.svg, symbolName: symbolname, x, y, dataset })
     // بالا آوردن لایه آخر برای دریافت رویدادهای موس
     this.svg.appendChild(this.chartArea)
@@ -341,7 +352,13 @@ export default class Audiogram {
 
   removeSymbol({ container, dataset }) {
     const { side, type, f, i, masked } = dataset
-    const symbol = container.querySelector(`[data-type='${type}'][data-f='${f}']`);
+    // ساخت رشته کوئری با توجه به پارامترها
+    let query = '';
+    side && (query += `[data-side='${side}']`);
+    type && (query += `[data-type='${type}']`);
+    f && (query += `[data-f='${f}']`);
+    i && (query += `[data-i='${i}']`);
+    const symbol = container.querySelector(query);
     if (symbol) {
       const symbolname = symbol.dataset.symbolname;
       delete this.data[symbolname][f]
