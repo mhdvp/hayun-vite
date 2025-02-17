@@ -50,6 +50,8 @@ export default class Form {
                 events: false
             });
         }
+        console.log(template.RAudiogram);
+        
         if (sections.LAudiogram) {
             this.LAudiogram = new AudiogramChart({
                 container: sections.LAudiogram,

@@ -46,7 +46,7 @@ export default class Forms {
         printBtn.addEventListener('click', () => { printForm({ container: this.selectedForm.form }) });
 
         // انتخاب فرم پیش‌فرض  
-        let selectedIndex = 2
+        let selectedIndex = 0
         forms[selectedIndex].form.style.display = 'block';
         this.selectedForm = this.forms[selectedIndex]
         btns[selectedIndex].style.backgroundColor = ' #1c15e1'

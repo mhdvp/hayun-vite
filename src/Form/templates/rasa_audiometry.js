@@ -52,25 +52,34 @@ const rasaAud = {
 
         this.RAudiogram = {}
         Object.assign(this.RAudiogram,
-            audDims[this.name],
             {
+                blank: true,
+                chartPadding: { left: 0, top: 0, right: 0, bottom: 0 },
+
                 name: 'RAudiogram',
-                w: width / 2, h: 99,
+                w: width / 2, h: 99, // این پهنا و ارتفاع سکشن هست
                 margin: { left: 18.1, top: 18.5, right: 16.4, bottom: 11.2 },
+                intensity: { min: -20, max: 120, step: 10 },
+                // بعدا از مقادیر بالا برای محاسبه اتومات پهنا و ارتفاع استفاده میشود
+               
                 display: 'inline',
-            });
+            }
+        );
 
         this.LAudiogram = {}
         Object.assign(this.LAudiogram,
-            audDims[this.name],
             {
                 name: 'LAudiogram',
+                blank: true,
+
+                chartPadding: { left: 0, top: 0, right: 0, bottom: 0 },
+                intensity: { min: -20, max: 120, step: 10 },
+                
                 w: width / 2, h: 99, // پهنای سکشن هست
                 margin: { left: 18.2, top: 18.5, right: 16.4, bottom: 11.2 },
                 display: 'block',
-            });
-
-
+            }
+        );
 
         this.RSpeech = {
             name: 'RSpeech',

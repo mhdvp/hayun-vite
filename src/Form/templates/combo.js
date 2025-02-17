@@ -42,17 +42,16 @@ const combo = {
 
         this.RAudiogram = {}
         Object.assign(this.RAudiogram,
-            audDims[this.name],
             {
+                blank: false,
                 name: 'RAudiogram',
-                w: width / 2, h: 100,
+                w: width / 2, h: 100, // ابعاد سکشن ادیوگرام 
                 margin: { left: 1, top: 1, right: 1, bottom: 1 },
                 display: 'inline',
             });
 
         this.LAudiogram = {}
         Object.assign(this.LAudiogram,
-            audDims[this.name],
             {
                 name: 'LAudiogram',
                 w: width / 2, h: 100, // پهنای سکشن هست

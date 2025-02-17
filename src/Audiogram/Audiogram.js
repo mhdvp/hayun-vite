@@ -11,7 +11,7 @@ export default class Audiogram {
     this.container = container;
     this.dims = {}
     Object.assign(this.dims, mainDims)
-    dims = { blank: false }
+    // dims = { blank: false }
     // اضافه کردن ابعاد جایگزین و یا اختصاصی دیگر به آبجکت ابعاد
     dims && Object.assign(this.dims, dims)
 
@@ -26,12 +26,22 @@ export default class Audiogram {
 
   draw() {
     const [container, dims] = [this.container, this.dims]
-    const
+    let
       {
-        width, height, chartPadding, symbolDims, vf, vfArray,
+        vbWidth, vbHeight, width, height, chartPadding, symbolDims, vf, vfArray,
         vfToF, fToVf, intensity, styles, frequencies
       }
         = dims;
+    // متناسب سازی مقدار ارتفاع ویوباکس بر حسب نسبت طول و عرض پیکسلی
+    const
+      kpx = height / width,
+      kvb = vbWidth / vbHeight;
+
+
+    // width = vbWidth,
+    vbHeight = vbHeight * kpx * kvb;
+
+    console.log(height);
 
     let x = dims.margin.left
     let y = dims.margin.top
@@ -46,25 +56,25 @@ export default class Audiogram {
     this.chartPadding = chartPadding;
 
     let style;
-    const xArea = { min: chartPadding.left, max: width - (chartPadding.right) }
+    const xArea = { min: chartPadding.left, max: vbWidth - (chartPadding.right) }
     this.xArea = xArea
-    const yArea = { min: chartPadding.top, max: height - (chartPadding.bottom) }
+    const yArea = { min: chartPadding.top, max: vbHeight - (chartPadding.bottom) }
 
     const xAxisLength = {
-      vb: width - (chartPadding.left + chartPadding.right),
+      vb: vbWidth - (chartPadding.left + chartPadding.right),
       hzi: vf.max - vf.min // 0, 1, 2, ... instead 125, ...
     }
     this.xAxisLength = xAxisLength
 
     const yAxisLength = {
-      vb: height - (chartPadding.top + chartPadding.bottom),
+      vb: vbHeight - (chartPadding.top + chartPadding.bottom),
       db: intensity.max - intensity.min
     }
     this.yAxisLength = yAxisLength
 
     // Main SVG for Audiogram
-    const viewBox = [-chartPadding.left, -chartPadding.top, width, height]
-    const svg = putSVG({ container, x, y, viewBox })
+    const viewBox = [-chartPadding.left, -chartPadding.top, vbWidth, vbHeight]
+    const svg = putSVG({ container, x, y, width, height, viewBox })
     this.svg = svg; // کل نودی که به کانتینر اپند میشه
 
     // برای فرم‌های پیش چاپ نشده
@@ -122,7 +132,7 @@ export default class Audiogram {
     // این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی ریودادها درست عمل کند
     const borderRect = putRect({
       container: svg, x: -chartPadding.left, y: -chartPadding.top,
-      width, height, name: '',
+      width: vbWidth, height: vbHeight, name: '',
       style: 'fill: transparent; stroke: transparent;',
     });
     this.borderRect = borderRect;
