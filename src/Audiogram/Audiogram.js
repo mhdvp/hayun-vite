@@ -37,11 +37,7 @@ export default class Audiogram {
       kpx = height / width,
       kvb = vbWidth / vbHeight;
 
-
-    // width = vbWidth,
     vbHeight = vbHeight * kpx * kvb;
-
-    console.log(height);
 
     let x = dims.margin.left
     let y = dims.margin.top
@@ -288,7 +284,6 @@ export default class Audiogram {
       const f = this.currentCordinate.f = +this.getFreq(x).f;
       const vf = this.getFreq(x).vf;
       const i = this.currentCordinate.i = this.getIntensity(y)
-      console.log(f);
 
       if (
         f >= 250 && i >= -15 && i <= 125 &&

@@ -5,19 +5,17 @@ import Forms from "./Form/Forms.js";
 import { officeData, patientData } from "../data/sampleData.js"
 
 document.querySelector('#app').innerHTML = `
-    
     <div id="audiogram-div" style=""></div>
-    <svg width="700" height="750" id="aud-svg"></svg>
     <div id="forms-div"></div>
 `
 
 const RAudiogram = new Audiogram({
-  container: document.getElementById('audiogram-div'), side: 'R', dims
+  container: document.getElementById('audiogram-div'), side: 'R',
 })
 
-// const LAudiogram = new Audiogram({
-//   container: document.getElementById('audiogram-div'), side: 'L', 
-// })
+const LAudiogram = new Audiogram({
+  container: document.getElementById('audiogram-div'), side: 'L', 
+})
 
 RAudiogram.update({
   data: {
@@ -31,15 +29,15 @@ RAudiogram.update({
   side: 'R',
 })
 
-// LAudiogram.update({
-//   data: {
-//     // R_AC_M: { 8000: 25, 2000: 5, 1500: 0, },
-//     L_AC: { 1000: 30, 500: 20, 750: 30, 250: 5, 6000: 35, 2000: 45 },
-//     L_BC_M: { 2000: 25, 6000: 25 },
-//     L_BC: { 1000: 20, 500: 10, 750: 15, 250: 5, 4000: 20 },
-//   },
-//   side: 'L',
-// })
+LAudiogram.update({
+  data: {
+    // R_AC_M: { 8000: 25, 2000: 5, 1500: 0, },
+    L_AC: { 1000: 30, 500: 20, 750: 30, 250: 5, 6000: 35, 2000: 45 },
+    L_BC_M: { 2000: 25, 6000: 25 },
+    L_BC: { 1000: 20, 500: 10, 750: 15, 250: 5, 4000: 20 },
+  },
+  side: 'L',
+})
 
 const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
 forms.update({ officeData, patientData, sessionIndex: 0 })

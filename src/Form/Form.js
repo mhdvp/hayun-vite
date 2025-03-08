@@ -34,13 +34,10 @@ export default class Form {
             this.patient.draw({ dims: template.patient });
         }
 
-
         if (sections.history) {
             this.history = new TextBox({ container: sections.history })
             this.history.draw({ dims: template.history });
         }
-
-        // this.symbols = new Symbols();
 
         if (sections.RAudiogram) {
             this.RAudiogram = new AudiogramChart({
@@ -50,7 +47,6 @@ export default class Form {
                 events: false
             });
         }
-        console.log(template.RAudiogram);
         
         if (sections.LAudiogram) {
             this.LAudiogram = new AudiogramChart({
