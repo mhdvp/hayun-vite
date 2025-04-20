@@ -20,10 +20,12 @@ export default class Form {
         this.form.style.display = 'none';
         // رسم مارجین های فرم
         this.drawMarginLines({ container: this.form, width, height });
-
+        
         const sections = new Sections({ container: this.form, dims: template });
         this.sections = sections;
-
+        
+        (template.label === 'تمپانومتری رسا') && console.log(template.patient);
+        
         if (sections.header) {
             this.header = new Header({ container: sections.header })
             this.header.draw({ dims: template.header });

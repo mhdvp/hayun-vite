@@ -247,7 +247,6 @@ export default class Tympanogram {
     }
 
     update(data) {
-        console.log(data);
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
         this.chart.querySelector(`text[data-name="Type"]`).innerHTML = data?.Type || "";

@@ -1,8 +1,7 @@
-import audDims from "../../Audiogram/dims.js"
 import image from './rasa_tymp_reflex.jpg'
 
 const rasaTymp = {
-    name: 'combo',
+    name: 'rasa_tymp_reflex',
     label: 'تمپانومتری رسا',
     backgroundImage: image, // Just Path of image
     margin: { left: 0, top: 0, right: 0, bottom: 0 },
@@ -105,14 +104,16 @@ const rasaTymp = {
             { type: 'line', x1: 0, y1: 20, x2: width, y2: 20 },
             { type: 'text', x: width, y: 5, value: 'نام:' },
             { type: 'text', x: width - 30, y: 5, value: 'نام خانوادگی:' },
-            { type: 'text', x: width - 90, y: 5, value: 'سن:' },
-            { type: 'text', x: width - 130, y: 5, value: 'ارجاع از:' }
+            { type: 'text', x: width - 80, y: 5, value: 'سن:' },
+            { type: 'text', x: width - 120, y: 5, value: 'ارجاع از:' },
+            { type: 'text', x: width - 170, y: 5, value: 'تاریخ:' }
         ]
         this.patient.inputs = [
             { name: 'name', x: width - 5, y: 5 },
             { name: 'lastName', x: width - 47, y: 5 },
-            { name: 'age', x: width - 97, y: 5 },
-            { name: 'referrer', x: width - 142, y: 5 }
+            { name: 'age', x: width - 87, y: 5 },
+            { name: 'referrer', x: width - 132, y: 5 },
+            { name: 'date', x: width - 180, y: 5 }
         ]
         this.patient.forceInputs = [
             { name: 'name', x: width - 10, y: 4 },
