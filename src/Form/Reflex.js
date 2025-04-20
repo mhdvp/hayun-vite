@@ -10,6 +10,7 @@ export default class Reflex {
     }
 
     draw({ dims }) {
+  
         let width = dims.width;
         let height = dims.height;
         let x = dims.margin.left;
@@ -71,8 +72,8 @@ export default class Reflex {
             for (let i = 1; i <= 4; i++) {
                 let x = cw1 / 2 + cw1 * i;
                 let y = ch1 * j + ch2 / 2;
-                let bw = cw1 * 0.80; // پهنای هر باکس
-                let bh = ch2 * 0.80; // ارتفاع هر باکس
+                let bw = cw1 * 0.8; // پهنای هر باکس
+                let bh = ch2 * 0.7; // ارتفاع هر باکس
                 //رسم باکس با مختصات مرکز باکس
                 putBox(x, y, bw, bh);
             }
