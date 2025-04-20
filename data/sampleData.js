@@ -31,6 +31,7 @@ const patientData = {
     name: "سید علی اکبر الزمان",
     lastName: "پرنده  بافقی یزدی",
     gender: "مرد",
+    age: 75,
     birthday: { year: 1356, month: 5, day: 3 },
     nationalCode: "0321456546",
     createDate: "2025/5/5", //تاریخ و ساعت ایجاد بیمار

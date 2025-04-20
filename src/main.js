@@ -41,6 +41,8 @@ LAudiogram.update({
 */
 const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
+console.log(patientData);
+
 
 
 // import javascriptLogo from './javascript.svg'

@@ -137,7 +137,9 @@ export default class Form {
                     name: patientData.name,
                     lastName: patientData.lastName,
                     gender: patientData?.gender,
-                    age: patientData.sessions[sessionIndex]?.age,
+                    // خط زیر محاسبه درست سن هست. موقتا کامنت می‌شود تا در اپ اصلی فیلد سن رو در سشن ها قرار دهیم
+                    // age: patientData.sessions[sessionIndex]?.age,
+                    age: patientData?.age,
                     referrer: patientData.sessions[sessionIndex]?.referrer,
                     date: new Date().toLocaleDateString('fa-IR'),
 
