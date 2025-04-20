@@ -108,12 +108,14 @@ export default class Tympanogram {
             text-anchor: start; /*تراز افقی*/
             dominant-baseline: middle; /* تراز عمودی*/       
         `;
+        let color = (this.side === 'R') ? 'red' : 'blue';
+
         putText({
             container: svg, value: "ECV :", style: style,
             x: getX(pressure.min), y: getY(compliance.min), dy: 10
         });
         putText({
-            container: svg, value: "", style: style, name: 'ECV',
+            container: svg, value: "", style: style + 'fill: ' + color, name: 'ECV',
             x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 9
         });
         putText({
@@ -121,7 +123,7 @@ export default class Tympanogram {
             x: getX(-300), y: getY(compliance.min), dy: 10
         });
         putText({
-            container: svg, value: "", style: style, name: 'MEP',
+            container: svg, value: "", style: style + 'fill: ' + color, name: 'MEP',
             x: getX(-300), y: getY(compliance.min), dy: 10, dx: 9
         });
         putText({
@@ -129,7 +131,7 @@ export default class Tympanogram {
             x: getX(0), y: getY(compliance.min), dy: 10
         });
         putText({
-            container: svg, value: "", style: style, name: 'SC',
+            container: svg, value: "", style: style + 'fill: ' + color, name: 'SC',
             x: getX(0), y: getY(compliance.min), dy: 10, dx: 6
         });
         putText({
@@ -137,11 +139,11 @@ export default class Tympanogram {
             x: getX(300), y: getY(compliance.min), dy: 10
         });
         putText({
-            container: svg, value: "", style: style, name: 'G',
+            container: svg, value: "", style: style + 'fill: ' + color, name: 'G',
             x: getX(300), y: getY(compliance.min), dy: 10, dx: 4
         });
         putText({
-            container: svg, value: "Type", style: style,
+            container: svg, value: "Type", style: style + 'fill: ' + color,
             x: getX(-500), y: getY(2.5),
         });
         putText({
