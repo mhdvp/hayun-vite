@@ -142,13 +142,24 @@ export default class Tympanogram {
             container: svg, value: "", style: style + 'fill: ' + color, name: 'G',
             x: getX(300), y: getY(compliance.min), dy: 10, dx: 4
         });
+
+        style = `
+            user-select: none;
+            direction: ltr !important;
+            /* text-align: center; */
+            font-family: Arial, Helvetica, sans-serif !important;
+            font-size: 1mm;
+            font-weight: bold;
+            text-anchor: start; /*تراز افقی*/
+            dominant-baseline: middle; /* تراز عمودی*/       
+        `;
         putText({
             container: svg, value: "Type", style: style + 'fill: ' + color,
             x: getX(-500), y: getY(2.5),
         });
         putText({
-            container: svg, value: "", style: style, name: 'Type',
-            x: getX(-500), y: getY(2.5), dx: 8
+            container: svg, value: "", style: style + 'fill: ' + color, name: 'Type',
+            x: getX(-500), y: getY(2.5), dx: 9
         });
 
         // Compliance Axios digits
@@ -236,9 +247,10 @@ export default class Tympanogram {
     }
 
     update(data) {
+        console.log(data);
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
-        this.chart.querySelector(`text[data-name="Type"]`).innerHTML = data?.type || "";
+        this.chart.querySelector(`text[data-name="Type"]`).innerHTML = data?.Type || "";
         this.chart.querySelector(`text[data-name="ECV"]`).innerHTML = data?.ECV || "";
         this.chart.querySelector(`text[data-name="MEP"]`).innerHTML = data?.MEP || "";
         this.chart.querySelector(`text[data-name="SC"]`).innerHTML = data?.SC || "";
