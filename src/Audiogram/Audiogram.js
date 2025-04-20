@@ -13,7 +13,9 @@ export default class Audiogram {
     Object.assign(this.dims, mainDims)
     // dims = { blank: false }
     // اضافه کردن ابعاد جایگزین و یا اختصاصی دیگر به آبجکت ابعاد
-    dims && Object.assign(this.dims, dims)
+    dims && Object.assign(this.dims, dims);
+    // console.log(dims);
+    
 
     this.events = events;
     this.side = side;

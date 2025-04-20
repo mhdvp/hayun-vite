@@ -4,8 +4,9 @@ import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Reflex {
-    constructor({ container }) {
+    constructor({ container, side }) {
         this.container = container;
+        this.side = side; // این برای تعیین رنگ راست و چپ استفاده می‌شود
     }
 
     draw({ dims }) {
@@ -84,8 +85,11 @@ export default class Reflex {
             font-family: Arial, Helvetica, sans-serif !important;
             font-size: 0.8mm;
             text-anchor: middle; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/       
+            dominant-baseline: middle; /* تراز عمودی*/
         `;
+        // اضافه کردن رنگ قرمز یا آبی به استایل بر اساس جهت
+        style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
+
         let names = ["IPSI_500", "IPSI_1000", "IPSI_2000", "IPSI_4000"];
         for (let index = 0; index < 4; index++) {
             x = cw1 / 2 + cw1 * (index + 1);
@@ -122,7 +126,9 @@ export default class Reflex {
         }
     }
 
+    // جایگذاری داده های رفلکس
     update(data) {
+
         for (const key in data) {
             for (const freq in data[key]) {
                 this.chart.querySelector(`text[data-name=${key}_${freq}]`).innerHTML = data?.[key]?.[freq] || "";

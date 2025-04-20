@@ -1,14 +1,13 @@
 // import './style.css'
 import Audiogram from "./Audiogram/Audiogram.js"
-import dims from './Audiogram/dims.js'
 import Forms from "./Form/Forms.js";
 import { officeData, patientData } from "../data/sampleData.js"
 
 document.querySelector('#app').innerHTML = `
-    <div id="audiogram-div" style=""></div>
+    <div id="audiogram-div"></div>
     <div id="forms-div"></div>
 `
-
+/*
 const RAudiogram = new Audiogram({
   container: document.getElementById('audiogram-div'), side: 'R',
 })
@@ -39,6 +38,7 @@ LAudiogram.update({
   side: 'L',
 })
 
+*/
 const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 

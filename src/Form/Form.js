@@ -73,11 +73,11 @@ export default class Form {
             this.LTympanogram.draw({ dims: template.LTympanogram });
         }
         if (sections.RReflex) {
-            this.RReflex = new Reflex({ container: sections.RReflex })
+            this.RReflex = new Reflex({ container: sections.RReflex, side: 'R' })
             this.RReflex.draw({ dims: template.RReflex });
         }
         if (sections.LReflex) {
-            this.LReflex = new Reflex({ container: sections.LReflex })
+            this.LReflex = new Reflex({ container: sections.LReflex, side: 'L' })
             this.LReflex.draw({ dims: template.LReflex });
         }
         if (sections.report) {
