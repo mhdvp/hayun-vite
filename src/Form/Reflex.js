@@ -36,7 +36,7 @@ export default class Reflex {
             direction: ltr !important;
             /* text-align: center; */
             font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 0.8mm;
+            font-size: 0.9mm;
             font-weight: bold;
             text-anchor: middle; /*تراز افقی*/
             dominant-baseline: middle; /* تراز عمودی*/       
@@ -56,7 +56,7 @@ export default class Reflex {
             direction: ltr !important;
             /* text-align: center; */
             font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 0.8mm;
+            font-size: 0.9mm;
             font-weight: bold;
             text-anchor: end; /*تراز افقی*/
             dominant-baseline: middle; /* تراز عمودی*/       
@@ -84,7 +84,7 @@ export default class Reflex {
             direction: ltr !important;
             /* text-align: center; */
             font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 0.8mm;
+            font-size: 1mm;
             text-anchor: middle; /*تراز افقی*/
             dominant-baseline: middle; /* تراز عمودی*/
         `;

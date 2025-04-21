@@ -104,27 +104,27 @@ export default class Tympanogram {
             direction: ltr !important;
             /* text-align: center; */
             font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 0.8mm;
+            font-size: 1mm;
             text-anchor: start; /*تراز افقی*/
             dominant-baseline: middle; /* تراز عمودی*/       
         `;
         let color = (this.side === 'R') ? 'red' : 'blue';
 
         putText({
-            container: svg, value: "ECV :", style: style,
+            container: svg, value: "ECV:", style: style,
             x: getX(pressure.min), y: getY(compliance.min), dy: 10
         });
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'ECV',
-            x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 9
+            x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 11
         });
         putText({
-            container: svg, value: "MEP :", style: style,
+            container: svg, value: "MEP:", style: style,
             x: getX(-300), y: getY(compliance.min), dy: 10
         });
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'MEP',
-            x: getX(-300), y: getY(compliance.min), dy: 10, dx: 9
+            x: getX(-300), y: getY(compliance.min), dy: 10, dx: 11
         });
         putText({
             container: svg, value: "SC:", style: style,
@@ -132,11 +132,11 @@ export default class Tympanogram {
         });
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'SC',
-            x: getX(0), y: getY(compliance.min), dy: 10, dx: 6
+            x: getX(0), y: getY(compliance.min), dy: 10, dx: 8
         });
         putText({
             container: svg, value: "G:", style: style,
-            x: getX(300), y: getY(compliance.min), dy: 10
+            x: getX(280), y: getY(compliance.min), dy: 10
         });
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'G',

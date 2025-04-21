@@ -18,13 +18,22 @@ export default class TextBox {
         let y = dims.margin.top;
 
         let style, className;
+        style = `
+        /* font-family: Arial, Helvetica, sans-serif !important; */
+        font-size: 1mm;
+        /* font-weight: bold; */
+        direction: rtl !important;
+        user-select: none;
+        /* dominant-baseline: middle; /* تراز عمودی*/
+        `;
         // بوردر کل چارت
         const svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("x", x);
         svg.setAttribute("y", y);
         svg.setAttribute("width", width);
         svg.setAttribute("height", height);
-        svg.setAttribute('class', 'text-box')
+        svg.setAttribute('style', style)
+        // svg.setAttribute('class', 'text-box')
 
         // اگر مقدار استروک درست بود لیبل ها را چاپ کن
         if (!dims.hideContext) {

@@ -103,15 +103,15 @@ const rasaTymp = {
         this.patient.elements = [
             { type: 'line', x1: 0, y1: 20, x2: width, y2: 20 },
             { type: 'text', x: width, y: 5, value: 'نام:' },
-            { type: 'text', x: width - 30, y: 5, value: 'نام خانوادگی:' },
-            { type: 'text', x: width - 80, y: 5, value: 'سن:' },
+            { type: 'text', x: width - 37, y: 5, value: 'نام خانوادگی:' },
+            { type: 'text', x: width - 84, y: 5, value: 'سن:' },
             { type: 'text', x: width - 120, y: 5, value: 'ارجاع از:' },
             { type: 'text', x: width - 170, y: 5, value: 'تاریخ:' }
         ]
         this.patient.inputs = [
-            { name: 'name', x: width - 5, y: 5 },
-            { name: 'lastName', x: width - 47, y: 5 },
-            { name: 'age', x: width - 87, y: 5 },
+            { name: 'name', x: width - 6, y: 5 },
+            { name: 'lastName', x: width - 57, y: 5 },
+            { name: 'age', x: width - 91, y: 5 },
             { name: 'referrer', x: width - 132, y: 5 },
             { name: 'date', x: width - 180, y: 5 }
         ]

@@ -24,7 +24,6 @@ export default class Form {
         const sections = new Sections({ container: this.form, dims: template });
         this.sections = sections;
         
-        (template.label === 'تمپانومتری رسا') && console.log(template.patient);
         
         if (sections.header) {
             this.header = new Header({ container: sections.header })
@@ -32,6 +31,8 @@ export default class Form {
         }
 
         if (sections.patient) {
+        // (template.label === 'تمپانومتری رسا') && console.log(template.patient);
+
             this.patient = new TextBox({ container: sections.patient });
             this.patient.draw({ dims: template.patient });
         }
