@@ -57,10 +57,7 @@ export default function printForm({ container }) {
 
                 .persian {
                     font-family: "Vazirmatn";
-                    
-                    font-weight: 200;
-                    font-style: normal;
-                    font-size: 0.8mm;
+                 
 
                 }
 
