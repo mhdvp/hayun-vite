@@ -39,7 +39,7 @@ LAudiogram.update({
 })
 
 */
-const forms = new Forms({ container: document.getElementById('forms-div'), name: 'form1' });
+const forms = new Forms({ container: document.getElementById('forms-div') });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 
 

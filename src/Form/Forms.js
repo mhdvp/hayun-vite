@@ -12,13 +12,13 @@ import '../style.css'
 
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
-    constructor({ assets, container } = {}) {
+    constructor({ assets, container, defaultFormIndex = 1 } = {}) {
         this.container = container
-        this.addForms({ templates: [rasaAud, rasaTymp, combo] })
+        this.addForms({ templates: [rasaAud, rasaTymp, combo], defaultFormIndex })
     }
 
     // افزودن فرم 
-    addForms({ templates }) {
+    addForms({ templates, defaultFormIndex }) {
         const container = this.container
         // ایجاد یک دیو برای قرار دادن دکمه ها و لینک های فرم
         const div = document.createElement('div');
@@ -42,12 +42,12 @@ export default class Forms {
         });
 
         const printBtn = this.putButton({ container: div, text: 'چاپ', className });
-        
+
         // تعریف رویداد دکمه چاپ فرم نمایشی
         printBtn.addEventListener('click', () => { printForm({ container: this.selectedForm.form }) });
 
         // انتخاب فرم پیش‌فرض  
-        let selectedIndex = 1
+        let selectedIndex = defaultFormIndex;
         forms[selectedIndex].form.style.display = 'block';
         this.selectedForm = this.forms[selectedIndex]
         btns[selectedIndex].style.backgroundColor = ' #1c15e1'
