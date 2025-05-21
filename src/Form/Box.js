@@ -37,23 +37,25 @@ export default class TextBox {
 
         // اگر مقدار استروک درست بود لیبل ها را چاپ کن
         if (!dims.hideContext) {
-            dims.elements.forEach(element => {
-                switch (element.type) {
-                    case 'text':
-                        ({ x, y, value } = element);
-                        putText({ container: svg, value, x, y, className: 'persian bold' });
-                        break;
-                    case 'line':
-                        let { x1, y1, x2, y2 } = element;
-                        putLine({ container: svg, x1, y1, x2, y2 });
-                        break;
-                }
-            });
+            dims.elements
+                .forEach(
+                    element => {
+                        switch (element.type) {
+                            case 'text':
+                                ({ x, y, value, style } = element);
+                                putText({ container: svg, value, x, y, style, className: 'persian bold' });
+                                break;
+                            case 'line':
+                                let { x1, y1, x2, y2 } = element;
+                                putLine({ container: svg, x1, y1, x2, y2 });
+                                break;
+                        }
+                    });
         }
 
         // محل اینپوت‌های دیتا
         let name;
-        this.inputs.forEach(input => {
+        this.inputs && this.inputs.forEach(input => {
             ({ name, x, y } = input);
             putText({ container: svg, x, y, className: 'persian', name });
         });

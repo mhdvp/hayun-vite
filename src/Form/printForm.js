@@ -3,8 +3,13 @@ export default function printForm({ container }) {
   iframe.onload = setPrint;
   iframe.style.display = "block";
   let style = `
-                @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
-                font-display: auto;
+                @font-face {
+                font-family: vazirmatn;
+                src:
+                    url("/fonts/Vazirmatn-Regular.woff2") format("woff2"),
+                    url('/fonts/Vazirmatn-Regular.woff') format('woff');
+                font-display: swap;
+                }
 
                 @page {
 

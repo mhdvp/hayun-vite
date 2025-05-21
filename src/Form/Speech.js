@@ -9,24 +9,18 @@ export default class Speech {
     }
 
     draw({ dims, stroke = true }) {
+        console.log(dims);
+        
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         this.inputs = (dims.forceInsert) ? dims.forceInputs : dims.inputs
-
         let style;
-
         let width = dims.width;
         let height = dims.height;
         let x = dims.margin.left;
         let y = dims.margin.top;
-
         const labels = dims.labels;
-        // const inputs = dims.inputs;
         const cn = labels.length;
-
         this.labels = labels;
-
-
-
         let sideCaption = this.side === "R" ? "Right" : "Left";
         // یک جدول 6*2  - ۲ سطر و ۶ ستون
         // const cw = width / 6; // پهنای هر خانه
@@ -123,11 +117,5 @@ export default class Speech {
         this.labels.forEach((label) => {
             this.chart.querySelector(`text[data-name=${label}]`).innerHTML = data?.[label] || "";
         })
-        // this.chart.querySelector(`text[data-name="SAT"]`).innerHTML = data?.SAT || "";
-        // this.chart.querySelector(`text[data-name="SRT"]`).innerHTML = data?.SRT || "";
-        // this.chart.querySelector(`text[data-name="MCL"]`).innerHTML = data?.MCL || "";
-        // this.chart.querySelector(`text[data-name="UCL"]`).innerHTML = data?.UCL || "";
-        // this.chart.querySelector(`text[data-name="SDS"]`).innerHTML = data?.SDS || "";
     }
-
 }

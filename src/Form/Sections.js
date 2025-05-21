@@ -17,9 +17,6 @@ export default class Sections {
 
         // یک حلقه آرایه ایجاد میکنیم همه سکشن ها رسم شود
         this.create()
-
-
-
     }
     // ایجاد سکشن‌ها
     create() {
@@ -44,13 +41,14 @@ export default class Sections {
             svg.setAttribute("y", this.top);
 
             // نگهداری مختصات رسم بوردر هر سکشن برای استفاده در متد داخلی رسم بودر تاپ لایر 
-            this.cords.push({ name: name, width: width, height: height, x: this.left, y: this.top });
+            this.cords.push({ name, width, height, x: this.left, y: this.top });
 
             putRect({
                 container: svg, x: 0, y: 0, width, height,
                 style: 'fill: transparent; stroke: blue; stroke-width: 0.2',
                 className: 'no-print', name: 'guide-border'
-            })
+            });
+            
             this[name] = svg;
             this.container.appendChild(svg)
 

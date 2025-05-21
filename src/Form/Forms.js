@@ -7,14 +7,15 @@ import rasaAud from "./templates/rasa_audiometry.js";
 import rasaTymp from './templates/rasa_tymp_reflex.js'
 
 // خط کد زیر لازم هست
-import './fonts/Vazirmatn-Regular.woff2'
+// import './fonts/Vazirmatn-Regular.woff2'
 import '../style.css'
 
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
-    constructor({ assets, container, defaultFormIndex = 1 } = {}) {
+    constructor({ assets, container, defaultFormIndex = 0 } = {}) {
         this.container = container
-        this.addForms({ templates: [rasaAud, rasaTymp, combo], defaultFormIndex })
+        // this.addForms({ templates: [rasaAud, rasaTymp, combo], defaultFormIndex })
+        this.addForms({ templates: [combo], defaultFormIndex })
     }
 
     // افزودن فرم 

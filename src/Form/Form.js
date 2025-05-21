@@ -1,9 +1,9 @@
 // import Symbols from "../Symbol/Symbols.js";
-import TextBox from "./TextBox.js";
+import Box from "./Box.js";
 import Header from "./Header.js";
-import Reflex from "./Reflex.js";
+import Reflex from "./Reflex_N.js";
 import Sections from "./Sections.js";
-import Speech from "./Speech.js";
+import Speech from "./Speech_N.js";
 import Tympanogram from "./Tympanogram.js";
 import putRect from "../common/putRect.js";
 import AudiogramChart from "../Audiogram/Audiogram.js";
@@ -20,28 +20,28 @@ export default class Form {
         this.form.style.display = 'none';
         // رسم مارجین های فرم
         this.drawMarginLines({ container: this.form, width, height });
-        
+
         const sections = new Sections({ container: this.form, dims: template });
         this.sections = sections;
-        
-        
+
         if (sections.header) {
             this.header = new Header({ container: sections.header })
             this.header.draw({ dims: template.header });
         }
-
         if (sections.patient) {
-        // (template.label === 'تمپانومتری رسا') && console.log(template.patient);
+            // (template.label === 'تمپانومتری رسا') && console.log(template.patient);
 
-            this.patient = new TextBox({ container: sections.patient });
+            this.patient = new Box({ container: sections.patient });
             this.patient.draw({ dims: template.patient });
         }
-
         if (sections.history) {
-            this.history = new TextBox({ container: sections.history })
+            this.history = new Box({ container: sections.history })
             this.history.draw({ dims: template.history });
         }
-
+        if (sections['Audiogram Titles']) {
+            const titles = new Box({ container: sections['Audiogram Titles'] });
+            titles.draw({ dims: template['Audiogram Titles'] });
+        }
         if (sections.RAudiogram) {
             this.RAudiogram = new AudiogramChart({
                 container: sections.RAudiogram,
@@ -50,7 +50,6 @@ export default class Form {
                 events: false
             });
         }
-        
         if (sections.LAudiogram) {
             this.LAudiogram = new AudiogramChart({
                 container: sections.LAudiogram,
@@ -59,13 +58,21 @@ export default class Form {
                 events: false
             });
         }
-        if (sections.RSpeech) {
+        if (sections['Speech Titles']) {
+            const titles = new Box({ container: sections['Speech Titles'] });
+            titles.draw({ dims: template['Speech Titles'] });
+        }
+        if (sections['RSpeech']) {
             this.RSpeech = new Speech({ container: sections.RSpeech, side: 'R' })
             this.RSpeech.draw({ dims: template.RSpeech, })
         }
         if (sections.LSpeech) {
             this.LSpeech = new Speech({ container: sections.LSpeech, side: 'L' })
             this.LSpeech.draw({ dims: template.LSpeech, });
+        }
+        if (sections['Tympanogram Titles']) {
+            const titles = new Box({ container: sections['Tympanogram Titles'] });
+            titles.draw({ dims: template['Tympanogram Titles'] });
         }
         if (sections.RTympanogram) {
             this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R' })
@@ -75,6 +82,12 @@ export default class Form {
             this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L' })
             this.LTympanogram.draw({ dims: template.LTympanogram });
         }
+
+         if (sections['Reflex Titles']) {
+            const titles = new Box({ container: sections['Reflex Titles'] });
+            titles.draw({ dims: template['Reflex Titles'] });
+        }
+
         if (sections.RReflex) {
             this.RReflex = new Reflex({ container: sections.RReflex, side: 'R' })
             this.RReflex.draw({ dims: template.RReflex });
@@ -84,11 +97,11 @@ export default class Form {
             this.LReflex.draw({ dims: template.LReflex });
         }
         if (sections.report) {
-            this.report = new TextBox({ container: sections.report })
+            this.report = new Box({ container: sections.report })
             this.report.draw({ dims: template.report });
         }
         if (sections.footer) {
-            this.footer = new TextBox({ container: sections.footer })
+            this.footer = new Box({ container: sections.footer })
             this.footer.draw({ dims: template.footer });
         }
 
