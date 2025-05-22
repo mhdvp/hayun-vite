@@ -2,13 +2,15 @@
 import Audiogram from "./Audiogram/Audiogram.js"
 import Forms from "./Form/Forms.js";
 import { officeData, patientData } from "../data/sampleData.js"
+import combo from "./Form/templates/combo.js";
+
 
 document.querySelector('#app').innerHTML = `
     <div id="audiogram-div"></div>
     <div id="forms-div"></div>
 `;
 
-const forms = new Forms({ container: document.getElementById('forms-div') });
+const forms = new Forms({ container: document.getElementById('forms-div'), templates: [combo], mode: 'develop' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 
 /*
