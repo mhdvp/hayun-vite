@@ -1,11 +1,19 @@
 @font-face {
+  font-family: 'Vazirmatn';
+  src: url('fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
+       url('fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* @font-face {
   font-family: vazirmatn;
   src:
     url("fonts/Vazirmatn-Regular.woff2") format("woff2"),
     url('fonts/Vazirmatn-Regular.woff') format('woff');
   font-display: swap;
-
-}
+} */
 
 .text-box {
   /* font-family: Arial, Helvetica, sans-serif !important; */

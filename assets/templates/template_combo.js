@@ -1,9 +1,9 @@
-import audDims from "../../Audiogram/dims.js";
-
-const combo = {
+const template_combo = {
     name: 'combo',
     label: 'ادیومتری و تمپانوتری',
     // backgroundImage: 'backgroundImage',
+    // تعیین نمایش بوردرهای سکشن ها
+    sectionBorders: 'none', // display || none
     margin: { left: 5, top: 5, right: 5, bottom: 5 },
     paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },
 
@@ -24,7 +24,7 @@ const combo = {
             // hideContext: true,
             name: 'header',
             w: width, h: 15,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
         this.patient = {
@@ -82,7 +82,7 @@ const combo = {
         this.RSpeech = {
             name: 'RSpeech',
             w: width / 2, h: 15,
-            margin: { left: 5, top: 0, right: 10, bottom: 0 },
+            margin: { left: 2, top: 0, right: 12, bottom: 0 },
             display: 'inline',
             stroke: true,
         }
@@ -90,7 +90,7 @@ const combo = {
         this.LSpeech = {
             name: 'LSpeech',
             w: width / 2, h: 15,
-            margin: { left: 10, top: 0, right: 5, bottom: 0 },
+            margin: { left: 12, top: 0, right: 2, bottom: 0 },
             display: 'block',
             stroke: true
         }
@@ -129,12 +129,6 @@ const combo = {
             // محاسبه پهنا  ارتفاع در تابع calc2 
         }
 
-        this.Reflexes = {
-            name: 'Reflexes',
-            w: width, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
-            display: 'block'
-        }
 
         this.RReflex = {
             name: 'RReflex',
@@ -146,7 +140,7 @@ const combo = {
         this.LReflex = {
             name: 'LReflex',
             w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 5, bottom: 2 },
+            margin: { left: 2, top: 2, right: 2, bottom: 2 },
             display: 'block'
         }
 
@@ -173,13 +167,21 @@ const combo = {
         width = this.header.width = this.getWidth(this.header)
         height = this.header.height = this.getHeight(this.header)
 
+        style = `
+            font-family: vazirmatn, Helvetica, sans-serif !important;
+            font-size: 1.5mm;
+            font-weight: bold;
+            text-anchor: start; /*تراز افقی*/
+            /* dominant-baseline: middle; /* تراز عمودی*/       
+        `;
+
         this.header.elements = [
             { type: 'line', x1: 0, y1: height, x2: width, y2: height },
             { type: 'text', x: 30, y: 5, value: 'تاریخ :' },
         ]
         this.header.inputs = [
-            { name: 'officeName', x: width - 20, y: height - 10 },
-            { name: 'date', x: 20, y: 5 },
+            { name: 'officeName', x: width - 16, y: height - 6, style },
+            { name: 'date', x: 20, y: 5, style: style + ' font-size: 0.8mm;'  },
         ]
 
         width = this.patient.width = this.getWidth(this.patient)
@@ -332,10 +334,11 @@ const combo = {
 
 }
 
-combo.calc1()
-combo.calc2()
-combo.calcSectionsArray()
+// محاسبه پهنا و ارتفاع قسمت ها با توجه به پهنا و ارتفاع محدوده چاپی و مارجین ها
+template_combo.calc1()
+template_combo.calc2()
+template_combo.calcSectionsArray()
 // پهنا و ارتفاع قابل استفاده منهای پد ها میشه پهنا و ارتفاع اصلی
 
-export default combo;
+export default template_combo;
 

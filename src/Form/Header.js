@@ -1,7 +1,9 @@
 import putLine from "../common/putLine.js";
 import putRect from "../common/putRect.js";
+import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
+
 
 export default class Header {
     constructor({ container }) {
@@ -17,18 +19,13 @@ export default class Header {
         let x = dims.margin.left;
         let y = dims.margin.top;
 
-        const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("x", x);
-        svg.setAttribute("y", y);
-        svg.setAttribute("width", width);
-        svg.setAttribute("height", height);
-        svg.setAttribute('style', 'direction: rtl !important; user-select: none;')
+        const svg = putSVG({ x, y, width, height, style: 'direction: rtl !important; user-select: none;' })
 
         // Logo 
         let image = document.createElementNS(svgNS, "image");
         image.setAttribute("data-name", "officeLogo")
         image.setAttribute("width", "17");
-        image.setAttribute("height", "17");
+        image.setAttribute("height", height - 1);
         image.setAttribute("x", width - 16);
         image.setAttribute("y", 0.5);
         svg.appendChild(image);
@@ -61,18 +58,11 @@ export default class Header {
             });
         }
 
-        style = `
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 0.8mm;
-            font-weight: bold;
-            text-anchor: start; /*تراز افقی*/
-            /* dominant-baseline: middle; /* تراز عمودی*/       
-        `;
         // محل اینپوت‌های دیتا
         let name;
         dims.inputs.forEach(input => {
-            ({ name, x, y } = input);
-            putText({ container: svg, x, y, style: style, name });
+            ({ name, x, y, style } = input);
+            putText({ container: svg, x, y, style, name });
         });
 
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه

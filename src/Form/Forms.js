@@ -7,8 +7,8 @@ import Form from "./Form.js";
 // import rasaTymp from './templates/rasa_tymp_reflex.js'
 
 // خط کد زیر لازم هست
-// import './fonts/Vazirmatn-Regular.woff2'
-import '../style.css'
+// import '/fonts/webfonts/Vazirmatn-Regular.woff2'
+import '../styles.css'
 
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {

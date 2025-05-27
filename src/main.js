@@ -1,8 +1,8 @@
 // import './style.css'
 import Audiogram from "./Audiogram/Audiogram.js"
 import Forms from "./Form/Forms.js";
-import { officeData, patientData } from "../data/sampleData.js"
-import combo from "./Form/templates/combo.js";
+import { officeData, patientData } from "../assets/data/sampleData.js"
+import template_combo from "../assets/templates/template_combo.js";
 
 
 document.querySelector('#app').innerHTML = `
@@ -10,7 +10,7 @@ document.querySelector('#app').innerHTML = `
     <div id="forms-div"></div>
 `;
 
-const forms = new Forms({ container: document.getElementById('forms-div'), templates: [combo], mode: 'develop' });
+const forms = new Forms({ container: document.getElementById('forms-div'), templates: [template_combo], mode: 'develop' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 
 /*

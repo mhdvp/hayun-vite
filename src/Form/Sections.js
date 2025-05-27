@@ -15,6 +15,10 @@ export default class Sections {
         // از پایینی برای رسم تاپ لایر استفاده میکنم
         this.cords = []; // آرایه نگهداری مختصات و طول و عرض هر سکشن
 
+        this.sectionBorders = dims.sectionBorders;
+        console.log(this.sectionBorders);
+
+
         // یک حلقه آرایه ایجاد میکنیم همه سکشن ها رسم شود
         this.create()
     }
@@ -43,12 +47,14 @@ export default class Sections {
             // نگهداری مختصات رسم بوردر هر سکشن برای استفاده در متد داخلی رسم بودر تاپ لایر 
             this.cords.push({ name, width, height, x: this.left, y: this.top });
 
-            putRect({
-                container: svg, x: 0, y: 0, width, height,
-                style: 'fill: transparent; stroke: blue; stroke-width: 0.2',
-                className: 'no-print', name: 'guide-border'
-            });
-            
+            // Section Border
+            (this.sectionBorders == 'display') &&
+                putRect({
+                    container: svg, x: 0, y: 0, width, height,
+                    style: 'fill: transparent; stroke: blue; stroke-width: 0.2',
+                    className: 'no-print', name: 'guide-border'
+                });
+
             this[name] = svg;
             this.container.appendChild(svg)
 
