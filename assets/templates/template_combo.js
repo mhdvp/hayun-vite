@@ -168,7 +168,7 @@ const template_combo = {
         height = this.header.height = this.getHeight(this.header)
 
         style = `
-            font-family: vazirmatn, Helvetica, sans-serif !important;
+            font-family: Vazir, Helvetica, sans-serif !important;
             font-size: 1.5mm;
             font-weight: bold;
             text-anchor: start; /*تراز افقی*/
