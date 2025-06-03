@@ -4,13 +4,12 @@ import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
-
 export default class Header {
     constructor({ container }) {
         this.container = container;
     }
 
-    draw({ dims, stroke = true }) {
+    draw({ dims }) {
 
         this.inputs = dims.inputs
         let value;
@@ -76,7 +75,5 @@ export default class Header {
         this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
         this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";
         this.container.querySelector("[data-name=officeLogo]").setAttribute("href", data?.officeLogo || "");
-
     }
-
 }

@@ -47,8 +47,6 @@ export default class Forms {
         this.selectedForm = this.forms[selectedIndex];
         (this.mode == 'develop') && (btns[selectedIndex].style.backgroundColor = ' #1c15e1');
 
-        console.log(this.mode);
-
         if (this.mode == 'develop') {
 
             const printBtn = this.putButton({ container: div, text: 'چاپ', className });

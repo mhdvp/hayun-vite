@@ -1,5 +1,7 @@
 import putRect from "../common/putRect.js";
+import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
+import units from "./units.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Tympanogram {
@@ -16,23 +18,23 @@ export default class Tympanogram {
         let height = dims.height;
         let x = dims.margin.left;
         let y = dims.margin.top;
-        // const labels = items.labels;
+        let style;
 
         const { pressure, compliance, padding } = {
             pressure: this.pressure,
             compliance: this.compliance,
             padding: this.padding,
+        }
 
-        };
-        const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("data-name", "R_Tymp");
-        svg.setAttribute("width", width);
-        svg.setAttribute("height", height);
-        svg.setAttribute("x", x);
-        svg.setAttribute("y", y);
-        svg.setAttribute("viewBox", [-padding.left, -padding.top, width, height]);
+        let { styles, vbWidth, vbHeight } = units;
 
-
+        // کل چارت
+        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        const viewBox = [-padding.left, -padding.top, vbWidth, vbHeight].join(' ');
+        const svg = putSVG({ x, y, width, height, viewBox })
+        // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
+        width = vbWidth; // ثابت می‌ماند همیشه
+        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
 
         const pressureAxiosLength = {
             dapa: pressure.max - pressure.min,
@@ -44,17 +46,16 @@ export default class Tympanogram {
             mm: height - padding.top - padding.bottom
         }
 
-        this.chartInfo = { pressure, compliance, padding, pressureAxiosLength, complianceAxiosLength };
+        this.chartInfo = { pressure, compliance, padding, pressureAxiosLength, complianceAxiosLength }
 
         // point({ this.container: svg, x: getX(pressure.min), y: getY(compliance.max), color: 'red' });
         // point({ this.container: svg, x: getX(pressure.max), y: getY(compliance.min), color: 'green' });
         // point({ this.container: svg, x: getX(pressure.min), y: getY(compliance.min), color: 'brown' });
-        let style;
         // Pressure Axios (Horizontal)
         style = `
           stroke-width: 0.15mm;
           stroke: black;
-      `;
+        `;
         putLine({
             x1: getX(pressure.min), y1: getY(compliance.min),
             x2: getX(pressure.max), y2: getY(compliance.min), style: style
@@ -70,109 +71,87 @@ export default class Tympanogram {
           stroke: black;
           stroke-dasharray: 0.4;
           stroke-opacity: 0.5;
-      `;
+        `;
         putLine({
             x1: getX(0), y1: getY(compliance.min),
             x2: getX(0), y2: getY(compliance.max), style: style
-        })
+        });
+
         // Compliance Zero Line
         putLine({
             x1: getX(pressure.min), y1: getY(0),
             x2: getX(pressure.max), y2: getY(0), style: style
-        })
+        });
 
         // Captions:
-        style = `
-        user-select: none;
-        direction: ltr !important;
-        /* text-align: center; */
-        font-family: Arial, Helvetica, sans-serif !important;
-        font-size: 0.8mm;
-        text-anchor: middle; /*تراز افقی*/
-        dominant-baseline: middle; /* تراز عمودی*/       
-      `;
+        style = styles.caption;
+
         putText({
-            container: svg, value: "Compliance (ml)", style: style,
+            container: svg, value: "Compliance (ml)", style,
             x: getX(pressure.min), y: getY(compliance.max), dx: 5, dy: -3
         });
+
         putText({
             container: svg, value: "Pressure (dapa)", style: style,
             x: getX(pressure.max), y: getY(compliance.min), dx: -8, dy: 6,
         });
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            text-anchor: start; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/       
-        `;
+
+        style = styles.label;
         let color = (this.side === 'R') ? 'red' : 'blue';
 
         putText({
             container: svg, value: "ECV:", style: style,
             x: getX(pressure.min), y: getY(compliance.min), dy: 10
         });
+
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'ECV',
             x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 11
         });
+
         putText({
             container: svg, value: "MEP:", style: style,
             x: getX(-300), y: getY(compliance.min), dy: 10
         });
+
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'MEP',
             x: getX(-300), y: getY(compliance.min), dy: 10, dx: 11
         });
+
         putText({
             container: svg, value: "SC:", style: style,
             x: getX(0), y: getY(compliance.min), dy: 10
         });
+
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'SC',
             x: getX(0), y: getY(compliance.min), dy: 10, dx: 8
         });
+
         putText({
             container: svg, value: "G:", style: style,
             x: getX(280), y: getY(compliance.min), dy: 10
         });
+
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'G',
             x: getX(300), y: getY(compliance.min), dy: 10, dx: 4
         });
 
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            font-weight: bold;
-            text-anchor: start; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/       
-        `;
+        style = styles.type;
         putText({
             container: svg, value: "Type", style: style + 'fill: ' + color,
             x: getX(-500), y: getY(2.5),
         });
+
         putText({
             container: svg, value: "", style: style + 'fill: ' + color, name: 'Type',
             x: getX(-500), y: getY(2.5), dx: 9
         });
 
         // Compliance Axios digits
-        style = `
-      user-select: none;
-      direction: ltr !important;
-      /* text-align: center; */
-      font-family: Arial, Helvetica, sans-serif !important;
-      font-size: 0.7mm;
-      text-anchor: end; /*تراز افقی*/
-      dominant-baseline: middle; /* تراز عمودی*/
-      
-      `;
+        style = styles.compliance;
         x = getX(pressure.min);
         for (let c = compliance.min + compliance.step; c <= compliance.max; c += compliance.step) {
             c = Math.round(c * 10) / 10 // برای اون پدیده اعشاری غیرمنتظر
@@ -184,22 +163,13 @@ export default class Tympanogram {
         }
 
         // Pressure Axios digits
-        style = `
-      user-select: none;
-      direction: ltr !important;
-      /* text-align: center; */
-      font-family: Arial, Helvetica, sans-serif !important;
-      font-size: 0.7mm;
-      text-anchor: middle; /*تراز افقی*/
-      dominant-baseline: hanging; /* تراز عمودی*/
-      `;
+        style = styles.pressure;
         for (let p = pressure.min; p <= pressure.max; p += pressure.step) {
             putText({
                 container: svg, value: p,
                 x: getX(p), y: getY(compliance.min), dy: 1,
-                style: style,
+                style,
             });
-
         }
 
         // console.log(this.container);
@@ -258,7 +228,6 @@ export default class Tympanogram {
         this.chart.querySelector(`path[data-name="curve"]`)?.remove();
         // رسم منحنی
         this.drawCurve(data);
-
     }
 
     // توابع داخلی
@@ -274,7 +243,7 @@ export default class Tympanogram {
         // data.SC = 0.5;
         // data.MEP = -75;
         // با توجه به اندازه اس ‌سی میشه برای مقادیر زیر یک سری رل گذاشت با منحنی قشنگ تر باشد
-        let cp = 50; // جابجایی نقطه کنترل منحنی های راست و چپ روی محور افقی
+        let cp = 70; // جابجایی نقطه کنترل منحنی های راست و چپ روی محور افقی
         // let k = 0.5; // width and height change [0, 1]
         let cpp = 5; //جابجایی نقطه کنترل قله ها روی محور افقی
         // رل‌هایی برای تغییر مقادیر بالا برای زیبایی بیشتر منحنی در نقطه قله

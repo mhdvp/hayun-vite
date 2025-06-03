@@ -3,16 +3,18 @@ const template_combo = {
     label: 'ادیومتری و تمپانوتری',
     // backgroundImage: 'backgroundImage',
     // تعیین نمایش بوردرهای سکشن ها
-    sectionBorders: 'none', // display || none
+    sectionBorders: 'display', // display || none
     margin: { left: 5, top: 5, right: 5, bottom: 5 },
     paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },
 
     // Printable Dimention
     calc1: function () {
+
         this.width = this.paper.width - (this.margin.left + this.margin.right);
         this.height = this.paper.height - (this.margin.top + this.margin.bottom);
         let width = this.width;
         // ابعاد و پدینگ المنت ها
+
         // فضای خالی
         this.blank = {
             name: 'blank',
@@ -20,6 +22,7 @@ const template_combo = {
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
+
         this.header = {
             // hideContext: true,
             name: 'header',
@@ -27,25 +30,32 @@ const template_combo = {
             margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
+
         this.patient = {
             name: 'patient',
-            w: width, h: 10,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            w: width, h: 8,
+            margin: { left: 1, top: 0, right: 1, bottom: 0 },
             display: 'block',
         }
+
         this.history = {
             name: 'history',
-            w: width, h: 10,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            w: width, h: 14,
+            margin: { left: 1, top: 0, right: 1, bottom: 0 },
+            display: 'block',
+        }
+
+        // Titles Common Object
+        this['Title'] = {
+            w: width, h: 7, // پهنا و ارتفاع سکشن
+            margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block',
         }
 
         // Audiogram Titles 
         this['Audiogram Titles'] = {
+            ...this['Title'],
             name: 'Audiogram Titles',
-            w: width, h: 8, // پهنا و ارتفاع سکشن
-            margin: { left: 5, top: 1, right: 5, bottom: 1 },
-            display: 'block',
             stroke: true,
             // محاسبه پهنا  ارتفاع در تابع calc2 
         }
@@ -55,26 +65,26 @@ const template_combo = {
             {
                 blank: false,
                 name: 'RAudiogram',
-                w: width / 2, h: 90, // ابعاد سکشن ادیوگرام 
-                margin: { left: 1, top: 0, right: 1, bottom: 0 },
+                w: width / 2, h: 95, // ابعاد سکشن ادیوگرام 
+                margin: { left: 1, top: 0, right: 2, bottom: 0 }, // در مدل باکس این برای باکس هست
                 display: 'inline',
+                borderBox: 'display', // display | none default: none بوردر 
             });
 
         this.LAudiogram = {}
         Object.assign(this.LAudiogram,
             {
                 name: 'LAudiogram',
-                w: width / 2, h: 90, // پهنای سکشن هست
-                margin: { left: 1, top: 0, right: 1, bottom: 0 },
+                w: width / 2, h: 95, // پهنای سکشن هست
+                margin: { left: 2, top: 0, right: 1, bottom: 0 },
                 display: 'block',
+                // borderBox: 'none', // display | none default: none بوردر 
             });
 
         // Speech Titles 
         this['Speech Titles'] = {
             name: 'Speech Titles',
-            w: width, h: 8, // پهنا و ارتفاع سکشن
-            margin: { left: 5, top: 0.5, right: 5, bottom: 1 },
-            display: 'block',
+            ...this['Title'],
             stroke: true,
             // محاسبه پهنا  ارتفاع در تابع calc2 
         }
@@ -82,7 +92,7 @@ const template_combo = {
         this.RSpeech = {
             name: 'RSpeech',
             w: width / 2, h: 15,
-            margin: { left: 2, top: 0, right: 12, bottom: 0 },
+            margin: { left: 1, top: 0, right: 2, bottom: 0 },
             display: 'inline',
             stroke: true,
         }
@@ -90,7 +100,7 @@ const template_combo = {
         this.LSpeech = {
             name: 'LSpeech',
             w: width / 2, h: 15,
-            margin: { left: 12, top: 0, right: 2, bottom: 0 },
+            margin: { left: 2, top: 0, right: 1, bottom: 0 },
             display: 'block',
             stroke: true
         }
@@ -98,9 +108,7 @@ const template_combo = {
         // Tympanogram Titles 
         this['Tympanogram Titles'] = {
             name: 'Tympanogram Titles',
-            w: width, h: 8, // پهنا و ارتفاع سکشن
-            margin: { left: 5, top: 1, right: 5, bottom: 1 },
-            display: 'block',
+            ...this['Title'],
             stroke: true,
             // محاسبه پهنا  ارتفاع در تابع calc2 
         }
@@ -108,53 +116,50 @@ const template_combo = {
         this.RTympanogram = {
             name: 'RTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 2, top: 0, right: 2, bottom: 0 },
+            margin: { left: 1, top: 0, right: 2, bottom: 0 },
             display: 'inline',
         }
 
         this.LTympanogram = {
             name: 'LTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 2, top: 0, right: 2, bottom: 0 },
+            margin: { left: 2, top: 0, right: 1, bottom: 0 },
             display: 'block',
         }
 
         // Reflex Titles 
         this['Reflex Titles'] = {
             name: 'Reflex Titles',
-            w: width, h: 8, // پهنا و ارتفاع سکشن
-            margin: { left: 5, top: 1, right: 5, bottom: 1 },
-            display: 'block',
+            ...this['Title'],
             stroke: true,
             // محاسبه پهنا  ارتفاع در تابع calc2 
         }
 
-
         this.RReflex = {
             name: 'RReflex',
-            w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            w: width / 2, h: 26,
+            margin: { left: 1, top: 0, right: 2, bottom: 1 },
             display: 'inline'
         }
 
         this.LReflex = {
             name: 'LReflex',
-            w: width / 2, h: 30,
-            margin: { left: 2, top: 2, right: 2, bottom: 2 },
+            w: width / 2, h: 26,
+            margin: { left: 2, top: 0, right: 1, bottom: 1 },
             display: 'block'
         }
 
         this.report = {
             name: 'report',
-            w: width, h: 15,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            w: width, h: 20,
+            margin: { left: 1, top: 0, right: 1, bottom: 0 },
             display: 'block'
         }
 
         this.footer = {
             name: 'footer',
             w: width, h: 10,
-            margin: { left: 1, top: 1, right: 1, bottom: 1 },
+            margin: { left: 0, top: 0, right: 0, bottom: 0 },
             display: 'block'
         }
     },
@@ -181,13 +186,13 @@ const template_combo = {
         ]
         this.header.inputs = [
             { name: 'officeName', x: width - 16, y: height - 6, style },
-            { name: 'date', x: 20, y: 5, style: style + ' font-size: 0.8mm;'  },
+            { name: 'date', x: 20, y: 5, style: style + ' font-size: 0.8mm;' },
         ]
 
         width = this.patient.width = this.getWidth(this.patient)
-        this.patient.height = this.getHeight(this.patient)
+        height = this.patient.height = this.getHeight(this.patient)
         this.patient.elements = [
-            { type: 'line', x1: 0, y1: 20, x2: width, y2: 20 },
+            // { type: 'line', x1: 0, y1: height, x2: width, y2: height },
             { type: 'text', x: width, y: 5, value: 'نام:' },
             { type: 'text', x: width - 38, y: 5, value: 'نام خانوادگی:' },
             { type: 'text', x: width - 90, y: 5, value: 'سن:' },
@@ -207,9 +212,9 @@ const template_combo = {
         ]
 
         width = this.history.width = this.getWidth(this.history)
-        this.history.height = this.getHeight(this.history)
+        height = this.history.height = this.getHeight(this.history)
         this.history.elements = [
-            { type: 'line', x1: 0, y1: 20, x2: width, y2: 20 },
+            { type: 'line', x1: 0, y1: height, x2: width, y2: height },
             { type: 'text', x: width, y: 5, value: 'شرح حال:' },
         ]
         this.history.inputs = [
@@ -220,12 +225,12 @@ const template_combo = {
         height = this['Audiogram Titles'].height = this.getHeight(this['Audiogram Titles'])
         style = `
             text-anchor: middle;
+            dominant-baseline: middle;
             font-size: 1.2mm
         `;
-
         this['Audiogram Titles'].elements = [
             // { type: 'line', x1: 0, y1: 0, x2: width, y2: 0 },
-            { type: 'text', x: width / 2, y: 5, value: 'Audiograms', style },
+            { type: 'text', x: width / 2, y: height / 2, value: 'Audiograms', style },
             { type: 'text', x: width / 4, y: 5, value: 'Right', style: 'fill: red' },
             { type: 'text', x: width * 3 / 4, y: 5, value: 'Left', style: 'fill: blue' },
         ]
@@ -240,7 +245,7 @@ const template_combo = {
         height = this['Speech Titles'].height = this.getHeight(this['Speech Titles'])
         this['Speech Titles'].elements = [
             // { type: 'line', x1: 0, y1: 0, x2: width, y2: 0 },
-            { type: 'text', x: width / 2, y: 4, value: 'Speech Tests', style },
+            { type: 'text', x: width / 2, y: height / 2, value: 'Speech Tests', style },
             { type: 'text', x: width / 4, y: 5, value: 'Right', style: 'fill: red' },
             { type: 'text', x: width * 3 / 4, y: 5, value: 'Left', style: 'fill: blue' },
         ]
@@ -257,7 +262,7 @@ const template_combo = {
         height = this['Tympanogram Titles'].height = this.getHeight(this['Tympanogram Titles'])
         this['Tympanogram Titles'].elements = [
             // { type: 'line', x1: 0, y1: 0, x2: width, y2: 0 },
-            { type: 'text', x: width / 2, y: 5, value: 'Tympanograms', style },
+            { type: 'text', x: width / 2, y: height / 2, value: 'Tympanograms', style },
             // { type: 'text', x: width / 4, y: 5, value: 'Right', style: 'fill: red' },
             // { type: 'text', x: width * 3 / 4, y: 5, value: 'Left', style: 'fill: blue' },
         ]
@@ -271,7 +276,7 @@ const template_combo = {
         height = this['Reflex Titles'].height = this.getHeight(this['Reflex Titles'])
         this['Reflex Titles'].elements = [
             // { type: 'line', x1: 0, y1: 0, x2: width, y2: 0 },
-            { type: 'text', x: width / 2, y: 5, value: 'Acoustic Reflexes', style },
+            { type: 'text', x: width / 2, y: height / 2, value: 'Acoustic Reflexes', style },
             { type: 'text', x: width / 4, y: 5, value: 'Probe in the Right Ear', style: 'fill: red; text-anchor: middle' },
             { type: 'text', x: width * 3 / 4, y: 5, value: 'Probe in the Left Ear', style: 'fill: blue; text-anchor: middle' },
         ]
@@ -287,7 +292,7 @@ const template_combo = {
             { type: 'text', x: width, y: 5, value: 'گزارش:' },
         ]
         this.report.inputs = [
-            { name: 'description', x: width - 10, y: 5 },
+            { name: 'description', x: width - 12, y: 5 },
         ]
 
         width = this.footer.width = this.getWidth(this.footer)

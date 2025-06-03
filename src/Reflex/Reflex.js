@@ -1,7 +1,8 @@
 import putRect from "../common/putRect.js";
 import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
-import putTextBox from "../common/putTextBox.js";
+import putCell from "../common/putCell.js";
+import units from "./units.js";
 
 export default class Reflex {
     constructor({ container, side }) {
@@ -18,7 +19,18 @@ export default class Reflex {
         let style;
 
         // کل چارت
-        const svg = putSVG({ x, y, width, height, className: 'reflex' })
+        // const svg = putSVG({ x, y, width, height, className: 'reflex' })
+        let { styles, vbWidth, vbHeight } = units;
+        
+        // کل چارت
+        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
+        const svg = putSVG({ x, y, width, height, viewBox })
+        // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
+        width = vbWidth; // ثابت می‌ماند همیشه
+        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+
+
 
         let lable = ["", "500", "1000", "2000", "4000"]; // مقادیر برچسب‌های سطر اول
         // جدولی با ۳ سطر و ۵ ستون
@@ -69,7 +81,7 @@ export default class Reflex {
                 let x = cw1 / 2 + cw1 * i;
                 let y = ch1 * j + ch2 / 2;
                 //رسم باکس با مختصات مرکز باکس
-                putTextBox({ container: svg, x, y, dx: 0, dy: -1, w: 13, h: 7, rx: 1 });
+                putCell({ container: svg, x, y, dx: 0, dy: -1, width: 13, height: 7, rx: 1 });
             }
         }
 

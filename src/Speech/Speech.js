@@ -1,12 +1,8 @@
-import putTextBox from "../common/putTextBox.js";
+import putCell from "../common/putCell.js";
 import putRect from "../common/putRect.js";
 import putText from "../common/putText.js";
 import putSVG from "../common/putSVG.js";
-import putPoint from "../common/putPoint.js";
-
-
-
-
+import units from "./units.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
@@ -15,7 +11,8 @@ export default class Speech {
         this.side = side;
     }
 
-    draw({ dims, stroke = true }) {
+    draw({ dims }) {
+        // console.log(dims);
 
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         this.inputs = (dims.forceInsert) ? dims.forceInputs : dims.inputs
@@ -24,43 +21,51 @@ export default class Speech {
         let height = dims.height;
         let x = dims.margin.left;
         let y = dims.margin.top;
-        const labels = dims.labels;
-        this.labels = labels;
-        // const cn = labels.length;
-        let sideCaption = this.side === "R" ? "Right" : "Left";
-        // یک جدول 6*2  - ۲ سطر و ۶ ستون
-        const rows = 2;
-        const column = labels.length;
-
-        const cw = width / column; // پهنای هر خانه
-        const ch = height / rows; // ارتفاع هر خانه
+        let { styles, vbWidth, vbHeight } = units;
 
         // کل چارت
-        const svg = putSVG({ x, y, width, height, className: 'speach' })
+        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
+        const svg = putSVG({ x, y, width, height, viewBox })
+        // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
+        width = vbWidth; // ثابت می‌ماند همیشه
+        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
 
+
+        const labels = dims.labels;
+        this.labels = labels;
+        // یک جدول 6*2  - ۲ سطر و ۶ ستون
+        const rows = 2;
+        const columns = labels.length;
+        const cw = width / columns; // پهنای هر خانه
+        const ch = height / rows; // ارتفاع هر خانه
+        // تعریف آبجکتی چارت
+        const chart = {
+            width, height,
+            rows: 2, column: labels.length,
+            cell: { width: 1, height: 1 },
+            calc1: function () {
+                this.cell.width = this.width / this.column
+            }
+        }
+
+
+        // ایجاد ماتریکس سلول های چارت که آدرس و مختصات مرکز هر سلول را نگهداری میکند
         const matrix = [
             [],
             []
         ];
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < rows; i++) {
             x = cw / 2;
             y = ch / 2 + ch * i;
-            for (let j = 0; j < 5; j++) {
+            for (let j = 0; j < columns; j++) {
                 matrix[i][j] = { i, j, x, y };
                 x += cw;
             }
         }
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            font-weight: bold;
-            text-anchor: middle; /*تراز افقی*/
-        `;
 
+        style = styles.label;
         // برچسب های سطر اول
         // برای فرم های پیش چاپ شده انجام نمیشود
         !dims.hideContext &&
@@ -69,19 +74,31 @@ export default class Speech {
 
         style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
 
+        const inputBox = {
+            width: width / 5 * 0.70, height: height / 2 * 0.85,
+            rx: width / 100
+        }
+        // محاسبه کمان گردی بر اساس مقدار پهنا
+        inputBox.rx = inputBox.width / 10
+
         // باکس و تکست مقادیر
         matrix[1].forEach((cell, index) => {
             // برای فرم های پیش چاپ شده باکس رسم نمیشود
-            !dims.hideContext && putTextBox({ container: svg, x: cell.x, y: cell.y, dy: -1, w: 13, h: 7, rx: 1, });
+            !dims.hideContext &&
+                putCell({
+                    container: svg, x: cell.x, y: cell.y, dy: -1,
+                    width: inputBox.width, height: inputBox.height,
+                    rx: inputBox.rx,
+                });
             // مقدار نگه دارها
             if (!dims.forceInsert) {
-                putText({ container: svg, value: "", x: cell.x, y: cell.y, style: style, name: labels[index] });
+                putText({ container: svg, value: "", x: cell.x, y: cell.y, style, name: labels[index] });
             } else {
                 // برای فرم های مثل رسا استفاده میشود
                 let name;
                 this.inputs.forEach(input => {
                     ({ name, x, y } = input);
-                    putText({ container: svg, x, y, style: style, name });
+                    putText({ container: svg, x, y, style, name });
                 });
             }
         }

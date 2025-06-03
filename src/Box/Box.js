@@ -3,7 +3,7 @@ import putRect from "../common/putRect.js";
 import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
-export default class TextBox {
+export default class Box {
     constructor({ container }) {
         this.container = container;
     }
@@ -21,6 +21,7 @@ export default class TextBox {
         style = `
         /* font-family: Arial, Helvetica, sans-serif !important; */
         font-size: 1mm;
+        white-space: break-spaces;
         /* font-weight: bold; */
         direction: rtl !important;
         user-select: none;
@@ -76,7 +77,29 @@ export default class TextBox {
 
     update(data) {
         this.inputs.forEach(input => {
-            this.container.querySelector(`text[data-name=${input.name}]`).innerHTML = data?.[input.name] || "";
+            let value = data?.[input.name];
+            const textInput = this.container.querySelector(`text[data-name=${input.name}]`)
+
+            // پیدا کردن کاراکترهای رفتن به سرخط در متن
+            const textLines = value.toString().split(/\n|\r|\r\n/);
+            const x = textInput.getAttribute('x')
+            // اگر متن چند خطی بود 
+            if (textLines.length >= 2) {
+                let y = 5;
+                textLines.forEach(value => {
+                    putTspan({ container: textInput, value, x, y });
+                    y += 6;
+                })
+            } else textInput.innerHTML = value || "";
         });
     }
+}
+
+function putTspan({ container, value, x , y = 5, dx = 0, dy = 0, style }) {
+    const tspan = document.createElementNS(svgNS, "tspan");
+    tspan.setAttribute('x', x);
+    tspan.setAttribute('y', y)
+    tspan.textContent = value;
+    container && container.appendChild(tspan)
+    return tspan;
 }

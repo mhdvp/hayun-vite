@@ -1,10 +1,10 @@
 // import Symbols from "../Symbol/Symbols.js";
-import Box from "./Box.js";
-import Header from "./Header.js";
-import Reflex from "./Reflex_N.js";
+import Box from "../Box/Box.js";
+import Header from "../Header/Header.js";
+import Reflex from "../Reflex/Reflex.js";
 import Sections from "./Sections.js";
-import Speech from "./Speech_N.js";
-import Tympanogram from "./Tympanogram.js";
+import Speech from "../Speech/Speech.js";
+import Tympanogram from "../Tympanogram/Tympanogram.js";
 import putRect from "../common/putRect.js";
 import AudiogramChart from "../Audiogram/Audiogram.js";
 const svgNS = "http://www.w3.org/2000/svg";
@@ -49,6 +49,8 @@ export default class Form {
                 side: 'R',
                 events: false
             });
+            console.log(template.RAudiogram);
+            
         }
         if (sections.LAudiogram) {
             this.LAudiogram = new AudiogramChart({
@@ -76,18 +78,16 @@ export default class Form {
         }
         if (sections.RTympanogram) {
             this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R' })
-            this.RTympanogram.draw({ dims: template.RTympanogram });
+            this.RTympanogram.draw({ dims: template.RTympanogram });            
         }
         if (sections.LTympanogram) {
             this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L' })
             this.LTympanogram.draw({ dims: template.LTympanogram });
         }
-
          if (sections['Reflex Titles']) {
             const titles = new Box({ container: sections['Reflex Titles'] });
             titles.draw({ dims: template['Reflex Titles'] });
         }
-
         if (sections.RReflex) {
             this.RReflex = new Reflex({ container: sections.RReflex, side: 'R' })
             this.RReflex.draw({ dims: template.RReflex });

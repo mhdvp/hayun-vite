@@ -1,7 +1,7 @@
 // تابع رسم خط
 const svgNS = "http://www.w3.org/2000/svg";
 
-export default function putLine({ container, x1, y1, x2, y2, style = 'stroke: black; stroke-width: 0.5;', name }) {
+export default function putLine({ container, x1, y1, x2, y2, style = 'stroke: black; stroke-width: 0.3;', name }) {
     
     let line = document.createElementNS(svgNS, "line");
     line.setAttribute("x1", x1);

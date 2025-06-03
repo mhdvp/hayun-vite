@@ -1,22 +1,24 @@
-import putG from "../common/putG.js";
 import putLine from "../common/putLine.js";
 import putPoint from "../common/putPoint.js";
 import putRect from "../common/putRect.js";
 import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
 import getAllSymbolsSVG from "../Symbol/getAllSymbolsSVG.js";
-import mainDims from './dims.js';
+import units from './dims.js';
 
 export default class Audiogram {
   constructor({ container, side, dims, events = true }) {
+
     this.container = container;
-    this.dims = {}
-    Object.assign(this.dims, mainDims)
-    // dims = { blank: false }
+    // this.dims = {}
+    // Object.assign(this.dims, units)
+    this.dims = units; // ابعاد اصلی برای رسم روی دیسپلی به تنهایی کافی هست
+
     // اضافه کردن ابعاد جایگزین و یا اختصاصی دیگر به آبجکت ابعاد
     dims && Object.assign(this.dims, dims);
-    // console.log(dims);
 
+    // هارد کد نمایش بورد برای همه باکس ها
+    this.dims.borderBox = 'display';
 
     this.events = events;
     this.side = side;
@@ -32,15 +34,10 @@ export default class Audiogram {
     let
       {
         vbWidth, vbHeight, width, height, chartPadding, symbolDims, vf, vfArray,
-        vfToF, fToVf, intensity, styles, frequencies
+        vfToF, fToVf, intensity, styles, frequencies, borderBox,
       }
         = dims;
-    // متناسب سازی مقدار ارتفاع ویوباکس بر حسب نسبت طول و عرض پیکسلی
-    const
-      kpx = height / width,
-      kvb = vbWidth / vbHeight;
 
-    vbHeight = vbHeight * kpx * kvb;
 
     let x = dims.margin.left
     let y = dims.margin.top
@@ -71,89 +68,83 @@ export default class Audiogram {
     }
     this.yAxisLength = yAxisLength
 
+
+    // کل چارت
     // Main SVG for Audiogram
-    style = styles.svg;
-    const viewBox = [-chartPadding.left, -chartPadding.top, vbWidth, vbHeight]
-    const svg = putSVG({ container, x, y, width, height, viewBox, style })
+     // متناسب سازی مقدار ارتفاع ویوباکس بر حسب نسبت طول و عرض پیکسلی روش اول
+    // const kpx = height / width
+    // const kvb = vbWidth / vbHeight
+    // vbHeight = vbHeight * kpx * kvb;
+
+    vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+    
+   
+
+    const viewBox = [-chartPadding.left, -chartPadding.top, vbWidth, vbHeight].join(' ')
+    const svg = putSVG({ x, y, width, height, viewBox })
+    // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
+    width = vbWidth; // ثابت می‌ماند همیشه
+    height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+
     this.svg = svg; // کل نودی که به کانتینر اپند میشه
 
     // برای فرم‌های پیش چاپ نشده
     if (!dims.blank) {
       // محدوده مختصات خطوط جدول
-      putRect({
+      const chartArea = putRect({
         container: svg,
         x: this.getX(vf.min), y: this.getY(intensity.min),
         width: xAxisLength.vb, height: yAxisLength.vb,
         style: 'stroke-width: 0.4; stroke: gray; fill: transparent'
-      })
+      });
 
       // رسم خطوط افقی از بالا به پایین
-      let g = putG({ container: svg });
-
       let x1 = this.getX(vf.min);
       let x2 = this.getX(vf.max);
-
       for (let i = intensity.min; i <= intensity.max; i += intensity.step) {
         const y1 = this.getY(i)
         const y2 = y1;
         style = (i === 0) ? styles.boldLine : styles.line;
-        putLine({ container: g, x1, y1, x2, y2, style })
+        putLine({ container: svg, x1, y1, x2, y2, style })
       }
 
-      svg.appendChild(g);
-
       // رسم خطوط عمودی از چپ به راست
-      g = putG({ container: svg });
-
       let y1 = this.getY(intensity.min)
       let y2 = this.getY(intensity.max)
-
-      frequencies.
-        forEach(item => {
-          const x1 = this.getX(item.vf)
-          const x2 = x1
-          style = (item.semiOctav) ? styles.semiOctavFreqline : styles.mainFreqline;
-          (item.f === 1000) && (style = styles.boldLine);
-          putLine({ container: g, x1, y1, x2, y2, style })
-        });
-
-      svg.appendChild(g);
-
+      frequencies.forEach(item => {
+        const x1 = this.getX(item.vf)
+        const x2 = x1
+        style = (item.semiOctav) ? styles.semiOctavFreqline : styles.mainFreqline;
+        (item.f === 1000) && (style = styles.boldLine);
+        putLine({ container: svg, x1, y1, x2, y2, style })
+      })
       // برچسب های اعداد فرکانس
       style = styles.frequency
-      g = putG({ container: svg, style });
       const y = this.getY(-25)
-
-      frequencies.
-        forEach(item => {
-          const value = item.f
-          const x = this.getX(item.vf)
-          !item.semiOctav && item.f != 125 && item.f != 16000 &&
-            putText({ container: g, value, x, y, });
-        });
-
-      svg.appendChild(g);
+      frequencies.forEach(item => {
+        const value = item.f
+        const x = this.getX(item.vf)
+        !item.semiOctav && item.f != 125 && item.f != 16000 &&
+          putText({ container: svg, value, x, y, style });
+      })
 
       // رسم اعداد شدت محور عمودی
       style = styles.intensity
-      g = putG({ container: svg, style });
       const x = this.getX(-0.1)
-
       for (let i = -10; i <= 120; i += 10) {
         const y = this.getY(i)
         const value = i
-        putText({ container: g, x, y, value })
+        putText({ container: svg, x, y, value, style })
       }
-
-      svg.appendChild(g);
-
     }
     // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
-    // این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی ریودادها درست عمل کند
+    // این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی رویدادها درست عمل کند
+    // تعیین نمایش یا عدم نمایش با پراپرتی بوردباکس
+    let color = borderBox === 'display' ? 'green' : 'transparent'
     const borderRect = putRect({
       container: svg, x: -chartPadding.left, y: -chartPadding.top,
       width: vbWidth, height: vbHeight, name: '',
-      style: 'fill: transparent; stroke: green;',
+      style: `fill: transparent; stroke: ${color}; stroke-width: 0.5`,
     });
     this.borderRect = borderRect;
 
@@ -165,8 +156,7 @@ export default class Audiogram {
     const chartArea = putRect({
       container: svg, x: 0, y: 0,
       width: xAxisLength.vb, height: yAxisLength.vb,
-      style: 'fill: transparent; stroke: transparent;',
-      name: 'RAudiogram',
+      style: 'fill: transparent; stroke: ;',
     });
 
     this.chartArea = chartArea
@@ -183,7 +173,7 @@ export default class Audiogram {
 
 
     // نقطه راهنما
-    const pointer = putPoint({ container: this.svg, x: 0, y: 0, r: 4, color: 'black' });
+    const pointer = putPoint({ container: this.svg, x: 0, y: 0, r: 0.6, color: 'black' });
     this.pointer = pointer;
     this.mouseMove();
     this.click();
@@ -254,7 +244,7 @@ export default class Audiogram {
     let y = 0
 
     const symbolsChart = putSVG({ container: this.container, width, height, x, y });
-    symbolsChart.style.cursor = 'pointer'; // Change to pointer cursor
+    symbolsChart.style.cursor = 'pointer'; // Change Mouse Pointer to to pointer(Hand) cursor
     let container = symbolsChart
     style = 'fill: none;'
     putRect({ container, x, y, width, height, style });
@@ -268,7 +258,8 @@ export default class Audiogram {
 
     (this.side === 'R' ? ['R_AC', 'R_BC', 'R_AC_M', 'R_BC_M'] : ['L_AC', 'L_BC', 'L_AC_M', 'L_BC_M'])
       .forEach(symbolName => {
-        const [width, height] = [dw, dh];
+        let [width, height] = [dw, dh];
+        // width = ; height= 50
         rect[symbolName] = putRect({ container, x, y, width, height, name: symbolName, style });
         this.insertSymbol({ container, symbolName, x: x + dw / 2, y: dh / 2 })
         x += dw;
@@ -483,7 +474,11 @@ export default class Audiogram {
 
   insertSymbol({ container, symbolName, x, y, dataset }) {
 
-    const width = this.symbolDims.width
+    let width = this.symbolDims.width
+    console.log(width);
+    // width = 7;
+
+
     const symbol = this.getSymbol(symbolName);
     symbol.setAttribute('x', x - width / 2)
     symbol.setAttribute('y', y - width / 2)
