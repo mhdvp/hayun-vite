@@ -5,12 +5,13 @@ import units from "./units.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Tympanogram {
-    constructor({ container, side }) {
+    constructor({ container, side, dims }) {
         this.pressure = { min: -600, max: +400, step: 200 };
         this.compliance = { min: -0.50, max: 3, step: 0.50 };
         this.padding = { right: 5, left: 8, top: 7, bottom: 14 };
         this.container = container;
         this.side = side
+        this.draw({dims})
     }
 
     draw({ dims }) {

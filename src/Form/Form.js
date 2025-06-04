@@ -1,5 +1,3 @@
-// import Symbols from "../Symbol/Symbols.js";
-import Box from "../Box/Box.js";
 import Header from "../Header/Header.js";
 import Reflex from "../Reflex/Reflex.js";
 import Sections from "./Sections.js";
@@ -7,8 +5,8 @@ import Speech from "../Speech/Speech.js";
 import Tympanogram from "../Tympanogram/Tympanogram.js";
 import putRect from "../common/putRect.js";
 import AudiogramChart from "../Audiogram/Audiogram.js";
+import MultiText from "../MultiText/MultiText.js";
 const svgNS = "http://www.w3.org/2000/svg";
-
 
 export default class Form {
     constructor({ container, template } = {}) {
@@ -18,6 +16,7 @@ export default class Form {
         let { width, height, margin, paper } = template;
         this.form = this.create({ paper, margin });
         this.form.style.display = 'none';
+        let dims;
         // رسم مارجین های فرم
         this.drawMarginLines({ container: this.form, width, height });
 
@@ -29,18 +28,17 @@ export default class Form {
             this.header.draw({ dims: template.header });
         }
         if (sections.patient) {
-            // (template.label === 'تمپانومتری رسا') && console.log(template.patient);
-
-            this.patient = new Box({ container: sections.patient });
-            this.patient.draw({ dims: template.patient });
+            dims = template.patient;
+            this.patient = new MultiText({ container: sections.patient, dims });
         }
         if (sections.history) {
-            this.history = new Box({ container: sections.history })
-            this.history.draw({ dims: template.history });
+            dims = template.history;
+            this.history = new MultiText({ container: sections.history, dims })
+            // this.history.draw({ dims: template.history });
         }
         if (sections['Audiogram Titles']) {
-            const titles = new Box({ container: sections['Audiogram Titles'] });
-            titles.draw({ dims: template['Audiogram Titles'] });
+            dims = template['Audiogram Titles'];
+            new MultiText({ container: sections['Audiogram Titles'], dims });
         }
         if (sections.RAudiogram) {
             this.RAudiogram = new AudiogramChart({
@@ -48,9 +46,7 @@ export default class Form {
                 dims: template.RAudiogram,
                 side: 'R',
                 events: false
-            });
-            console.log(template.RAudiogram);
-            
+            })
         }
         if (sections.LAudiogram) {
             this.LAudiogram = new AudiogramChart({
@@ -58,51 +54,51 @@ export default class Form {
                 dims: template.LAudiogram,
                 side: 'L',
                 events: false
-            });
+            })
         }
         if (sections['Speech Titles']) {
-            const titles = new Box({ container: sections['Speech Titles'] });
-            titles.draw({ dims: template['Speech Titles'] });
+            dims= template['Speech Titles'];
+            const titles = new MultiText({ container: sections['Speech Titles'], dims });
         }
         if (sections['RSpeech']) {
-            this.RSpeech = new Speech({ container: sections.RSpeech, side: 'R' })
-            this.RSpeech.draw({ dims: template.RSpeech, })
+            dims= template.RSpeech
+            this.RSpeech = new Speech({ container: sections.RSpeech, side: 'R', dims})
         }
         if (sections.LSpeech) {
-            this.LSpeech = new Speech({ container: sections.LSpeech, side: 'L' })
-            this.LSpeech.draw({ dims: template.LSpeech, });
+            dims= template.LSpeech
+            this.LSpeech = new Speech({ container: sections.LSpeech, side: 'L', dims })
         }
         if (sections['Tympanogram Titles']) {
-            const titles = new Box({ container: sections['Tympanogram Titles'] });
-            titles.draw({ dims: template['Tympanogram Titles'] });
+            dims= template['Tympanogram Titles'];
+            new MultiText({ container: sections['Tympanogram Titles'], dims });
         }
         if (sections.RTympanogram) {
-            this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R' })
-            this.RTympanogram.draw({ dims: template.RTympanogram });            
+            dims= template.RTympanogram 
+            this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R', dims })
         }
         if (sections.LTympanogram) {
-            this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L' })
-            this.LTympanogram.draw({ dims: template.LTympanogram });
+            dims= template.LTympanogram
+            this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L', dims })
         }
-         if (sections['Reflex Titles']) {
-            const titles = new Box({ container: sections['Reflex Titles'] });
-            titles.draw({ dims: template['Reflex Titles'] });
+        if (sections['Reflex Titles']) {
+            dims= template['Reflex Titles'];
+            const titles = new MultiText({ container: sections['Reflex Titles'], dims });
         }
         if (sections.RReflex) {
-            this.RReflex = new Reflex({ container: sections.RReflex, side: 'R' })
-            this.RReflex.draw({ dims: template.RReflex });
+            dims= template.RReflex
+            this.RReflex = new Reflex({ container: sections.RReflex, side: 'R', dims })
         }
         if (sections.LReflex) {
-            this.LReflex = new Reflex({ container: sections.LReflex, side: 'L' })
-            this.LReflex.draw({ dims: template.LReflex });
+            dims= template.LReflex
+            this.LReflex = new Reflex({ container: sections.LReflex, side: 'L', dims })
         }
         if (sections.report) {
-            this.report = new Box({ container: sections.report })
-            this.report.draw({ dims: template.report });
+            dims= template.report;
+            this.report = new MultiText({ container: sections.report, dims })
         }
         if (sections.footer) {
-            this.footer = new Box({ container: sections.footer })
-            this.footer.draw({ dims: template.footer });
+            dims= template.footer;
+            this.footer = new MultiText({ container: sections.footer, dims})
         }
 
         this.container.appendChild(this.form);

@@ -6,9 +6,10 @@ import units from "./units.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
-    constructor({ container, side = 'R' }) {
+    constructor({ container, side = 'R', dims }) {
         this.container = container;
         this.side = side;
+        this.draw({dims})
     }
 
     draw({ dims }) {
@@ -48,7 +49,6 @@ export default class Speech {
                 this.cell.width = this.width / this.column
             }
         }
-
 
         // ایجاد ماتریکس سلول های چارت که آدرس و مختصات مرکز هر سلول را نگهداری میکند
         const matrix = [

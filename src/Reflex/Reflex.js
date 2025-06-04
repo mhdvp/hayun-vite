@@ -5,9 +5,10 @@ import putCell from "../common/putCell.js";
 import units from "./units.js";
 
 export default class Reflex {
-    constructor({ container, side }) {
+    constructor({ container, side, dims }) {
         this.container = container;
         this.side = side; // این برای تعیین رنگ راست و چپ استفاده می‌شود
+        this.draw({dims})
     }
 
     draw({ dims }) {

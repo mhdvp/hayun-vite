@@ -6,7 +6,8 @@ import template from "../assets/templates/template_combo.js";
 import Tympanogram from "./Tympanogram/Tympanogram.js";
 import Speech from "./Speech/Speech.js";
 import Reflex from "./Reflex/Reflex.js";
-import Box from "./Box/Box.js";
+import MultiText from "./MultiText/MultiText.js";
+
 
 
 document.querySelector('#app').innerHTML = `
@@ -40,9 +41,8 @@ let dims = {
   ]
 }
 
-const RSpeech = new Speech({ container, side: 'R' })
-RSpeech.draw({ dims })
-RSpeech.update({ MCL: '55', SAT: '25', SDS: '98', UCL: '120', SRT: '30' })
+// const RSpeech = new Speech({ container, side: 'R' , dims})
+// RSpeech.update({ MCL: '55', SAT: '25', SDS: '98', UCL: '120', SRT: '30' })
 
 dims = {
   "name": "RTympanogram",
@@ -59,8 +59,7 @@ dims = {
   "height": 60 * 6
 }
 
-const RTympanogram = new Tympanogram({ container, side: 'R' })
-RTympanogram.draw({ dims });
+// const RTympanogram = new Tympanogram({ container, side: 'R', dims })
 
 dims = {
   "name": "RReflex",
@@ -77,13 +76,12 @@ dims = {
   "height": 30 * 6
 }
 
-const RReflex = new Reflex({ container, side: 'R' })
-RReflex.draw({ dims });
+// const RReflex = new Reflex({ container, side: 'R' , dims})
 
 dims = {
-  "name": "report",
+  "name": "patient",
   "w": 200,
-  "h": 20,
+  "h": 8,
   "margin": {
     "left": 1,
     "top": 0,
@@ -92,26 +90,80 @@ dims = {
   },
   "display": "block",
   "width": 198,
-  "height": 20,
+  "height": 8,
   "elements": [
     {
       "type": "text",
       "x": 198,
       "y": 5,
-      "value": "گزارش:"
+      "value": "نام:"
+    },
+    {
+      "type": "text",
+      "x": 160,
+      "y": 5,
+      "value": "نام خانوادگی:"
+    },
+    {
+      "type": "text",
+      "x": 108,
+      "y": 5,
+      "value": "سن:"
+    },
+    {
+      "type": "text",
+      "x": 68,
+      "y": 5,
+      "value": "ارجاع از:"
     }
   ],
   "inputs": [
     {
-      "name": "description",
-      "x": 186,
+      "name": "name",
+      "x": 191,
+      "y": 5
+    },
+    {
+      "name": "lastName",
+      "x": 139,
+      "y": 5
+    },
+    {
+      "name": "age",
+      "x": 100,
+      "y": 5
+    },
+    {
+      "name": "referrer",
+      "x": 55,
+      "y": 5
+    }
+  ],
+  "forceInputs": [
+    {
+      "name": "name",
+      "x": 188,
+      "y": 4
+    },
+    {
+      "name": "lastName",
+      "x": 151,
+      "y": 5
+    },
+    {
+      "name": "age",
+      "x": 101,
+      "y": 5
+    },
+    {
+      "name": "referrer",
+      "x": 56,
       "y": 5
     }
   ]
 }
 
-// const report = new Box({ container })
-// report.draw({ dims });
+const patient = new MultiText({ container, dims })
 
 dims = {
   "blank": false,
@@ -130,7 +182,7 @@ dims = {
   "height": 600
 }
 
-const RAudiogram = new Audiogram({ container, side: 'R', dims })
+// const RAudiogram = new Audiogram({ container, side: 'R', dims })
 // RAudiogram.update({
 //   data: {
 //     // R_AC_M: { 8000: 25, 2000: 5, 1500: 0, },
