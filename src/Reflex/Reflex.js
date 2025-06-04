@@ -1,14 +1,13 @@
 import putRect from "../common/putRect.js";
 import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
-import putCell from "../common/putCell.js";
 import units from "./units.js";
 
 export default class Reflex {
     constructor({ container, side, dims }) {
         this.container = container;
         this.side = side; // این برای تعیین رنگ راست و چپ استفاده می‌شود
-        this.draw({dims})
+        this.draw({ dims })
     }
 
     draw({ dims }) {
@@ -22,54 +21,35 @@ export default class Reflex {
         // کل چارت
         // const svg = putSVG({ x, y, width, height, className: 'reflex' })
         let { styles, vbWidth, vbHeight } = units;
-        
+
         // کل چارت
+        style = styles.svg
         vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
-        const svg = putSVG({ x, y, width, height, viewBox })
+        const svg = putSVG({ x, y, width, height, viewBox, style })
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
         width = vbWidth; // ثابت می‌ماند همیشه
         height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
 
 
-
+        // چاپ برچسب‌های سطر اول
+        style = styles.numberlabel;
         let lable = ["", "500", "1000", "2000", "4000"]; // مقادیر برچسب‌های سطر اول
         // جدولی با ۳ سطر و ۵ ستون
         let cw1 = width / 5; // پهنای خانه‌های سطر اول
         let ch1 = height / 3; // ارتفاع خانه‌های سطر اول
         let ch2 = height / 3; // ارتفاع خانه‌های سطر دوم
 
-        // چاپ برچسب‌های سطر اول
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            font-weight: bold;
-            text-anchor: middle; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/       
-        `;
         lable.forEach((value, i) => {
             if (value != "") {
                 let x = cw1 / 2 + cw1 * i;
                 let y = ch1 / 2;
-                // putText(value, x, y, "", "middle", "middle"); // با استایل تراز عمودی پایین نسبت به خط پایه
                 putText({ container: svg, value, x, y, style })
             }
         });
 
         // مقادیر برچسب‌های ستون اول
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            font-weight: bold;
-            text-anchor: end; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/       
-        `;
+        style = styles.textLable
         lable = ["Freq", "IPSI", "CONTRA"];
         // چاپ برچسب‌های ستون اول
         putText({ container: svg, value: "Freq", x: cw1, y: ch1 / 2, style: style })
@@ -77,24 +57,27 @@ export default class Reflex {
         putText({ container: svg, value: "CONTRA", x: cw1, y: ch1 * 5 / 2, style: style })
 
         //چاپ ده باکس سطر دوم و سوم
+        const inputBox = {
+            width: width / 5 * 0.80, height: height / 3 * 0.8,
+            rx: width / 100
+        }
+        // محاسبه کمان گردی بر اساس مقدار پهنا
+        inputBox.rx = inputBox.width / 10
+
         for (let j = 1; j <= 2; j++) {
             for (let i = 1; i <= 4; i++) {
-                let x = cw1 / 2 + cw1 * i;
-                let y = ch1 * j + ch2 / 2;
+                let cx = cw1 / 2 + cw1 * i;
+                let cy = ch1 * j + ch2 / 2;
                 //رسم باکس با مختصات مرکز باکس
-                putCell({ container: svg, x, y, dx: 0, dy: -1, width: 13, height: 7, rx: 1 });
+                putRect({
+                    container: svg, cx, cy,
+                    width: inputBox.width, height: inputBox.height, rx: inputBox.rx
+                });
             }
         }
 
-        style = `
-            user-select: none;
-            direction: ltr !important;
-            /* text-align: center; */
-            font-family: Arial, Helvetica, sans-serif !important;
-            font-size: 1mm;
-            text-anchor: middle; /*تراز افقی*/
-            dominant-baseline: middle; /* تراز عمودی*/
-        `;
+        // مقادیر ورودی عددی
+        style = styles.inputNumber
         // اضافه کردن رنگ قرمز یا آبی به استایل بر اساس جهت
         style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
 
@@ -102,7 +85,7 @@ export default class Reflex {
         for (let index = 0; index < 4; index++) {
             x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 + ch2 / 2;
-            putText({ container: svg, value: "", x, y, dx: 0, dy: -1, style, name: names[index] })
+            putText({ container: svg, value: "", x, y, style, name: names[index] })
         }
 
         // المنت‌های تکست خالی با آیدی یکتا در سطر سوم
@@ -113,7 +96,7 @@ export default class Reflex {
             // const idValue = idValues[index];
             x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 * 2 + ch2 / 2;
-            putText({ container: svg, value: "", x, y, dx: 0, dy: -1, style, name: names[index] })
+            putText({ container: svg, value: "", x, y, style, name: names[index] })
         }
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه و دریافت رویداد کلیک روی فرم
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';

@@ -4,6 +4,7 @@ const template_combo = {
     // backgroundImage: 'backgroundImage',
     // تعیین نمایش بوردرهای سکشن ها
     sectionBorders: 'display', // display || none
+    boxBorders: 'none', // display || none
     margin: { left: 5, top: 5, right: 5, bottom: 5 },
     paper: { type: 'A4', case: 'portrait', width: 210, height: 297 },
 
@@ -36,6 +37,7 @@ const template_combo = {
             w: width, h: 8,
             margin: { left: 1, top: 0, right: 1, bottom: 0 },
             display: 'block',
+            boxBorder: 'none' // display || none default: none
         }
 
         this.history = {
@@ -43,6 +45,7 @@ const template_combo = {
             w: width, h: 14,
             margin: { left: 1, top: 0, right: 1, bottom: 0 },
             display: 'block',
+            boxBorder: 'none' // display || none
         }
 
         // Titles Common Object
@@ -92,7 +95,7 @@ const template_combo = {
         this.RSpeech = {
             name: 'RSpeech',
             w: width / 2, h: 15,
-            margin: { left: 1, top: 0, right: 2, bottom: 0 },
+            margin: { left: 1, top: 0, right: 10, bottom: 0 },
             display: 'inline',
             stroke: true,
         }
@@ -100,7 +103,7 @@ const template_combo = {
         this.LSpeech = {
             name: 'LSpeech',
             w: width / 2, h: 15,
-            margin: { left: 2, top: 0, right: 1, bottom: 0 },
+            margin: { left: 10, top: 0, right: 1, bottom: 0 },
             display: 'block',
             stroke: true
         }
@@ -116,14 +119,14 @@ const template_combo = {
         this.RTympanogram = {
             name: 'RTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 1, top: 0, right: 2, bottom: 0 },
+            margin: { left: 1, top: 0, right: 10, bottom: 0 },
             display: 'inline',
         }
 
         this.LTympanogram = {
             name: 'LTympanogram',
             w: width / 2, h: 60,
-            margin: { left: 2, top: 0, right: 1, bottom: 0 },
+            margin: { left: 10, top: 0, right: 1, bottom: 0 },
             display: 'block',
         }
 
@@ -138,14 +141,14 @@ const template_combo = {
         this.RReflex = {
             name: 'RReflex',
             w: width / 2, h: 26,
-            margin: { left: 1, top: 0, right: 2, bottom: 1 },
+            margin: { left: 1, top: 0, right: 10, bottom: 1 },
             display: 'inline'
         }
 
         this.LReflex = {
             name: 'LReflex',
             w: width / 2, h: 26,
-            margin: { left: 2, top: 0, right: 1, bottom: 1 },
+            margin: { left: 10, top: 0, right: 1, bottom: 1 },
             display: 'block'
         }
 

@@ -1,4 +1,4 @@
-import putCell from "../common/putCell.js";
+// https://docs.google.com/document/d/19Pgsi0eHRDgsxjkbxweHLRKVB60jrH4fzV52I83-6CM/edit?tab=t.977lyzmcu5uu#heading=h.sd8yc08kbsfo
 import putRect from "../common/putRect.js";
 import putText from "../common/putText.js";
 import putSVG from "../common/putSVG.js";
@@ -9,11 +9,10 @@ export default class Speech {
     constructor({ container, side = 'R', dims }) {
         this.container = container;
         this.side = side;
-        this.draw({dims})
+        this.draw({ dims })
     }
 
     draw({ dims }) {
-        // console.log(dims);
 
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         this.inputs = (dims.forceInsert) ? dims.forceInputs : dims.inputs
@@ -23,6 +22,7 @@ export default class Speech {
         let x = dims.margin.left;
         let y = dims.margin.top;
         let { styles, vbWidth, vbHeight } = units;
+        let cx, cy;
 
         // کل چارت
         vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
@@ -31,7 +31,6 @@ export default class Speech {
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
         width = vbWidth; // ثابت می‌ماند همیشه
         height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
-
 
         const labels = dims.labels;
         this.labels = labels;
@@ -57,11 +56,11 @@ export default class Speech {
         ];
 
         for (let i = 0; i < rows; i++) {
-            x = cw / 2;
-            y = ch / 2 + ch * i;
+            cx = cw / 2;
+            cy = ch / 2 + ch * i;
             for (let j = 0; j < columns; j++) {
-                matrix[i][j] = { i, j, x, y };
-                x += cw;
+                matrix[i][j] = { i, j, cx, cy };
+                cx += cw;
             }
         }
 
@@ -70,12 +69,15 @@ export default class Speech {
         // برای فرم های پیش چاپ شده انجام نمیشود
         !dims.hideContext &&
             matrix[0].forEach((cell, index) =>
-                putText({ container: svg, value: labels[index], x: cell.x, y: cell.y, dx: 0, dy: 1, style }));
+                putText({
+                    container: svg, value: labels[index],
+                    x: cell.cx, y: cell.cy, dx: 0, dy: 1, style
+                }));
 
         style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
 
         const inputBox = {
-            width: width / 5 * 0.70, height: height / 2 * 0.85,
+            width: width / 5 * 0.80, height: height / 2 * 0.95,
             rx: width / 100
         }
         // محاسبه کمان گردی بر اساس مقدار پهنا
@@ -85,14 +87,14 @@ export default class Speech {
         matrix[1].forEach((cell, index) => {
             // برای فرم های پیش چاپ شده باکس رسم نمیشود
             !dims.hideContext &&
-                putCell({
-                    container: svg, x: cell.x, y: cell.y, dy: -1,
+                putRect({
+                    container: svg, cx: cell.cx, cy: cell.cy, dy: -1,
                     width: inputBox.width, height: inputBox.height,
                     rx: inputBox.rx,
                 });
             // مقدار نگه دارها
             if (!dims.forceInsert) {
-                putText({ container: svg, value: "", x: cell.x, y: cell.y, style, name: labels[index] });
+                putText({ container: svg, value: "", x: cell.cx, y: cell.cy, style, name: labels[index] });
             } else {
                 // برای فرم های مثل رسا استفاده میشود
                 let name;

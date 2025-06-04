@@ -46,7 +46,7 @@ export default class Sections {
                 putRect({
                     container: svg, x: 0, y: 0, width, height,
                     style: 'fill: transparent; stroke: blue; stroke-width: 0.2',
-                    className: 'no-print', name: 'guide-border'
+                    className: 'no-print', name: 'section-border'
                 });
 
             this[name] = svg;

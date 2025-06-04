@@ -14,13 +14,13 @@ export default class Form {
         this.container = container;
         this.data = {};
         let { width, height, margin, paper } = template;
-        this.form = this.create({ paper, margin });
-        this.form.style.display = 'none';
+        this.page = this.create({ paper, margin });
+        this.page.style.display = 'none';
         let dims;
         // رسم مارجین های فرم
-        this.drawMarginLines({ container: this.form, width, height });
+        this.drawMarginLines({ container: this.page, width, height });
 
-        const sections = new Sections({ container: this.form, dims: template });
+        const sections = new Sections({ container: this.page, dims: template });
         this.sections = sections;
 
         if (sections.header) {
@@ -101,7 +101,7 @@ export default class Form {
             this.footer = new MultiText({ container: sections.footer, dims})
         }
 
-        this.container.appendChild(this.form);
+        this.container.appendChild(this.page);
     }
 
 

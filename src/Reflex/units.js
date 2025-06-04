@@ -12,53 +12,25 @@ const units = {
     height: 30,
 
     styles: {
-        pressure: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 3;
-            text-anchor: middle; 
-            dominant-baseline: hanging; 
-        `,
-        caption: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 3;
-            text-anchor: middle; 
+        svg: 'user-select: none; direction: ltr !important; font-family: Vazir;',
+        textLable: `
+            font-size: 4.2;
+            font-weight: bold;
+            text-anchor: end;
             dominant-baseline: middle; 
         `,
-        label: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 1mm;
-            text-anchor: start;
-            dominant-baseline: middle;       
-        `,
-        type: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 1mm;
-            font-weight: bold;
-            text-anchor: start;
+        numberlabel: `
+            font-size: 4.2;
+            font-weight: 700;
+            text-anchor: middle;   
             dominant-baseline: middle;   
         `,
-        compliance: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 0.7mm;
-            text-anchor: end; 
-            dominant-baseline: middle; 
+        inputNumber: `
+            font-size: 4.2;
+            font-weight: 700;
+            text-anchor: middle;   
+            dominant-baseline: middle;  
         `,
-        mainFreqline: `stroke: black; stroke-width: 1;`,
-        semiOctavFreqline: `stroke: black; stroke-width: 1;  stroke-dasharray: 4;`,
-        boldLine: 'stroke: black; stroke-width: 3;',
-
-        juncDashLine: `stroke-width: 1 ; stroke-opacity: 0.8; stroke-dasharray: 4;`,
-        juncLine: `stroke-width: 1; stroke-opacity: 0.8;`,
     },
 }
 

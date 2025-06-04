@@ -195,7 +195,7 @@ dims = {
 //   side: 'R',
 // })
 
-const forms = new Forms({ container: document.getElementById('forms-div'), templates: [template], mode: 'production' });
+const forms = new Forms({ container: document.getElementById('forms-div'), templates: [template], mode: 'develop' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 
 

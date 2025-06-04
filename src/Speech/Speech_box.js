@@ -1,4 +1,3 @@
-import putCell from "../common/putCell.js";
 import putRect from "../common/putRect.js";
 import putText from "../common/putText.js";
 import putSVG from "../common/putSVG.js";
@@ -84,8 +83,8 @@ export default class Speech {
         matrix[1].forEach((cell, index) => {
             // برای فرم های پیش چاپ شده باکس رسم نمیشود
             // !dims.hideContext &&
-            putCell({
-                container, x: cell.x, y: cell.y, dy: -1,
+            putRect({
+                container, cx: cell.x, cy: cell.y, dy: -1,
                 width: inputBox.width, height: inputBox.height,
                 rx: inputBox.rx,
             });

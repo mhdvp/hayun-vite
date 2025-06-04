@@ -62,11 +62,23 @@ export default class MultiText {
         const borderRect = putRect({
             container: svg, x: 0, y: 0, width, height,
             name: dims.name, className: 'no-print',
-            style: 'stroke: green; fill: transparent; stroke-width: 0.3;'
+            style: 'stroke: transparent; fill: transparent; stroke-width: 0.3;'
         });
-
         this.borderRect = borderRect;
         this.container.appendChild(svg)
+
+        // Box Border for Design guid with Brown Color
+        dims.boxBorder === 'display' && putRect({
+            container: svg, x: 0, y: 0, width, height,
+            style: 'fill: transparent; stroke-width: 0.3; stroke: brown;',
+            name: 'box-border',
+            className: 'no-print',
+        })
+
+        this.container.appendChild(svg)
+
+
+
     }
 
     update(data) {
