@@ -1,7 +1,7 @@
 const svgNS = "http://www.w3.org/2000/svg";
 
 import printForm from "./printForm.js";
-import Form from "./Form.js";
+import Form from "../Form/Form.js";
 // import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 // import rasaAud from "./templates/rasa_audiometry.js";
 // import rasaTymp from './templates/rasa_tymp_reflex.js'
@@ -22,9 +22,9 @@ export default class Forms {
     // افزودن فرم 
     addForms({ templates, defaultTemplateIndex }) {
         const container = this.container
+        
         // ایجاد یک دیو برای قرار دادن دکمه ها و لینک های فرم
         const div = document.createElement('div');
-
         div.style = 'border: 1px solid brown; margin: 0; padding: 0;'
         container.appendChild(div);
 
@@ -37,7 +37,8 @@ export default class Forms {
         this.pages = forms
 
         templates.forEach((template, index) => {
-            (this.mode == 'develop') && (btns[index] = this.putButton({ container: div, text: template.label, className }));
+            (this.mode == 'develop') &&
+                (btns[index] = this.putButton({ container: div, text: template.label, className }));
             this.forms.push(new Form({ container, template }));
         });
 
@@ -75,6 +76,8 @@ export default class Forms {
                 .addEventListener('click', () => { this.toggleDisplay({ container: forms[selectedIndex].form }) });
         }
     }
+
+
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
     update({ data, officeData, patientData, sessionIndex = 0 }) {

@@ -7,13 +7,10 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
     constructor({ box, side = 'R' }) {
-        console.log(box);
-
         // const { container, width, height, elements } = box
         // this.container = container;
         this.side = side;
         this.draw({ box })
-
     }
 
     draw({ box }) {
@@ -52,7 +49,6 @@ export default class Speech {
             }
         }
 
-
         // ایجاد ماتریکس سلول های چارت که آدرس و مختصات مرکز هر سلول را نگهداری میکند
         const matrix = [
             [],
@@ -69,7 +65,6 @@ export default class Speech {
         }
 
         style = styles.label;
-
         // برچسب های سطر اول
         // برای فرم های پیش چاپ شده انجام نمیشود
         // !dims.hideContext &&

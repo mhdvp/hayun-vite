@@ -1,14 +1,10 @@
-import Box from "./Box.js";
-import Header from "../Header/Header_N.js";
-import Reflex from "../Reflex/Reflex.js";
-import Sections from "./Sections_N.js";
-import Speech from "../Speech/Speech_N.js";
-import Tympanogram from "../Tympanogram/Tympanogram.js";
+import Header from "../Header/Header_box.js";
+import Speech from "../Speech/Speech_box.js";
 import putRect from "../common/putRect.js";
-import Audiogram from "../Audiogram/Audiogram_N.js";
+import Audiogram from "../Audiogram/Audiogram_box.js";
 import mainTemplate from "../../assets/templates/mainTemplate.js";
 import putSVG from "../common/putSVG.js";
-import MultiText from "../MultiText/MultiText.js";
+import MultiText from "../MultiText/MultiText_box.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Form {
@@ -40,7 +36,7 @@ export default class Form {
                 case 'history':
                     break;
                 case 'RAudiogram':
-                    const RAudiogram = new Audiogram({ box, side: 'R', events: false })
+                    const RAudiogram = new Audiogram({ box, container: box.container, side: 'R', events: false })
                     break;
                 case 'LAudiogram':
                     // const LAudiogram = new Audiogram({ container: box.container, side: 'L', dims: box, events: false })

@@ -16,6 +16,7 @@ const mainTemplate = {
     },
 
     defSections: function () {
+        
         this['Header'] = {
             name: 'header', container: '',
             width: this.width, height: 20,

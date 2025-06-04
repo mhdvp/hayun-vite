@@ -1,6 +1,6 @@
 // import './style.css'
 import Audiogram from "./Audiogram/Audiogram.js"
-import Forms from "./Form/Forms.js";
+import Forms from "./Forms/Forms.js";
 import { officeData, patientData } from "../assets/data/sampleData.js"
 import template from "../assets/templates/template_combo.js";
 import Tympanogram from "./Tympanogram/Tympanogram.js";
@@ -163,7 +163,7 @@ dims = {
   ]
 }
 
-const patient = new MultiText({ container, dims })
+// const patient = new MultiText({ container, dims })
 
 dims = {
   "blank": false,
@@ -195,7 +195,7 @@ dims = {
 //   side: 'R',
 // })
 
-const forms = new Forms({ container: document.getElementById('forms-div'), templates: [template], mode: 'develop' });
+const forms = new Forms({ container: document.getElementById('forms-div'), templates: [template], mode: 'production' });
 forms.update({ officeData, patientData, sessionIndex: 0 })
 
 
