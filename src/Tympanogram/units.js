@@ -11,55 +11,45 @@ const units = {
     width: 100,
     height: 60,
 
-    // این فاصله خطوط محورهای بالا و چپ ادیوگرام از لبه ها هست
-    chartPadding: { left: 40, top: 40, right: 30, bottom: 20 },
-    symbolDims: { width: 55, height: 55 },
-    symbolsChart: {
-        width: 240, height: 60
+    pressure: { min: -600, max: +400, step: 200 },
+    compliance: {
+        normal: { min: -0.50, max: 3, step: 0.50 },
+        extra: { min: -0.50, max: 6, step: 0.50 }
     },
-    // virtual frequency 
-    mainFrequencies: [125, 250, 500, 1000, 2000, 4000, 8000],
-   
-    intensity: { min: -20, max: 130, step: 10 },
-    
+    padding: { right: 5, left: 8, top: 7, bottom: 14 },
+
+
     styles: {
+        svg: 'user-select: none; direction: ltr !important; font-family: Vazir;',
         pressure: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
             font-size: 3;
             text-anchor: middle; 
             dominant-baseline: hanging; 
         `,
         caption: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
             font-size: 3;
             text-anchor: middle; 
             dominant-baseline: middle; 
         `,
         label: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
-            font-size: 1mm;
+            font-size: 4.2;
+            font-weight: bold;
+            text-anchor: start;
+            dominant-baseline: middle;       
+        `,
+        input: `
+            font-size: 4.2;
+            font-weight: bold;
             text-anchor: start;
             dominant-baseline: middle;       
         `,
         type: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
             font-size: 1mm;
             font-weight: bold;
             text-anchor: start;
             dominant-baseline: middle;   
         `,
         compliance: `
-            user-select: none;
-            direction: ltr !important;
-            font-family: Vazir;
             font-size: 0.7mm;
             text-anchor: end; 
             dominant-baseline: middle; 

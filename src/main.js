@@ -9,7 +9,6 @@ import Reflex from "./Reflex/Reflex.js";
 import MultiText from "./MultiText/MultiText.js";
 
 
-
 document.querySelector('#app').innerHTML = `
     <div id="test"></div>
     <div id="audiogram-div"></div>

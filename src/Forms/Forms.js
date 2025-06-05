@@ -1,15 +1,16 @@
-const svgNS = "http://www.w3.org/2000/svg";
-
+// import '../styles.css' // برای تست منتقل شد به فایل ایندکس اصلی اچ‌تی‌ام‌ال  و برای توسعه منتقل شده به ایندکس جی اس
+import putLine from "../common/putLine.js";
 import printForm from "./printForm.js";
 import Form from "../Form/Form.js";
+
+const svgNS = "http://www.w3.org/2000/svg";
+
 // import combo from "./templates/combo.js"; // این در حقیقیت یک تمپلت هست
 // import rasaAud from "./templates/rasa_audiometry.js";
 // import rasaTymp from './templates/rasa_tymp_reflex.js'
 
 // خط کد زیر لازم هست
 // import '/fonts/webfonts/Vazirmatn-Regular.woff2'
-import '../styles.css'
-import putLine from "../common/putLine.js";
 
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {

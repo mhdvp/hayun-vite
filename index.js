@@ -3,6 +3,8 @@ import dims from './src/Audiogram/dims'
 import { officeData, patientData } from './assets/data/sampleData'
 import Forms from './src/Forms/Forms'
 import combo_template from './assets/templates/template_combo'
+import './src/styles.css'
+
 // import rasa_aud_template from './assets/templates/rasa_audiometry'
 // import rasa_tymp_reflex_template from './assets/templates/rasa_tymp_reflex'
 
