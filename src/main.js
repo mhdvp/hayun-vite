@@ -2,7 +2,7 @@
 import Audiogram from "./Audiogram/Audiogram.js"
 import Forms from "./Forms/Forms.js";
 import { officeData, patientData } from "../assets/data/sampleData.js"
-import template from "../assets/templates/template_combo.js";
+import template from "../assets/templates/templCombo.js";
 import Tympanogram from "./Tympanogram/Tympanogram.js";
 import Speech from "./Speech/Speech.js";
 import Reflex from "./Reflex/Reflex.js";

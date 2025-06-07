@@ -87,16 +87,18 @@ export default class MultiText {
             const textInput = this.container.querySelector(`text[data-name=${input.name}]`)
 
             // پیدا کردن کاراکترهای رفتن به سرخط در متن
-            const textLines = value.toString().split(/\n|\r|\r\n/);
-            const x = textInput.getAttribute('x')
-            // اگر متن چند خطی بود 
-            if (textLines.length >= 2) {
-                let y = 5;
-                textLines.forEach(value => {
-                    putTspan({ container: textInput, value, x, y });
-                    y += 6;
-                })
-            } else textInput.innerHTML = value || "";
+            if (value) {
+                const textLines = value.toString().split(/\n|\r|\r\n/);
+                const x = textInput.getAttribute('x')
+                // اگر متن چند خطی بود 
+                if (textLines.length >= 2) {
+                    let y = 5;
+                    textLines.forEach(value => {
+                        putTspan({ container: textInput, value, x, y });
+                        y += 6;
+                    })
+                } else textInput.innerHTML = value || "";
+            }
         });
     }
 }

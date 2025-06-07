@@ -17,7 +17,8 @@ const units = {
         extra: { min: -0.50, max: 6, step: 0.50 }
     },
     padding: { right: 5, left: 8, top: 7, bottom: 14 },
-
+    extraCompliance: false, // default is false (0-3) | true (0-6)
+    compensated: false, // default is false | true
 
     styles: {
         svg: 'user-select: none; direction: ltr !important; font-family: Vazir;',

@@ -18,11 +18,11 @@ export default class Header {
         let x = dims.margin.left;
         let y = dims.margin.top;
 
-        const svg = putSVG({ x, y, width, height, style: 'direction: rtl !important; user-select: none;' })
+        const svg = putSVG({ x, y, width, height, style: 'font-family: Vazir; direction: rtl !important; user-select: none;' })
 
         // Logo 
         let image = document.createElementNS(svgNS, "image");
-        image.setAttribute("data-name", "officeLogo")
+        image.setAttribute("data-name", "officeLogo") // برای تابع آپدیت استفاده می‌شود
         image.setAttribute("width", "17");
         image.setAttribute("height", height - 1);
         image.setAttribute("x", width - 16);
@@ -30,14 +30,10 @@ export default class Header {
         svg.appendChild(image);
 
         let style = `
-            user-select: none;
-            direction: rtl;
-            /* text-align: center; */
-            font-family: Vazir;
             font-size: 0.8mm;
             font-weight: bolder;
-            text-anchor: start; /*تراز افقی*/
-            dominant-baseline: auto; /* تراز عمودی*/  
+            text-anchor: start; 
+            dominant-baseline: auto; 
         `;
 
         // اگر مقدار استروک درست بود لیبل ها را چاپ کن

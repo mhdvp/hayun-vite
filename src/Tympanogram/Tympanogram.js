@@ -12,25 +12,31 @@ export default class Tympanogram {
         this.draw({ dims })
     }
 
-    draw({ dims, extraCompliance = false }) {
-        let width = dims.width;
-        let height = dims.height;
+    draw({ dims }) {
+        // پاک کردن چارت قبلی اگر وجود دارد
+        this.chart && this.chart.remove()
+
+        // داده‌های یونتیت خوانده میشود و بعد داده‌های دیمز به آن اضافه می‌‌شودکه می‌تواند جایگزین داده‌های قبلی یونیتز شود
+        dims = { ...units, ...dims }
+
+        let { width, height } = dims
         let x = dims.margin.left;
         let y = dims.margin.top;
-        let style;
+        const { extraCompliance, compensated } = dims
 
         const { pressure, padding, styles } = units
 
         const compliance = extraCompliance ? units.compliance.extra : units.compliance.normal
 
-
         let { vbWidth, vbHeight } = units;
 
         // کل چارت
+        let style
         style = styles.svg
         vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [-padding.left, -padding.top, vbWidth, vbHeight].join(' ')
         const svg = putSVG({ x, y, width, height, viewBox, style })
+        this.chart = svg;
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
         width = vbWidth; // ثابت می‌ماند همیشه
         height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
@@ -45,7 +51,10 @@ export default class Tympanogram {
             mm: height - (padding.top + padding.bottom)
         }
 
-        this.chartInfo = { pressure, compliance, padding, pressureAxiosLength, complianceAxiosLength }
+        this.chartInfo = {
+            pressure, compliance, padding,
+            pressureAxiosLength, complianceAxiosLength, compensated,
+        }
 
         // point({ container: svg, x: getX(pressure.min), y: getY(compliance.max), color: 'red' })
         // point({ container: svg, x: getX(pressure.max), y: getY(compliance.min), color: 'green' })
@@ -175,7 +184,7 @@ export default class Tympanogram {
             putText({
                 container: svg, value: c.toFixed(1),
                 x, y: getY(c), dx: -1,
-                style: style,
+                style,
             });
         }
 
@@ -193,8 +202,9 @@ export default class Tympanogram {
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
         // یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
         putRect({ container: svg, x: -padding.left, y: -padding.top, width, height, name: dims.name, style })
-        this.chart = svg;
         this.container.appendChild(svg);
+        // اگر آبجکت از قبل دیتایی دارد اون رو آپدیت کن
+        this.data && this.update(this.data)
 
         // بلاک توابع داخلی مورد نیاز تابع اصلی
         // توابع تبدیل فشار و کامپلیانس به مختصات میلیمتر
@@ -229,14 +239,9 @@ export default class Tympanogram {
     }
 
     update(data) {
-        let { ECV, SC, MEP, G, extraCompliance } = data
+        this.data = data
+        let { ECV, SC, MEP, G } = data
 
-        // اگر اکسترا کامپلیانس بود چارت دوباره باید رسم شود و چارت قبلی پاک شود
-        if (extraCompliance) {
-            this.chart.remove()
-            this.draw({ dims: this.dims, extraCompliance })
-        }
-        
         // تبدبل اعداد رشته ای به عدد با دو رقم اعشاری
         ECV && (ECV = (+ECV).toFixed(2));
         SC && (SC = (+SC).toFixed(2));
@@ -256,33 +261,38 @@ export default class Tympanogram {
 
     // توابع داخلی
     drawCurve(data) {
-        let { Type, ECV, SC, MEP, G, expanded } = data
-
+        let { Type, ECV, SC, MEP, G, expanded, cp, cpp } = data
 
         // Ensure to Convert to Numbers //
-        SC = +SC;
-        ECV = +ECV;
-        MEP = +MEP;
-        G = +G;
+        SC = +SC
+        ECV = +ECV
+        MEP = +MEP
+        G = +G
+        cp = +cp
+        cpp = +cpp
 
         // اگر این مقادیر وجود نداشته باشه مقدار صفر میدیم بهشون که خطا در رسم منحنی نخوریم
         SC || (SC = 0)
         MEP || (MEP = 0)
 
-
         const container = this.chart
-        const { pressure, compliance, pressureAxiosLength, complianceAxiosLength } = this.chartInfo;
+        const { pressure, compliance, pressureAxiosLength, complianceAxiosLength, compensated } = this.chartInfo;
+
+        let cmp = 0 // for non-compensated
+        compensated && (cmp = ECV)
 
         // مقداردهی دستی برای تست شکل منحنی
         // data.SC = 0.5;
         // data.MEP = -75;
         // با توجه به اندازه اس ‌سی میشه برای مقادیر زیر یک سری رل گذاشت با منحنی قشنگ تر باشد
-        let cp = 70 // جابجایی نقطه کنترل منحنی های راست و چپ روی محور افقی
+        // let cp = 70 // جابجایی نقطه کنترل منحنی های راست و چپ روی محور افقی
+        !cp && (cp = 70)
         // let k = 0.5; // width and height change [0, 1]
-        let cpp = 5 //جابجایی نقطه کنترل قله ها روی محور افقی
+        !cpp && (cpp = 5) //جابجایی نقطه کنترل قله ها روی محور افقی
         // رل‌هایی برای تغییر مقادیر بالا برای زیبایی بیشتر منحنی در نقطه قله
         // (data.SC <= 0.30)? k=0
-        let k = (SC > 0.30) ? 0.5 : 0.1 // width and height change [0, 1]
+        let k
+        k = (SC > 0.30) ? 0.5 : 0.1 // width and height change [0, 1]
         k = (SC > 1.0) ? 0.2 : k
         // k = (data.SC < 1.0) ? 0 : k;
 
@@ -299,24 +309,24 @@ export default class Tympanogram {
 
         const curve = {
             R: {
-                P1: { p: RV.max, c: 0 },
-                P2: { p: MEP + pw, c: SC - ph },
-                C: { p: MEP + cp, c: 0 }
+                P1: { p: RV.max, c: cmp },
+                P2: { p: MEP + pw, c: cmp + SC - ph },
+                C: { p: MEP + cp, c: cmp }
             },
             RM: {
                 P1: {}, // Define later
-                P2: { p: MEP, c: SC },
-                C: { p: MEP + cpp, c: SC }
+                P2: { p: MEP, c: cmp + SC },
+                C: { p: MEP + cpp, c: cmp + SC }
             },
             LM: {
                 P1: {}, // Define later
-                P2: { p: MEP - pw, c: SC - ph },
-                C: { p: MEP - cpp, c: SC }
+                P2: { p: MEP - pw, c: cmp + SC - ph },
+                C: { p: MEP - cpp, c: cmp + SC }
             },
             L: {
                 P1: {}, // Define later
-                P2: { p: RV.min, c: 0 },
-                C: { p: MEP - cp, c: 0 }
+                P2: { p: RV.min, c: cmp },
+                C: { p: MEP - cp, c: cmp }
             }
         }
 

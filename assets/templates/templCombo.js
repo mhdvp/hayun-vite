@@ -1,4 +1,4 @@
-const template_combo = {
+const templCombo = {
     name: 'combo',
     label: 'ادیومتری و تمپانوتری',
     // backgroundImage: 'backgroundImage',
@@ -343,10 +343,10 @@ const template_combo = {
 }
 
 // محاسبه پهنا و ارتفاع قسمت ها با توجه به پهنا و ارتفاع محدوده چاپی و مارجین ها
-template_combo.calc1()
-template_combo.calc2()
-template_combo.calcSectionsArray()
+templCombo.calc1()
+templCombo.calc2()
+templCombo.calcSectionsArray()
 // پهنا و ارتفاع قابل استفاده منهای پد ها میشه پهنا و ارتفاع اصلی
 
-export default template_combo;
+export default templCombo;
 
