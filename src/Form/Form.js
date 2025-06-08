@@ -173,41 +173,41 @@ export default class Form {
         }
         // }
         // if (keys.includes("history")) {
-        if (JSON.stringify(this.data.history) !== JSON.stringify(data.history) && data.history) {
+        if (JSON.stringify(this.data.history) !== JSON.stringify(session?.history) && session?.history) {
             this.history?.update(session?.history)
             this.data.history = session.history
         }
         // }
         // if (keys.includes("audiogram")) {
-        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(data.audiogram) && data.audiogram) {
+        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(session.audiogram) && session.audiogram) {
             this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
             this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
         }
         this.data.audiogram = session.audiogram
         // }
         // if (keys.includes("speech")) {
-        if (JSON.stringify(this.data.speech) !== JSON.stringify(data.speech) && data.speech) {
+        if (JSON.stringify(this.data.speech) !== JSON.stringify(session.speech) && session.speech) {
             this.RSpeech?.update(session.speech?.R)
             this.LSpeech?.update(session.speech?.L)
         }
         this.data.speech = session.speech
         // }
         // if (keys.includes("tympanogram")) {
-        if (JSON.stringify(this.data.tympanogram) !== JSON.stringify(data.tympanogram) && data.tympanogram) {
+        if (JSON.stringify(this.data.tympanogram) !== JSON.stringify(session.tympanogram) && session.tympanogram) {
             this.RTympanogram?.update(session.tympanogram?.R)
             this.LTympanogram?.update(session.tympanogram?.L)
         }
         this.data.tympanogram = session.tympanogram;
         // }
         // if (keys.includes("reflex")) {
-        if (JSON.stringify(this.data.reflex) !== JSON.stringify(data.reflex) && data.reflex) {
+        if (JSON.stringify(this.data.reflex) !== JSON.stringify(session.reflex) && session.reflex) {
             this.RReflex?.update(session.reflex?.R)
             this.LReflex?.update(session.reflex?.L)
         }
         this.data.reflex = session.reflex;
         // }
         // if (keys.includes("report")) {
-        if (JSON.stringify(this.data.report) !== JSON.stringify(data.report) && data.report) {
+        if (JSON.stringify(this.data.report) !== JSON.stringify(session.report) && session.report) {
             this.report?.update(session.report)
             this.data.report = session.report
         }
