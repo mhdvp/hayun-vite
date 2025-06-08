@@ -7,6 +7,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
     constructor({ container, side = 'R', dims }) {
+        
         this.container = container;
         this.side = side;
         this.draw({ dims })

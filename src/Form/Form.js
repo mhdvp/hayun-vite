@@ -107,7 +107,6 @@ export default class Form {
         this.addEvent()
     }
 
-
     create({ paper, margin }) {
         const { width, height } = paper;
         const { left, top } = margin;
@@ -138,7 +137,6 @@ export default class Form {
         const session = patientData.sessions[sessionIndex]
 
         let data = {
-
             header: {
                 officeName: officeData.name,
                 officeLogo: officeData.logos[officeData.selectedLogoIndex],
@@ -164,41 +162,60 @@ export default class Form {
         // let keys = Object.keys(data)
         // if (keys.includes("header")) {
 
-        this.header?.update(data.header)
+        console.log(JSON.stringify(this.data.header) !== JSON.stringify(data.header));
+
+        // console.log(this.data.header, data.header);
+
+        JSON.stringify(this.data.header) !== JSON.stringify(data.header) &&
+            this.header?.update(data.header)
+        this.data.header = data.header
         // }
         // if (keys.includes("patient")) {
-        this.patient?.update(data.patient)
+        JSON.stringify(this.data.patient) !== JSON.stringify(data.patient) &&
+            this.patient?.update(data.patient)
+        this.data.patient = data.patient
         // }
         // if (keys.includes("history")) {
-        this.history?.update(session?.history)
+        JSON.stringify(this.data.history) !== JSON.stringify(data.history) &&
+            this.history?.update(session?.history)
         this.data.history = session.history;
         // }
         // if (keys.includes("audiogram")) {
-        this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
-        this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
+        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(data.audiogram)) {
+            this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
+            this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
+        }
         this.data.audiogram = session.audiogram
         // }
         // if (keys.includes("speech")) {
-        this.RSpeech?.update(session.speech?.R)
-        this.LSpeech?.update(session.speech?.L)
+        if (JSON.stringify(this.data.speech) !== JSON.stringify(data.speech)) {
+            this.RSpeech?.update(session.speech?.R)
+            this.LSpeech?.update(session.speech?.L)
+        }
         this.data.speech = session.speech
         // }
         // if (keys.includes("tympanogram")) {
-        this.RTympanogram?.update(session.tympanogram?.R)
-        this.LTympanogram?.update(session.tympanogram?.L)
+        if (JSON.stringify(this.data.tympanogram) !== JSON.stringify(data.tympanogram) && data.tympanogram) {
+            this.RTympanogram?.update(session.tympanogram?.R)
+            this.LTympanogram?.update(session.tympanogram?.L)
+        }
         this.data.tympanogram = session.tympanogram;
         // }
         // if (keys.includes("reflex")) {
-        this.RReflex?.update(session.reflex?.R)
-        this.LReflex?.update(session.reflex?.L)
-        this.data.tympanogram = session.reflex;
+        if (JSON.stringify(this.data.reflex) !== JSON.stringify(data.reflex)) {
+            this.RReflex?.update(session.reflex?.R)
+            this.LReflex?.update(session.reflex?.L)
+        }
+        this.data.reflex = session.reflex;
         // }
         // if (keys.includes("report")) {
-        this.report?.update(session.report)
+        JSON.stringify(this.data.report) !== JSON.stringify(data.report) &&
+            this.report?.update(session.report)
         this.data.report = session.report;
         // }
         // if (keys.includes("footer")) {
-        this.footer?.update(data?.footer)
+        JSON.stringify(this.data.footer) !== JSON.stringify(data.footer) &&
+            this.footer?.update(data?.footer)
         this.data.footer = data.footer;
     }
 

@@ -6,6 +6,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Header {
     constructor({ container }) {
+        
         this.container = container;
     }
 
@@ -68,6 +69,8 @@ export default class Header {
     }
 
     update(data) {
+        console.log('I`m from header.update');
+        
         this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
         this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";
         this.container.querySelector("[data-name=officeLogo]").setAttribute("href", data?.officeLogo || "");

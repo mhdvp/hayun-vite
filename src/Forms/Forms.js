@@ -14,7 +14,7 @@ export default class Forms {
         this.container = container
         this.mode = mode;
         this.forms = [] // آرایه آبجکت های فرم های مختلف
-        this.addForms({ templates: [templCombo, templAudiometry], defaultTemplateIndex })
+        this.addForms({ templates, defaultTemplateIndex })
     }
 
     // افزودن فرم 

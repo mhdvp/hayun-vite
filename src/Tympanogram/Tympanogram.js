@@ -240,6 +240,8 @@ export default class Tympanogram {
 
     update(data) {
         this.data = data
+        console.log(data);
+        
         let { ECV, SC, MEP, G } = data
 
         // تبدبل اعداد رشته ای به عدد با دو رقم اعشاری

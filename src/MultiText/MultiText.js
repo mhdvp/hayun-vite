@@ -76,9 +76,6 @@ export default class MultiText {
         })
 
         this.container.appendChild(svg)
-
-
-
     }
 
     update(data) {
@@ -92,12 +89,15 @@ export default class MultiText {
                 const x = textInput.getAttribute('x')
                 // اگر متن چند خطی بود 
                 if (textLines.length >= 2) {
+                    // اول از همه هر چی تی‌اسپن از قبل توی این تکست اینپوت هست پاک کن
+                    textInput.textContent = ""
+
                     let y = 5;
                     textLines.forEach(value => {
                         putTspan({ container: textInput, value, x, y });
                         y += 6;
                     })
-                } else textInput.innerHTML = value || "";
+                } else textInput.textContent = value || "";
             }
         });
     }
