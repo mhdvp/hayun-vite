@@ -179,14 +179,14 @@ export default class Form {
         }
         // }
         // if (keys.includes("audiogram")) {
-        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(data.audiogram)) {
+        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(data.audiogram) && data.audiogram) {
             this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
             this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
         }
         this.data.audiogram = session.audiogram
         // }
         // if (keys.includes("speech")) {
-        if (JSON.stringify(this.data.speech) !== JSON.stringify(data.speech)) {
+        if (JSON.stringify(this.data.speech) !== JSON.stringify(data.speech) && data.speech) {
             this.RSpeech?.update(session.speech?.R)
             this.LSpeech?.update(session.speech?.L)
         }
@@ -200,7 +200,7 @@ export default class Form {
         this.data.tympanogram = session.tympanogram;
         // }
         // if (keys.includes("reflex")) {
-        if (JSON.stringify(this.data.reflex) !== JSON.stringify(data.reflex)) {
+        if (JSON.stringify(this.data.reflex) !== JSON.stringify(data.reflex) && data.reflex) {
             this.RReflex?.update(session.reflex?.R)
             this.LReflex?.update(session.reflex?.L)
         }
