@@ -161,24 +161,22 @@ export default class Form {
 
         // let keys = Object.keys(data)
         // if (keys.includes("header")) {
-
-        console.log(JSON.stringify(this.data.header) !== JSON.stringify(data.header));
-
-        // console.log(this.data.header, data.header);
-
-        JSON.stringify(this.data.header) !== JSON.stringify(data.header) &&
+        if (JSON.stringify(this.data.header) !== JSON.stringify(data.header) && data.header) {
             this.header?.update(data.header)
-        this.data.header = data.header
+            this.data.header = data.header
+        }
         // }
         // if (keys.includes("patient")) {
-        JSON.stringify(this.data.patient) !== JSON.stringify(data.patient) &&
+        if (JSON.stringify(this.data.patient) !== JSON.stringify(data.patient) && data.patient) {
             this.patient?.update(data.patient)
-        this.data.patient = data.patient
+            this.data.patient = data.patient
+        }
         // }
         // if (keys.includes("history")) {
-        JSON.stringify(this.data.history) !== JSON.stringify(data.history) &&
+        if (JSON.stringify(this.data.history) !== JSON.stringify(data.history) && data.history) {
             this.history?.update(session?.history)
-        this.data.history = session.history;
+            this.data.history = session.history
+        }
         // }
         // if (keys.includes("audiogram")) {
         if (JSON.stringify(this.data.audiogram) !== JSON.stringify(data.audiogram)) {
@@ -209,14 +207,16 @@ export default class Form {
         this.data.reflex = session.reflex;
         // }
         // if (keys.includes("report")) {
-        JSON.stringify(this.data.report) !== JSON.stringify(data.report) &&
+        if (JSON.stringify(this.data.report) !== JSON.stringify(data.report) && data.report) {
             this.report?.update(session.report)
-        this.data.report = session.report;
+            this.data.report = session.report
+        }
         // }
         // if (keys.includes("footer")) {
-        JSON.stringify(this.data.footer) !== JSON.stringify(data.footer) &&
+        if (JSON.stringify(this.data.footer) !== JSON.stringify(data.footer) && data.footer) {
             this.footer?.update(data?.footer)
-        this.data.footer = data.footer;
+            this.data.footer = data.footer
+        }
     }
 
     // خطوط نقطه چین مارجین فرم
