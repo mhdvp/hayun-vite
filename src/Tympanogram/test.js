@@ -1,7 +1,9 @@
+import home from "../../uis/home";
 import Tympanogram from "./Tympanogram";
 
+
 document.querySelector('#app').innerHTML = `
-    <div id="test"></div>
+    <div id="tympanogram"></div>
     <p>Curve settings:</p>
     <div>
       <input type="range" id="cp" name="cp" min="10" max="150" value="70" step="5" />
@@ -17,7 +19,8 @@ document.querySelector('#app').innerHTML = `
         <label for="compensated">Compensated</label>
       </div>
     </div>
-`;
+` + home
+
 let dims = {
     "name": "RTympanogram",
     "w": 100,
@@ -63,8 +66,8 @@ document.querySelector("#cp")
     .addEventListener("input", e => {
         cp = e.target.value
         console.log(cp);
-        data = {...data, cp}
-        
+        data = { ...data, cp }
+
         RTympanogram.update(data)
     })
 
@@ -73,12 +76,12 @@ document.querySelector("#cpp")
     .addEventListener("input", e => {
         cpp = e.target.value
         console.log(cpp);
-        data = {...data, cpp}
+        data = { ...data, cpp }
 
         RTympanogram.update(data)
     })
 
-const container = document.getElementById('test')
+const container = document.getElementById('tympanogram')
 
 const RTympanogram = new Tympanogram({ container, dims, side: 'R' })
 RTympanogram.update(data)

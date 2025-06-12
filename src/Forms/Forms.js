@@ -11,7 +11,7 @@ import templAudiometry from "../../assets/templates/templAudiometry.js"
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
     constructor({ assets, container, templates, defaultTemplateIndex = 0, mode = 'production' } = {}) {
-        console.log('I`M FROM Forms.constructor METHOD !!!!!!!!!!!!!!');
+        // console.log('I`M FROM Forms.constructor METHOD !!!!!!!!!!!!!!');
         
         this.container = container
         this.mode = mode;
@@ -110,7 +110,7 @@ export default class Forms {
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
     update({ officeData, patientData, sessionIndex = 0 }) {
-        console.log('I`M FROM Forms.update METHOD !!!!!!!!!!!!!!');
+        // console.log('I`M FROM Forms.update METHOD !!!!!!!!!!!!!!');
 
         // اگر هر دو دیتا وجود داشت  ادامه بده
         if (officeData && patientData) {

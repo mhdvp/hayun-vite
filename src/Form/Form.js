@@ -75,6 +75,8 @@ export default class Form {
         }
         if (sections.RTympanogram) {
             dims = template.RTympanogram
+            console.log(dims);
+            
             this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R', dims })
         }
         if (sections.LTympanogram) {
@@ -161,59 +163,71 @@ export default class Form {
 
         // let keys = Object.keys(data)
         // if (keys.includes("header")) {
-        if (JSON.stringify(this.data.header) !== JSON.stringify(data.header) && data.header) {
+        if (data.header) {
             this.header?.update(data.header)
             this.data.header = data.header
         }
         // }
         // if (keys.includes("patient")) {
-        if (JSON.stringify(this.data.patient) !== JSON.stringify(data.patient) && data.patient) {
+        if (data.patient) {
             this.patient?.update(data.patient)
             this.data.patient = data.patient
         }
         // }
         // if (keys.includes("history")) {
-        if (JSON.stringify(this.data.history) !== JSON.stringify(session?.history) && session?.history) {
+        if (session?.history) {
             this.history?.update(session?.history)
             this.data.history = session.history
         }
         // }
         // if (keys.includes("audiogram")) {
-        if (JSON.stringify(this.data.audiogram) !== JSON.stringify(session.audiogram) && session.audiogram) {
+        if (session.audiogram) {
             this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
             this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
         }
         this.data.audiogram = session.audiogram
         // }
         // if (keys.includes("speech")) {
-        if (JSON.stringify(this.data.speech) !== JSON.stringify(session.speech) && session.speech) {
+        console.log(session.speech.R.SAT);
+
+        if (
+            // JSON.stringify(this.data.speech) !== JSON.stringify(session.speech) &&
+            session.speech &&
+            Object.keys(session.speech).length !== 0) {
+            console.log('FROM updatas speech');
+
             this.RSpeech?.update(session.speech?.R)
             this.LSpeech?.update(session.speech?.L)
         }
         this.data.speech = session.speech
         // }
         // if (keys.includes("tympanogram")) {
-        if (JSON.stringify(this.data.tympanogram) !== JSON.stringify(session.tympanogram) && session.tympanogram) {
+        if (
+            session.tympanogram &&
+            Object.keys(session.tympanogram).length !== 0) {
+
             this.RTympanogram?.update(session.tympanogram?.R)
             this.LTympanogram?.update(session.tympanogram?.L)
         }
         this.data.tympanogram = session.tympanogram;
         // }
         // if (keys.includes("reflex")) {
-        if (JSON.stringify(this.data.reflex) !== JSON.stringify(session.reflex) && session.reflex) {
+        if (
+            session.reflex && Object.keys(session.reflex).length !== 0) {
+
             this.RReflex?.update(session.reflex?.R)
             this.LReflex?.update(session.reflex?.L)
         }
         this.data.reflex = session.reflex;
         // }
         // if (keys.includes("report")) {
-        if (JSON.stringify(this.data.report) !== JSON.stringify(session.report) && session.report) {
+        if (session.report) {
             this.report?.update(session.report)
             this.data.report = session.report
         }
         // }
         // if (keys.includes("footer")) {
-        if (JSON.stringify(this.data.footer) !== JSON.stringify(data.footer) && data.footer) {
+        if (data.footer) {
             this.footer?.update(data?.footer)
             this.data.footer = data.footer
         }

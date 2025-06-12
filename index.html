@@ -5,18 +5,27 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="vite.svg" />
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css">
   <style>
     p,
+    span,
     label {
       font:
         1.3rem "Fira Sans",
         sans-serif;
     }
 
-    input {
-      margin: 0.4rem;
-      /* user-select: none; */
+    input[type="text"]:focus {
+      /* outline: none; */
+      /* removes the blue focus outline */
+      /* box-shadow: none; */
+      /* removes any additional focus shadow */
+      /* border: none; */
+      /* optional: remove border if desired */
+      /* margin: 0; */
+      /* optional: reset margin if browser adds any */
     }
+
     label {
       user-select: none;
     }
@@ -26,19 +35,17 @@
 </head>
 
 <body>
+  
   <div id="app"></div>
- 
-
   <script>
-    
-
-
-
 
   </script>
+  <!-- <script type="module" src="/src/Speech/test.js"></script> -->
+  <!-- <script type="module" src="/src/Speech/ui.js"></script> -->
   <!-- <script type="module" src="/src/Audiogram/test.js"></script> -->
   <!-- <script type="module" src="/src/main.js"></script> -->
-  <script type="module" src="/src/Forms/test.js"></script>
+  <!-- <script type="module" src="/src/Forms/ui.js"></script> -->
+  <script type="module" src="/src/Reflex/ui.js"></script>
   <!-- <script type="module" src="/src/Tympanogram/test.js"></script> -->
 
 </body>

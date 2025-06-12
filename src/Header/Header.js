@@ -69,7 +69,7 @@ export default class Header {
     }
 
     update(data) {
-        console.log('I`m from header.update');
+        // console.log('I`m from header.update');
         
         this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
         this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";

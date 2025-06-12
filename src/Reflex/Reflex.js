@@ -69,6 +69,7 @@ export default class Reflex {
                 let cx = cw1 / 2 + cw1 * i;
                 let cy = ch1 * j + ch2 / 2;
                 //رسم باکس با مختصات مرکز باکس
+                // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
                 putRect({
                     container: svg, cx, cy,
                     width: inputBox.width, height: inputBox.height, rx: inputBox.rx

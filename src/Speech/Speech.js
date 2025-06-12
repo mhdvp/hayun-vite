@@ -7,7 +7,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
     constructor({ container, side = 'R', dims }) {
-        
+
         this.container = container;
         this.side = side;
         this.draw({ dims })
@@ -18,20 +18,22 @@ export default class Speech {
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         this.inputs = (dims.forceInsert) ? dims.forceInputs : dims.inputs
         let style;
-        let width = dims.width;
-        let height = dims.height;
+        let w = dims.width;
+        let h = dims.height;
         let x = dims.margin.left;
         let y = dims.margin.top;
         let { styles, vbWidth, vbHeight } = units;
-        let cx, cy;
+        let cx, cy, pcx, pcy
 
         // کل چارت
-        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        vbHeight = (vbWidth * h) / w // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
-        const svg = putSVG({ x, y, width, height, viewBox })
+        const svg = putSVG({ x, y, width: w, height: h, viewBox })
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
-        width = vbWidth; // ثابت می‌ماند همیشه
-        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+        const width = vbWidth; // ثابت می‌ماند همیشه
+        const height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+        const kx = w / width
+        const ky = h / height
 
         const labels = dims.labels;
         this.labels = labels;
@@ -55,13 +57,18 @@ export default class Speech {
             [],
             []
         ];
+        this.matrix = matrix;
 
         for (let i = 0; i < rows; i++) {
-            cx = cw / 2;
-            cy = ch / 2 + ch * i;
+            cx = cw / 2
+            cy = ch / 2 + ch * i
             for (let j = 0; j < columns; j++) {
-                matrix[i][j] = { i, j, cx, cy };
-                cx += cw;
+                // مختصات پیکسلی
+                // استفاده ش برای رسم اینپوت های دیو ورود اطلاعات
+                pcx = cx * kx
+                pcy = cy * ky
+                matrix[i][j] = { i, j, cx, cy, pcx, pcy }
+                cx += cw
             }
         }
 
@@ -95,7 +102,7 @@ export default class Speech {
                 });
             // مقدار نگه دارها
             if (!dims.forceInsert) {
-                putText({ container: svg, value: "", x: cell.cx, y: cell.cy, style, name: labels[index] });
+                putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dy: 0, style, name: labels[index] });
             } else {
                 // برای فرم های مثل رسا استفاده میشود
                 let name;
@@ -113,6 +120,17 @@ export default class Speech {
         putRect({ container: svg, x: 0, y: 0, width, height, style, name: dims.name })
         this.chart = svg;
         this.container.appendChild(svg);
+
+        // تبدیل مختصات ویوباکس به مختصات پیکسلی
+
+    }
+
+    // تبدیل ماتریکس مختصات ویوباکس به مختصات پیکسلی
+    transformMatrix() {
+        this.matrix.map((value, index) => {
+            console.log(value, index);
+
+        })
     }
 
     update(data) {
