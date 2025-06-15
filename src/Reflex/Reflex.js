@@ -7,13 +7,14 @@ export default class Reflex {
     constructor({ container, side, dims }) {
         this.container = container;
         this.side = side; // این برای تعیین رنگ راست و چپ استفاده می‌شود
+        this.inputDims = [] // پراپرتی نگهداری مختصات مرکز اینپوت ها
         this.draw({ dims })
     }
 
     draw({ dims }) {
 
-        let width = dims.width;
-        let height = dims.height;
+        let w = dims.width;
+        let h = dims.height;
         let x = dims.margin.left;
         let y = dims.margin.top;
         let style;
@@ -24,13 +25,14 @@ export default class Reflex {
 
         // کل چارت
         style = styles.svg
-        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        vbHeight = (vbWidth * h) / w // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
-        const svg = putSVG({ x, y, width, height, viewBox, style })
+        const svg = putSVG({ x, y, width: w, height: h, viewBox, style })
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
-        width = vbWidth; // ثابت می‌ماند همیشه
-        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
-
+        const width = vbWidth; // ثابت می‌ماند همیشه
+        const height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+        const kx = w / width // ضرایب برای محاسبه مختصات پیکسلی
+        const ky = h / height
 
         // چاپ برچسب‌های سطر اول
         style = styles.numberlabel;
@@ -69,7 +71,6 @@ export default class Reflex {
                 let cx = cw1 / 2 + cw1 * i;
                 let cy = ch1 * j + ch2 / 2;
                 //رسم باکس با مختصات مرکز باکس
-                // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
                 putRect({
                     container: svg, cx, cy,
                     width: inputBox.width, height: inputBox.height, rx: inputBox.rx
@@ -82,22 +83,28 @@ export default class Reflex {
         // اضافه کردن رنگ قرمز یا آبی به استایل بر اساس جهت
         style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
 
-        let names = ["IPSI_500", "IPSI_1000", "IPSI_2000", "IPSI_4000"];
+        let names = ["ipsi-500", "ipsi-1000", "ipsi-2000", "ipsi-4000"];
         for (let index = 0; index < 4; index++) {
             x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 + ch2 / 2;
             putText({ container: svg, value: "", x, y, style, name: names[index] })
+            // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
+            // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
+            this.inputDims.push({ name: names[index], x: x * kx, y: y * ky })
         }
 
         // المنت‌های تکست خالی با آیدی یکتا در سطر سوم
         // آرایه نام آیدی یکتا برای المنت تکست مقادیر برای استفاده تابع آپدیت
-        names = ["CONTRA_500", "CONTRA_1000", "CONTRA_2000", "CONTRA_4000"];
+        names = ["contra-500", "contra-1000", "contra-2000", "contra-4000"];
 
         for (let index = 0; index < 4; index++) {
             // const idValue = idValues[index];
             x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 * 2 + ch2 / 2;
             putText({ container: svg, value: "", x, y, style, name: names[index] })
+            // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
+            // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
+            this.inputDims.push({ name: names[index], x: x * kx, y: y * ky })
         }
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه و دریافت رویداد کلیک روی فرم
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
@@ -109,9 +116,11 @@ export default class Reflex {
 
     // جایگذاری داده های رفلکس
     update(data) {
+        console.log(data);
+        
         for (const key in data) {
             for (const freq in data[key]) {
-                this.chart.querySelector(`text[data-name=${key}_${freq}]`).innerHTML = data?.[key]?.[freq] || "";
+                this.chart.querySelector(`text[data-name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";
             }
         }
     }

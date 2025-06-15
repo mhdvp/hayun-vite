@@ -1,4 +1,3 @@
-import home from "../../uis/home";
 import Tympanogram from "./Tympanogram";
 
 
@@ -19,7 +18,7 @@ document.querySelector('#app').innerHTML = `
         <label for="compensated">Compensated</label>
       </div>
     </div>
-` + home
+`
 
 let dims = {
     "name": "RTympanogram",
@@ -36,7 +35,7 @@ let dims = {
     "height": 60 * 12,
 }
 let data = {
-    Type: "An",
+    type: "An",
     ECV: '1.30',
     SC: '0.80',
     MEP: '-130',

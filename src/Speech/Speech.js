@@ -10,10 +10,11 @@ export default class Speech {
 
         this.container = container;
         this.side = side;
+        this.inputDims = [] // پراپرتی نگهداری مختصات مرکز اینپوت ها
         this.draw({ dims })
     }
 
-    draw({ dims }) {
+    draw({ container, dims }) {
 
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         this.inputs = (dims.forceInsert) ? dims.forceInputs : dims.inputs
@@ -100,9 +101,12 @@ export default class Speech {
                     width: inputBox.width, height: inputBox.height,
                     rx: inputBox.rx,
                 });
-            // مقدار نگه دارها
+            // اینپوت‌های نگهداری مقادیر که بعدا توسط متد آپدیت مقدارگذاری می‌شوند
             if (!dims.forceInsert) {
                 putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dy: 0, style, name: labels[index] });
+                // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
+                // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
+                this.inputDims.push({ name: labels[index], x: cell.cx * kx, y: cell.cy * ky })
             } else {
                 // برای فرم های مثل رسا استفاده میشود
                 let name;
@@ -119,23 +123,21 @@ export default class Speech {
         let className = 'no-print'
         putRect({ container: svg, x: 0, y: 0, width, height, style, name: dims.name })
         this.chart = svg;
-        this.container.appendChild(svg);
+        // اگر متد خودش کانتینر داشت در کانتینر خودش افزوده بشه
+        const parent = container ? container : this.container
+        parent.appendChild(svg);
 
         // تبدیل مختصات ویوباکس به مختصات پیکسلی
 
-    }
-
-    // تبدیل ماتریکس مختصات ویوباکس به مختصات پیکسلی
-    transformMatrix() {
-        this.matrix.map((value, index) => {
-            console.log(value, index);
-
-        })
     }
 
     update(data) {
         this.labels.forEach((label) => {
             this.chart.querySelector(`text[data-name=${label}]`).innerHTML = data?.[label] || "";
         })
+    }
+
+    ui(){
+
     }
 }

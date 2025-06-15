@@ -1,3 +1,4 @@
+import putPoint from "../common/putPoint.js";
 import putRect from "../common/putRect.js";
 import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
@@ -9,6 +10,8 @@ export default class Tympanogram {
         this.container = container;
         this.side = side
         this.dims = dims
+        this.inputDims = [] // پراپرتی نگهداری مختصات مرکز اینپوت ها
+
         this.draw({ dims })
     }
 
@@ -19,7 +22,10 @@ export default class Tympanogram {
         // داده‌های یونتیت خوانده میشود و بعد داده‌های دیمز به آن اضافه می‌‌شودکه می‌تواند جایگزین داده‌های قبلی یونیتز شود
         dims = { ...units, ...dims }
 
-        let { width, height } = dims
+        // let { width, height } = dims
+        let w = dims.width;
+        let h = dims.height;
+
         let x = dims.margin.left;
         let y = dims.margin.top;
         const { extraCompliance, compensated } = dims
@@ -33,13 +39,15 @@ export default class Tympanogram {
         // کل چارت
         let style
         style = styles.svg
-        vbHeight = (vbWidth * height) / width // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
+        vbHeight = (vbWidth * h) / w // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [-padding.left, -padding.top, vbWidth, vbHeight].join(' ')
-        const svg = putSVG({ x, y, width, height, viewBox, style })
+        const svg = putSVG({ x, y, width: w, height: h, viewBox, style })
         this.chart = svg;
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
-        width = vbWidth; // ثابت می‌ماند همیشه
-        height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+        const width = vbWidth; // ثابت می‌ماند همیشه
+        const height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
+        const kx = w / width // ضریب نسبت پهنای پیکسلی به پهنای ویوباکس برای استفاده در محاسبه مختصات پیکسلی نگهدار مقدارهای ورودی
+        const ky = h / height
 
         const pressureAxiosLength = {
             dapa: pressure.max - pressure.min,
@@ -59,7 +67,6 @@ export default class Tympanogram {
         // point({ container: svg, x: getX(pressure.min), y: getY(compliance.max), color: 'red' })
         // point({ container: svg, x: getX(pressure.max), y: getY(compliance.min), color: 'green' })
         // point({ container: svg, x: getX(pressure.min), y: getY(compliance.min), color: 'brown' })
-
 
         // Drawing Chart Lines
         {
@@ -146,35 +153,22 @@ export default class Tympanogram {
         }
 
         // Tympanogram Values (Inputs)
-        {
-            let color = (this.side === 'R') ? 'red' : 'blue';
-            style = styles.input
-
-            putText({
-                container: svg, value: "", style: style + 'fill: ' + color, name: 'ECV',
-                x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 11
-            })
-
-            putText({
-                container: svg, value: "", style: style + 'fill: ' + color, name: 'MEP',
-                x: getX(-300), y: getY(compliance.min), dy: 10, dx: 11
-            })
-
-            putText({
-                container: svg, value: "", style: style + 'fill: ' + color, name: 'SC',
-                x: getX(0), y: getY(compliance.min), dy: 10, dx: 8
-            })
-
-            putText({
-                container: svg, value: "", style: style + 'fill: ' + color, name: 'G',
-                x: getX(300), y: getY(compliance.min), dy: 10, dx: 4
-            })
-
-            putText({
-                container: svg, value: "", style: style + 'fill: ' + color, name: 'Type',
-                x: getX(-500), y: getY(2.5), dx: 9
-            })
-        }
+        let color = (this.side === 'R') ? 'red' : 'blue';
+        style = styles.input + 'fill: ' + color
+        let value = ""; // فضای خالی برای راهنمایی وگرنه به نظر میاد نبود هم نبود
+        [
+            { name: 'ECV', x: getX(pressure.min), y: getY(compliance.min), dy: 10, dx: 11 },
+            { name: 'MEP', x: getX(-300), y: getY(compliance.min), dy: 10, dx: 11 },
+            { name: 'SC', x: getX(0), y: getY(compliance.min), dy: 10, dx: 8 },
+            { name: 'G', x: getX(300), y: getY(compliance.min), dy: 10, dx: 4 },
+            { name: 'type', x: getX(-500), y: getY(2.5), dx: 9, dy: 0 },
+        ]
+            .forEach(input => {
+                const { name, x, y, dx, dy } = input
+                putText({ container: svg, value, style, name, x, y, dx, dy })
+                this.inputDims.push({ name, x: (x + dx + padding.left) * kx, y: (y + dy + padding.top) * ky })
+                // putPoint({ container: svg, x, y, dx, dy, r: 0.8, fill: 'brown' })
+            });
 
         // Compliance Axios digits
         style = styles.compliance;
@@ -240,7 +234,7 @@ export default class Tympanogram {
 
     update(data) {
         this.data = data
-        
+
         let { ECV, SC, MEP, G } = data
 
         // تبدبل اعداد رشته ای به عدد با دو رقم اعشاری
@@ -249,7 +243,7 @@ export default class Tympanogram {
         G && (G = (+G).toFixed(2));
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
-        this.chart.querySelector(`text[data-name="Type"]`).innerHTML = data?.Type || "-";
+        this.chart.querySelector(`text[data-name="type"]`).innerHTML = data?.type || "-";
         this.chart.querySelector(`text[data-name="ECV"]`).innerHTML = ECV || "-";
         this.chart.querySelector(`text[data-name="MEP"]`).innerHTML = data?.MEP || "-";
         this.chart.querySelector(`text[data-name="SC"]`).innerHTML = SC || "-";
@@ -262,7 +256,7 @@ export default class Tympanogram {
 
     // توابع داخلی
     drawCurve(data) {
-        let { Type, ECV, SC, MEP, G, expanded, cp, cpp } = data
+        let { type, ECV, SC, MEP, G, expanded, cp, cpp } = data
 
         // Ensure to Convert to Numbers //
         SC = +SC

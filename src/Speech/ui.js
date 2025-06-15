@@ -1,13 +1,22 @@
 import Speech from "./Speech";
-import {patientData} from "../../assets/data/sampleData.js"
 document.querySelector('#app').insertAdjacentHTML('beforeend', `
-  <button type="button" id="update-btn">Update</button>
-
-  <div style="display:flex; align-items: center; justify-content: space-around;">
-    <section id="speech" style="position: relative;">
-      <input type="text" data-name="SAT-input" maxlength="4" placeholder="---" autocomplete="off" />
-    </section>
-  </div>
+<div name="speechs">
+	<h1 class="center">Speech Tests</h1>
+	<div class="center">
+		<div>
+			<h2 class="center red">Right</h2>
+			<section id="r-speech" style="position: relative;">
+				<input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
+			</section>
+		</div>
+		<div>
+			<h2 class="center blue">Left</h2>
+			<section id="l-speech" style="position: relative;">
+				<input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
+			</section>
+		</div>
+	</div>
+</div>
 `)
 
 let dims = {
@@ -22,8 +31,8 @@ let dims = {
   },
   "display": "inline",
   "stroke": true,
-  "width": 100 * 5,
-  "height": 20 * 5,
+  "width": 100 * 6,
+  "height": 20 * 6,
   "labels": [
     "SAT",
     "SRT",
@@ -33,15 +42,11 @@ let dims = {
   ]
 }
 
-const container = document.querySelector('#speech')
+let container = document.querySelector('#r-speech')
 const RSpeech = new Speech({ container, dims, side: 'R' })
 
-let input = document.querySelector("[data-name='SAT-input']")
 const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
 const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
-const inputDims = RSpeech.matrix[1] // مختصات اینپوت‌های سطر دوم در یک آرایه
-let left = inputDims[0].pcx - width / 2
-let top = inputDims[0].pcy - height / 2 - 6 // توی رسم افست دادیم به مستطیل کادر جبران اون 
 let style = `
   margin: 0;
   padding: 0;
@@ -54,31 +59,44 @@ let style = `
   height: ${height}px;
   border: none;
 `
-// input.style = style;
-input.setAttribute('style', style + ' left: ' + left + 'px; ' + 'top: ' + top + 'px;')
-input.focus() // فوکوس روی اینپوت اول
+// آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
+let input = container.querySelector('[name=SAT]')
+input.focus()
+let inputDims = RSpeech.inputDims
+input.style = style
+input.style.left = inputDims[0].x - width / 2 + 'px'
+input.style.top = inputDims[0].y - height / 2 + 'px'
+inputDims.shift() // حذف اولین عنصر آرایه بخاط اینکه استفاده شد در نود بالایی
 
-// نود اول رو که در داکیومنت داریم. پس از نود دوم به بعد را از روی نود اول ایجاد می‌کنیم
-// و مقدار دهی می‌کنیم
-for (let i = 1; i < dims.labels.length; i++) {
+inputDims.forEach(dims => {
   input = input.cloneNode()
-  left = inputDims[i].pcx - width / 2
-  top = inputDims[i].pcy - height / 2 - 6 // توی رسم افست دادیم به مستطیل کادر جبران اون 
-  // input.setAttribute('style', style + ' left: ' + left + 'px; ' + 'top: ' + top + 'px;')
-  input.style = style
-  input.style.left = left + 'px'
-  input.style.top = top + 'px'
-  input.setAttribute('data-name', dims.labels[i] + '-input')
+  input.style.left = dims.x - width / 2 + 'px'
+  input.style.top = dims.y - height / 2 + 'px'
+  input.setAttribute('name', dims.name)
   container.appendChild(input)
-
-}
-
-document.querySelector('#update-btn').addEventListener('click', e => {
-  const SAT = container.querySelector("[data-name='SAT-input']").value
-  patientData.sessions[0].speech.R.SAT = SAT
-  
-
 })
+
+container = document.querySelector('#l-speech')
+const LSpeech = new Speech({ container, dims, side: 'L' })
+input = container.querySelector('[name=SAT]')
+inputDims = LSpeech.inputDims
+input.style = style
+input.style.left = inputDims[0].x - width / 2 + 'px'
+input.style.top = inputDims[0].y - height / 2 + 'px'
+inputDims.shift() // حذف اولین عنصر آرایه بخاط اینکه استفاده شد در نود بالایی
+
+inputDims.forEach(dims => {
+  input = input.cloneNode()
+  input.style.left = dims.x - width / 2 + 'px'
+  input.style.top = dims.y - height / 2 + 'px'
+  input.setAttribute('name', dims.name)
+  container.appendChild(input)
+})
+
+// document.querySelector('#update-btn').addEventListener('click', e => {
+//   const SAT = container.querySelector("[name='SAT']").value
+//   patientData.sessions[0].speech.R.SAT = SAT
+// })
 
 
 

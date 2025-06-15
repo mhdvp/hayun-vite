@@ -75,8 +75,6 @@ export default class Form {
         }
         if (sections.RTympanogram) {
             dims = template.RTympanogram
-            console.log(dims);
-            
             this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R', dims })
         }
         if (sections.LTympanogram) {
@@ -86,6 +84,8 @@ export default class Form {
         if (sections['Reflex Titles']) {
             dims = template['Reflex Titles'];
             const titles = new MultiText({ container: sections['Reflex Titles'], dims });
+            console.log(dims);
+            
         }
         if (sections.RReflex) {
             dims = template.RReflex
