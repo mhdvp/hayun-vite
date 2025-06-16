@@ -243,13 +243,13 @@ export default class Tympanogram {
         G && (G = (+G).toFixed(2));
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
-        this.chart.querySelector(`text[data-name="type"]`).innerHTML = data?.type || "-";
-        this.chart.querySelector(`text[data-name="ECV"]`).innerHTML = ECV || "-";
-        this.chart.querySelector(`text[data-name="MEP"]`).innerHTML = data?.MEP || "-";
-        this.chart.querySelector(`text[data-name="SC"]`).innerHTML = SC || "-";
-        this.chart.querySelector(`text[data-name="G"]`).innerHTML = G || "-";
+        this.chart.querySelector(`text[name="type"]`).innerHTML = data?.type || "-";
+        this.chart.querySelector(`text[name="ECV"]`).innerHTML = ECV || "-";
+        this.chart.querySelector(`text[name="MEP"]`).innerHTML = data?.MEP || "-";
+        this.chart.querySelector(`text[name="SC"]`).innerHTML = SC || "-";
+        this.chart.querySelector(`text[name="G"]`).innerHTML = G || "-";
         // پاک کردن منحنی قبلی از کانتینر جاری
-        this.chart.querySelector(`path[data-name="curve"]`)?.remove();
+        this.chart.querySelector(`path[name="curve"]`)?.remove();
         // رسم منحنی
         this.drawCurve(data);
     }

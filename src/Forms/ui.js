@@ -11,6 +11,8 @@ document.querySelector('#app').insertAdjacentHTML('beforeend', `
 const container = document.getElementById('forms')
 
 const forms = new Forms({ container, templates: [templCombo,], mode: 'develop' });
+forms.update({ officeData, patientData, sessionIndex: 0 })
+
 // forms.forms[0].RSpeech.update({ SAT: 555 })
 
 let dims = {
@@ -35,14 +37,14 @@ let dims = {
     "SDS"
   ]
 }
-forms.forms[0].RSpeech.draw({container, dims})
+// forms.forms[0].RSpeech.draw({ container, dims })
 // forms.update({ officeData, patientData, sessionIndex: 0 })
 // forms.update({ officeData, patientData, sessionIndex: 1 })
 
 document.querySelector('#update-form').addEventListener('click', e => {
-    console.log(patientData.sessions[0].speech.R.SAT);
+  console.log(patientData.sessions[0].speech.R.SAT);
 
-    forms.update({ officeData, patientData, sessionIndex: 0 })
+  forms.update({ officeData, patientData, sessionIndex: 0 })
 
 })
 

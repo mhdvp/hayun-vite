@@ -5,7 +5,7 @@ export default function putText(
     { container, value = '', x, y, id, dx = 0, dy = 0, style, name, className }) {
 
     let text = document.createElementNS(svgNS, "text");
-    name && text.setAttribute("data-name", name)
+    name && text.setAttribute("name", name)
     className && text.setAttribute("class", className);
     style && (text.style = style);
     text.setAttribute("x", x + dx);

@@ -107,6 +107,7 @@ function insertInputs({ containerID, side, dims, style }) {
 	
 	let inputDims = tympanogram.inputDims
 	input.style = style
+    input.style.color = (side === 'R') ? 'crimson' : 'blue';
 	input.style.left = inputDims[0].x - width / 2 + 'px'
 	input.style.top = inputDims[0].y - height / 2 + 'px'
 	inputDims.shift() // حذف اولین عنصر آرایه بخاط اینکه استفاده شد در نود بالایی

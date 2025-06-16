@@ -23,7 +23,7 @@ export default class Header {
 
         // Logo 
         let image = document.createElementNS(svgNS, "image");
-        image.setAttribute("data-name", "officeLogo") // برای تابع آپدیت استفاده می‌شود
+        image.setAttribute("name", "officeLogo") // برای تابع آپدیت استفاده می‌شود
         image.setAttribute("width", "17");
         image.setAttribute("height", height - 1);
         image.setAttribute("x", width - 16);
@@ -71,8 +71,8 @@ export default class Header {
     update(data) {
         // console.log('I`m from header.update');
         
-        this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
-        this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";
-        this.container.querySelector("[data-name=officeLogo]").setAttribute("href", data?.officeLogo || "");
+        this.container.querySelector("[name=officeName]").innerHTML = data?.officeName || "";
+        this.container.querySelector("[name=date]").innerHTML = data?.createDate || "";
+        this.container.querySelector("[name=officeLogo]").setAttribute("href", data?.officeLogo || "");
     }
 }

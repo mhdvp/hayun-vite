@@ -81,7 +81,7 @@ export default class MultiText {
     update(data) {
         this.inputs.forEach(input => {
             let value = data?.[input.name];
-            const textInput = this.container.querySelector(`text[data-name=${input.name}]`)
+            const textInput = this.container.querySelector(`text[name=${input.name}]`)
 
             // پیدا کردن کاراکترهای رفتن به سرخط در متن
             if (value) {

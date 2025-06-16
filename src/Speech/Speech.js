@@ -3,6 +3,7 @@ import putRect from "../common/putRect.js";
 import putText from "../common/putText.js";
 import putSVG from "../common/putSVG.js";
 import units from "./units.js";
+import putPoint from "../common/putPoint.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
@@ -83,6 +84,7 @@ export default class Speech {
                     x: cell.cx, y: cell.cy, dx: 0, dy: 1, style
                 }));
 
+        style = styles.svgInput
         style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
 
         const inputBox = {
@@ -91,22 +93,23 @@ export default class Speech {
         }
         // محاسبه کمان گردی بر اساس مقدار پهنا
         inputBox.rx = inputBox.width / 10
-
+        let dx = 0, dy = -2;
         // باکس و تکست مقادیر
         matrix[1].forEach((cell, index) => {
             // برای فرم های پیش چاپ شده باکس رسم نمیشود
             !dims.hideContext &&
                 putRect({
-                    container: svg, cx: cell.cx, cy: cell.cy, dy: -1,
+                    container: svg, cx: cell.cx, cy: cell.cy, dx, dy,
                     width: inputBox.width, height: inputBox.height,
                     rx: inputBox.rx,
                 });
             // اینپوت‌های نگهداری مقادیر که بعدا توسط متد آپدیت مقدارگذاری می‌شوند
             if (!dims.forceInsert) {
-                putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dy: 0, style, name: labels[index] });
+                // putPoint({ container: svg, x: cell.cx, y: cell.cy, r: 0.5, dx, dy })
+                putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dx, dy, style, name: labels[index] });
                 // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
                 // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
-                this.inputDims.push({ name: labels[index], x: cell.cx * kx, y: cell.cy * ky })
+                this.inputDims.push({ name: labels[index], x: (cell.cx + dx) * kx, y: (cell.cy + dy) * ky })
             } else {
                 // برای فرم های مثل رسا استفاده میشود
                 let name;
@@ -131,13 +134,18 @@ export default class Speech {
 
     }
 
-    update(data) {
+    update(data, container) {
+        console.log(container);
+        const prop = container ? 'value' : 'textContent'
+        const elem = container ? 'input' : 'text';
+        !container && (container = this.chart);
+
         this.labels.forEach((label) => {
-            this.chart.querySelector(`text[data-name=${label}]`).innerHTML = data?.[label] || "";
+            container.querySelector(`${elem}[name=${label}]`)[prop] = data?.[label] || "";
         })
     }
 
-    ui(){
+    ui() {
 
     }
 }

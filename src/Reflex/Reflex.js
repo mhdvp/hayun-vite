@@ -50,13 +50,14 @@ export default class Reflex {
             }
         });
 
+        let dx = 0, dy = 0
         // مقادیر برچسب‌های ستون اول
         style = styles.textLable
         lable = ["Freq", "IPSI", "CONTRA"];
         // چاپ برچسب‌های ستون اول
-        putText({ container: svg, value: "Freq", x: cw1, y: ch1 / 2, style: style })
-        putText({ container: svg, value: "IPSI", x: cw1, y: ch1 * 3 / 2, style: style })
-        putText({ container: svg, value: "CONTRA", x: cw1, y: ch1 * 5 / 2, style: style })
+        putText({ container: svg, value: "Freq", x: cw1, y: ch1 / 2, dx, dy, style })
+        putText({ container: svg, value: "IPSI", x: cw1, y: ch1 * 3 / 2, dx, dy, style })
+        putText({ container: svg, value: "CONTRA", x: cw1, y: ch1 * 5 / 2, dx, dy, style })
 
         //چاپ ده باکس سطر دوم و سوم
         const inputBox = {
@@ -65,14 +66,14 @@ export default class Reflex {
         }
         // محاسبه کمان گردی بر اساس مقدار پهنا
         inputBox.rx = inputBox.width / 10
-
+        dy = -1
         for (let j = 1; j <= 2; j++) {
             for (let i = 1; i <= 4; i++) {
                 let cx = cw1 / 2 + cw1 * i;
                 let cy = ch1 * j + ch2 / 2;
                 //رسم باکس با مختصات مرکز باکس
                 putRect({
-                    container: svg, cx, cy,
+                    container: svg, cx, cy, dx, dy,
                     width: inputBox.width, height: inputBox.height, rx: inputBox.rx
                 });
             }
@@ -87,10 +88,10 @@ export default class Reflex {
         for (let index = 0; index < 4; index++) {
             x = cw1 / 2 + cw1 * (index + 1);
             y = ch1 + ch2 / 2;
-            putText({ container: svg, value: "", x, y, style, name: names[index] })
+            putText({ container: svg, value: "", x, y, dx, dy, style, name: names[index] })
             // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
             // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
-            this.inputDims.push({ name: names[index], x: x * kx, y: y * ky })
+            this.inputDims.push({ name: names[index], x: (x + dx) * kx, y: (y + dy) * ky })
         }
 
         // المنت‌های تکست خالی با آیدی یکتا در سطر سوم
@@ -104,7 +105,7 @@ export default class Reflex {
             putText({ container: svg, value: "", x, y, style, name: names[index] })
             // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
             // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
-            this.inputDims.push({ name: names[index], x: x * kx, y: y * ky })
+            this.inputDims.push({ name: names[index], x: (x + dx) * kx, y: (y + dy) * ky })
         }
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه و دریافت رویداد کلیک روی فرم
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
@@ -117,10 +118,10 @@ export default class Reflex {
     // جایگذاری داده های رفلکس
     update(data) {
         console.log(data);
-        
+
         for (const key in data) {
             for (const freq in data[key]) {
-                this.chart.querySelector(`text[data-name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";
+                this.chart.querySelector(`text[name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";
             }
         }
     }
