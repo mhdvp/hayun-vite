@@ -135,7 +135,6 @@ export default class Speech {
     }
 
     update(data, container) {
-        console.log(container);
         const prop = container ? 'value' : 'textContent'
         const elem = container ? 'input' : 'text';
         !container && (container = this.chart);
