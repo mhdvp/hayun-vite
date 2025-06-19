@@ -1,13 +1,14 @@
 // import { initPWA } from './pwa.js'
 
 // src/main.js - Your app's entry point
-import { BaseComponent } from './core/BaseComponent.js';
-import { AudiogramUI, ReflexUI, SpeechUI, TympanogramUI } from './components/index.js';
-
+import { BaseComponent } from '../core/BaseComponent.js';
+import { SpeechUI } from '../components/index.js';
 
 // Main App component that orchestrates all other components
 class App extends BaseComponent {
   constructor(selector) {
+    // console.log(super);
+    
     super(selector);
     this.components = {};
   }
@@ -15,10 +16,7 @@ class App extends BaseComponent {
   render() {
     // Main layout structure
     this.element.innerHTML = `
-        <div id="audiograms"></div>
         <div id="speechs"></div>
-        <div id="tympanograms"></div>
-        <div id="reflexes"></div>
     `;
   }
 
@@ -29,10 +27,8 @@ class App extends BaseComponent {
 
   initializeComponents() {
     // Initialize Header component
-    this.components.speechUI = this.createChild(SpeechUI, '#speechs', {});
-    // this.components.reflexUI = this.createChild(ReflexUI, '#reflexes', {});
-    // this.components.TympanogramUI = this.createChild(TympanogramUI, '#tympanograms', {});
-    // this.components.audiogramUI = this.createChild(AudiogramUI, '#audiograms', {});
+    this.components.speechUI = this.createChild(SpeechUI, '#speechs', {
+    });
   }
 }
 
@@ -45,8 +41,8 @@ const app = new App('#app');
 document.addEventListener('DOMContentLoaded', () => {
 
   app.mount();
-
-  console.log(app.components);
+  
+  // console.log(app.components.speechUI.element);
 
 
   console.log('Audiolog app initialized successfully!');

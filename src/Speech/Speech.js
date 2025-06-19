@@ -11,6 +11,7 @@ export default class Speech {
 
         this.container = container;
         this.side = side;
+        this.data = {}
         this.inputDims = [] // پراپرتی نگهداری مختصات مرکز اینپوت ها
         this.draw({ dims })
     }
@@ -135,6 +136,9 @@ export default class Speech {
     }
 
     update(data, container) {
+        this.data = data
+        // انتخاب اینکه اینپوت های کاربر را آپدیت کنه یا اس وی جی تکست ها رو
+        // بر حسب اینکه پارامتر کانتینر باشه یا نباشه
         const prop = container ? 'value' : 'textContent'
         const elem = container ? 'input' : 'text';
         !container && (container = this.chart);
@@ -144,7 +148,60 @@ export default class Speech {
         })
     }
 
-    ui() {
+    createUserInput({ container }) {
+        // استایل دهی نسبی به کانتینر
+        container.style.position = 'relative'
+        const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+
+        let style = `
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: crimson;
+            position: absolute;
+            width: ${width}px;
+            height: ${height}px;
+            border: none;
+            color: blue;
+        `
+        const color = (this.side === 'R') ? 'crimson' : 'blue';
+        // ایجاد یک المنت اینپوت
+        // let input
+        // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
+        // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
+        let inputDims = this.inputDims
+
+        inputDims.forEach(dims => {
+            const input = document.createElement('input')
+            input.name = 'SAT'
+            input.type = 'text'
+            input.maxLength = 4
+            input.autocomplete = 'off'
+            input.placeholder = '---'
+            input.style = style
+            input.style.color = color
+            input.style.left = dims.x - width / 2 + 'px'
+            input.style.top = dims.y - height / 2 + 'px'
+            input.name = dims.name
+            container.appendChild(input)
+            // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
+        })
+        // firstInput.focus()
+    }
+
+    // دریافت دیتای کاربر از اینپوت ها و جایگزین کردن در دیتای آبجکت کلاس
+    // تغییر این دیتا باعث تغییر دیتای جاری می‌شود. چون آبجکت ها اشاره گر هستن
+    fetchInputUserData() {
+        ['SAT', 'SRT', 'MCL', 'UCL', 'SDS'].forEach(name => {
+            const value = this.container.querySelector(`input[name= ${name}]`).value
+            this.data[name] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
+        })
+      
+        console.log(this.data);
 
     }
+
 }

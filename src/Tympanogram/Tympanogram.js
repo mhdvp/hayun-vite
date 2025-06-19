@@ -249,6 +249,8 @@ export default class Tympanogram {
         this.chart.querySelector(`text[name="SC"]`).innerHTML = SC || "-";
         this.chart.querySelector(`text[name="G"]`).innerHTML = G || "-";
         // پاک کردن منحنی قبلی از کانتینر جاری
+        console.log(this.chart.querySelector(`path[name="curve"]`));
+
         this.chart.querySelector(`path[name="curve"]`)?.remove();
         // رسم منحنی
         this.drawCurve(data);
@@ -333,7 +335,7 @@ export default class Tympanogram {
         let color = (this.side == "R") ? "red" : "blue";
         let path = document.createElementNS(svgNS, "path");
         path.setAttribute("fill", "none");
-        path.setAttribute("data-name", "curve");
+        path.setAttribute("name", "curve");
         path.setAttribute("stroke", color);
         path.setAttribute("stroke-width", "0.5px");
         path.setAttribute(
@@ -373,5 +375,47 @@ export default class Tympanogram {
         function getY(c) {
             return (compliance.max - c) * (complianceAxiosLength.mm / complianceAxiosLength.ml)
         }
+    }
+
+    // ایجاد اینپوت‌های کاربر در کانتینر چارت
+    createUserInput({ container }) {
+        // استایل دهی نسبی به کانتینر
+        container.style.position = 'relative'
+        // ایجاد یک المنت اینپوت
+        let input = document.createElement('input')
+        input.name = 'SAT'
+        input.type = 'text'
+        input.maxLength = 4
+        input.autocomplete = 'off'
+        input.placeholder = '---'
+        const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        let style = `
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: crimson;
+            position: absolute;
+            width: ${width}px;
+            height: ${height}px;
+            border: none;
+        `
+        input.style = style
+        // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
+        const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
+        let inputDims = this.inputDims
+        input.style.color = (this.side === 'R') ? 'crimson' : 'blue';
+
+        inputDims.forEach(dims => {
+            input.style.left = dims.x - width / 2 + 'px'
+            input.style.top = dims.y - height / 2 + 'px'
+            input.setAttribute('name', dims.name)
+            container.appendChild(input)
+            input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
+        })
+
+        firstInput.focus()
     }
 }

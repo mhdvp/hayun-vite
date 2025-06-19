@@ -1,35 +1,36 @@
 import { BaseComponent } from "../core/BaseComponent.js";
-import Speech from '../Speech/Speech.js'
+import Reflex from '../Reflex/Reflex.js'
 
-export class SpeechUI extends BaseComponent {
+export class ReflexUI extends BaseComponent {
   constructor(selector, props = {}) {
     super(selector, props);
   }
 
   render() {
     this.element.innerHTML = `
-      <div name="speechs">
-        <h1 class="center">Speech Tests</h1>
+      <div name = "reflexes">
+        <h1 class="center">Acoustic Reflexes</h1>
         <div class="center">
           <div>
             <h2 class="center red">Right</h2>
-            <section id="r-speech" style="position: relative;">
-              <input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
+            <section id="r-reflex" style="position: relative;">
+              <input type="text" name="ipsi-500" maxlength="4" placeholder="---" autocomplete="off" />
             </section>
           </div>
           <div>
             <h2 class="center blue">Left</h2>
-            <section id="l-speech" style="position: relative;">
-              <input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
+            <section id="l-reflex" style="position: relative;">
+              <input type="text" name="ipsi-500" maxlength="4" placeholder="---" autocomplete="off" />
             </section>
           </div>
         </div>
       </div>
     `;
-    let dims = {
-      "name": "RSpeech",
-      "w": 89,
-      "h": 15,
+    // ابعاد جداول تمپانوگرام
+    const dims = {
+      "name": "RTympanogram",
+      "w": 100,
+      "h": 30,
       "margin": {
         "left": 1,
         "top": 0,
@@ -37,16 +38,8 @@ export class SpeechUI extends BaseComponent {
         "bottom": 0
       },
       "display": "inline",
-      "stroke": true,
       "width": 100 * 6,
-      "height": 20 * 5,
-      "labels": [
-        "SAT",
-        "SRT",
-        "MCL",
-        "UCL",
-        "SDS"
-      ]
+      "height": 30 * 6
     }
 
     const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
@@ -55,35 +48,25 @@ export class SpeechUI extends BaseComponent {
       margin: 0;
       padding: 0;
       text-align: center;
-      font-family: Vazir;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
-      color: crimson;
       position: absolute;
       width: ${width}px;
       height: ${height}px;
       border: none;
     `
-    let container = document.getElementById('r-speech')
-    let input = container.querySelector('[name=SAT]')
-    let chart = new Speech({ container, dims, side: 'R' })
-
-    insertInput({ container, chart, side: 'R' }).focus()
-    chart.update({ SAT: 50, SDS: 90 }, container)
+    insertInputs({ containerID: "r-reflex", side: 'R' }).focus()
+    insertInputs({ containerID: "l-reflex", side: 'L' })
 
 
-    container = document.getElementById('l-speech')
-    input = container.querySelector('[name=SAT]')
-    chart = new Speech({ container, dims, side: 'L' })
+    function insertInputs({ containerID, side }) {
+      const container = document.getElementById(containerID)
+      const RReflex = new Reflex({ container, dims, side });
+      let input = container.querySelector('[name=ipsi-500]')
+      // این رو به عنوان خروجی میدیم تا بتونیم فوکوس رو بهش بدیم
+      const firstInput = input // اولین اینپوت 
 
-    insertInput({ container, chart, side: 'L' })
-    chart.update({ SAT: 60, SDS: 90 }, container)
-
-
-    function insertInput({ container, chart, side }) {
-      // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
-      const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
-      let inputDims = chart.inputDims
+      let inputDims = RReflex.inputDims
       input.style = style
       input.style.color = (side === 'R') ? 'crimson' : 'blue';
 
@@ -100,6 +83,7 @@ export class SpeechUI extends BaseComponent {
       })
 
       return firstInput
+
     }
 
 

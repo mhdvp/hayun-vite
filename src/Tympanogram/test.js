@@ -64,7 +64,7 @@ document.querySelector("#extra-sc").addEventListener("input", e => {
 document.querySelector("#cp")
     .addEventListener("input", e => {
         cp = e.target.value
-        console.log(cp);
+        // console.log(cp);
         data = { ...data, cp }
 
         RTympanogram.update(data)

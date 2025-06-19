@@ -1,6 +1,7 @@
 // src/core/BaseComponent.js
 import { appState } from './AppState.js';
 
+
 export class BaseComponent {
   constructor(selector, props = {}) {
     this.element = typeof selector === 'string' ? document.querySelector(selector) : selector;
@@ -17,7 +18,7 @@ export class BaseComponent {
 
   mount() {
     if (this.mounted) return;
-    
+
     this.render();
     this.bindEvents();
     this.mounted = true;
@@ -25,20 +26,20 @@ export class BaseComponent {
 
   unmount() {
     if (!this.mounted) return;
-    
+
     // Unmount all child components first
     this.children.forEach(child => child.unmount());
     this.children.clear();
-    
+
     // Clean up subscriptions
     this.subscriptions.forEach(unsub => unsub());
     this.subscriptions = [];
-    
+
     // Clear element content
     if (this.element) {
       this.element.innerHTML = '';
     }
-    
+
     this.mounted = false;
   }
 
@@ -47,6 +48,8 @@ export class BaseComponent {
   }
 
   subscribe(stateKey, callback) {
+    console.log(appState);
+
     const unsub = appState.subscribe(stateKey, callback);
     this.subscriptions.push(unsub);
     return unsub;
@@ -55,24 +58,24 @@ export class BaseComponent {
   // Helper method to create and manage child components
   createChild(ComponentClass, selector, props = {}, key = null) {
     const childKey = key || `${ComponentClass.name}_${Date.now()}_${Math.random()}`;
-    
+
     // Remove existing child if updating
     if (this.children.has(childKey)) {
       this.children.get(childKey).unmount();
     }
-    
-    const element = typeof selector === 'string' ? 
+
+    const element = typeof selector === 'string' ?
       this.element.querySelector(selector) : selector;
-    
+
     if (!element) {
       console.error(`Element not found for selector: ${selector}`);
       return null;
     }
-    
+
     const child = new ComponentClass(element, props);
     this.children.set(childKey, child);
     child.mount();
-    
+
     return child;
   }
 

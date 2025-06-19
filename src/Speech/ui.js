@@ -1,98 +1,76 @@
 import Speech from "./Speech";
-document.querySelector('#app').insertAdjacentHTML('beforeend', `
-<div name="speechs">
-	<h1 class="center">Speech Tests</h1>
-	<div class="center">
-		<div>
-			<h2 class="center red">Right</h2>
-			<section id="r-speech" style="position: relative;">
-				<input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
-			</section>
-		</div>
-		<div>
-			<h2 class="center blue">Left</h2>
-			<section id="l-speech" style="position: relative;">
-				<input type="text" name="SAT" maxlength="4" placeholder="---" autocomplete="off" />
-			</section>
-		</div>
-	</div>
-</div>
-`)
 
-let dims = {
-  "name": "RSpeech",
-  "w": 89,
-  "h": 15,
-  "margin": {
-    "left": 1,
-    "top": 0,
-    "right": 10,
-    "bottom": 0
-  },
-  "display": "inline",
-  "stroke": true,
-  "width": 100 * 6,
-  "height": 20 * 5,
-  "labels": [
-    "SAT",
-    "SRT",
-    "MCL",
-    "UCL",
-    "SDS"
-  ]
-}
-
-const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
-const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
-let style = `
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: crimson;
-  position: absolute;
-  width: ${width}px;
-  height: ${height}px;
-  border: none;
-`
-let container = document.getElementById('r-speech')
-let input = container.querySelector('[name=SAT]')
-let chart = new Speech({ container, dims, side: 'R' })
-
-insertInput({ container, chart, side: 'R' }).focus()
-chart.update({ SAT: 50, SDS: 90 }, container)
+export default function speechUI({ data = {} } = {}) {
+  document.querySelector('#app').insertAdjacentHTML('beforeend', `
+    <div name="speechs">
+      <h1 class="center">Speech Tests</h1>
+      <div class="center">
+        <div>
+          <h2 class="center red">Right</h2>
+          <section id="r-speech"></section>
+        </div>
+        <div>
+          <h2 class="center blue">Left</h2>
+          <section id="l-speech"></section>
+        </div>
+      </div>
+      <button id="update">Update</button>
+    </div>
+  `)
 
 
-container = document.getElementById('l-speech')
-input = container.querySelector('[name=SAT]')
-chart = new Speech({ container, dims, side: 'L' })
+  let dims = {
+    "name": "RSpeech",
+    "w": 89,
+    "h": 15,
+    "margin": {
+      "left": 1,
+      "top": 0,
+      "right": 10,
+      "bottom": 0
+    },
+    "display": "inline",
+    "stroke": true,
+    "width": 100 * 6,
+    "height": 20 * 5,
+    "labels": [
+      "SAT",
+      "SRT",
+      "MCL",
+      "UCL",
+      "SDS"
+    ]
+  }
 
-insertInput({ container, chart, side: 'L' })
-chart.update({ SAT: 60 , SDS: 90 }, container)
+  let container = document.getElementById('r-speech')
+  let rchart = new Speech({ container, dims, side: 'R' })
+
+  // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
+  rchart.createUserInput({ container })
+  rchart.update(data.R, container)
 
 
-function insertInput({ container, chart, side }) {
-  // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
-  const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
-  let inputDims = chart.inputDims
-  input.style = style
-  input.style.color = (side === 'R') ? 'crimson' : 'blue';
+  container = document.getElementById('l-speech')
+  let lchart = new Speech({ container, dims, side: 'L' })
 
-  input.style.left = inputDims[0].x - width / 2 + 'px'
-  input.style.top = inputDims[0].y - height / 2 + 'px'
-  inputDims.shift() // حذف اولین عنصر آرایه بخاط اینکه استفاده شد در نود بالایی
+  // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
+  lchart.createUserInput({ container })
+  lchart.update(data.L, container)
 
-  inputDims.forEach(dims => {
-    input = input.cloneNode()
-    input.style.left = dims.x - width / 2 + 'px'
-    input.style.top = dims.y - height / 2 + 'px'
-    input.setAttribute('name', dims.name)
-    container.appendChild(input)
+  document.querySelector('#update').addEventListener('click', () => {
+    // مقادیر ورودی را بخوان و دیتای کلاس را آپدیت کن و آخر هم دیتای دریافتی تابع را جایگزین کن
+    // console.log(chart.data);
+    rchart.fetchInputUserData()
+    lchart.fetchInputUserData()
+
   })
 
-  return firstInput
 }
+
+// تابع زیر فقط در ایمپورت کل ماژول در فایل ایندکس اچ تی ام ال فراخوانی میشود و عملا با ایمپورت تابع فراخوانی میشود و برای تست هست
+// ui()
+console.log("gfffgf");
+
 
 
 
