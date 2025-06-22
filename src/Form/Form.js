@@ -84,8 +84,6 @@ export default class Form {
         if (sections['Reflex Titles']) {
             dims = template['Reflex Titles'];
             const titles = new MultiText({ container: sections['Reflex Titles'], dims });
-            console.log(dims);
-            
         }
         if (sections.RReflex) {
             dims = template.RReflex
@@ -134,11 +132,21 @@ export default class Form {
         return svg
     }
 
-    update({ officeData, patientData, sessionIndex = 0 }) {
+    update({ data, officeData, patientData, sessionIndex = 0 }) {
+        console.log(data);
+        data?.audiogram?.R && this.RAudiogram?.update({ data: data.audiogram.R, side: 'R' })
+        data?.audiogram?.L && this.LAudiogram?.update({ data: data.audiogram.L, side: 'L' })
+        data?.speech?.R && this.RSpeech?.update(data?.speech?.R)
+        data?.speech?.L && this.LSpeech?.update(data?.speech?.L)
+        data?.tympanogram?.R && this.RTympanogram?.update(data.tympanogram?.R)
+        data?.tympanogram?.L && this.LTympanogram?.update(data.tympanogram?.L)
+        data?.reflex?.R && this.RReflex?.update(data?.reflex?.R)
+        data?.reflex?.L && this.LReflex?.update(data?.reflex?.L)
+        /*
 
         const session = patientData.sessions[sessionIndex]
 
-        let data = {
+        let objData = {
             header: {
                 officeName: officeData.name,
                 officeLogo: officeData.logos[officeData.selectedLogoIndex],
@@ -163,15 +171,15 @@ export default class Form {
 
         // let keys = Object.keys(data)
         // if (keys.includes("header")) {
-        if (data.header) {
-            this.header?.update(data.header)
-            this.data.header = data.header
+        if (objData.header) {
+            this.header?.update(objData.header)
+            this.data.header = objData.header
         }
         // }
         // if (keys.includes("patient")) {
-        if (data.patient) {
-            this.patient?.update(data.patient)
-            this.data.patient = data.patient
+        if (objData.patient) {
+            this.patient?.update(objData.patient)
+            this.data.patient = objData.patient
         }
         // }
         // if (keys.includes("history")) {
@@ -231,6 +239,8 @@ export default class Form {
             this.footer?.update(data?.footer)
             this.data.footer = data.footer
         }
+
+        */
     }
 
     // خطوط نقطه چین مارجین فرم

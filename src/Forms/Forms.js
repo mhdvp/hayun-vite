@@ -12,8 +12,9 @@ import templAudiometry from "../../assets/templates/templAudiometry.js"
 export default class Forms {
     constructor({ assets, container, templates, defaultTemplateIndex = 0, mode = 'production' } = {}) {
         // console.log('I`M FROM Forms.constructor METHOD !!!!!!!!!!!!!!');
-        
+
         this.container = container
+        this.data = {}
         this.mode = mode;
         this.forms = [] // آرایه آبجکت های فرم های مختلف
         this.addForms({ templates, defaultTemplateIndex })
@@ -68,7 +69,7 @@ export default class Forms {
                     // this.selectedForm = forms[index]
                     selectedIndex = index
                     this.selectedIndex = selectedIndex
-                    this.update(this.dataParams)
+                    this.update({ data: this.data })
                 })
             }) // سمی‌کالن واجب
 
@@ -109,16 +110,20 @@ export default class Forms {
     }
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
-    update({ officeData, patientData, sessionIndex = 0 }) {
+    update({ data, officeData, patientData, sessionIndex = 0 }) {
+        // این تابع دیگه فقط با پارامتر دیتا کار میکنه
+        this.forms[this.selectedIndex].update({ data })
+        this.data = data
         // console.log('I`M FROM Forms.update METHOD !!!!!!!!!!!!!!');
-
+        // 
         // اگر هر دو دیتا وجود داشت  ادامه بده
-        if (officeData && patientData) {
-            // ذخیره کل دیتا برای استفاده داخلی آپدیت فرم انتخاب شده
-            this.dataParams = { officeData, patientData, sessionIndex }
-            // this.selectedForm.update({ officeData, patientData, sessionIndex })
-            this.forms[this.selectedIndex].update(this.dataParams)
-        }
+        // if (officeData && patientData) {
+        //     // ذخیره کل دیتا برای استفاده داخلی آپدیت فرم انتخاب شده
+        //     this.dataParams = { officeData, patientData, sessionIndex }
+        //     // this.selectedForm.update({ officeData, patientData, sessionIndex })
+        //     this.forms[this.selectedIndex].update(this.dataParams)
+        // }
+
     }
 
     // توابع داخلی ایجاد دکمه و لینک های بالای فرم

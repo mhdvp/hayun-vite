@@ -77,9 +77,22 @@
 	<script type="module">
 		import { patientData } from "/data/currentData.js"
 		import speechUI from "/src/Speech/ui.js"
+		import formsUI from "/src/Forms/ui.js"
 		// console.log(patientData.sessions[0].speech);
-		const data = patientData.sessions[0].speech
-		speechUI({ data })
+		let data = patientData.sessions[0].speech
+		// speechUI({ data })
+		// console.log(speechUI);
+		speechUI.draw()
+		// speechUI.update({ data })
+		// speechUI.draw()
+		speechUI.update({ data })
+
+
+
+
+		data = patientData.sessions[0]
+		formsUI({ data })
+
 
 		document.querySelector('#log').addEventListener('click', () => {
 			console.log(data.R, data.L);

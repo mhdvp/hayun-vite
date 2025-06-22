@@ -249,7 +249,7 @@ export default class Tympanogram {
         this.chart.querySelector(`text[name="SC"]`).innerHTML = SC || "-";
         this.chart.querySelector(`text[name="G"]`).innerHTML = G || "-";
         // پاک کردن منحنی قبلی از کانتینر جاری
-        console.log(this.chart.querySelector(`path[name="curve"]`));
+        // console.log(this.chart.querySelector(`path[name="curve"]`));
 
         this.chart.querySelector(`path[name="curve"]`)?.remove();
         // رسم منحنی

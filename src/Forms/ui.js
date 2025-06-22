@@ -12,7 +12,8 @@ export default function formsUI({ data = {} } = {}) {
   const container = document.getElementById('forms')
 
   const forms = new Forms({ container, templates: [templCombo, templAudiometry], mode: 'develop' });
-  forms.update({ officeData, patientData, sessionIndex: 0 })
+  // forms.update({ officeData, patientData, sessionIndex: 0 })
+  forms.update({ data })
 
   // forms.forms[0].RSpeech.update({ SAT: 555 })
 
@@ -45,10 +46,13 @@ export default function formsUI({ data = {} } = {}) {
   document.querySelector('#update-form').addEventListener('click', e => {
     console.log(patientData.sessions[0].speech.R.SAT);
 
-    forms.update({ officeData, patientData, sessionIndex: 0 })
+    // forms.update({ data, officeData, patientData, sessionIndex: 0 })
+    forms.update({ data })
 
   })
 }
+
+// formsUI()
 
 
 
