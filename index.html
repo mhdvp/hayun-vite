@@ -76,13 +76,13 @@
 
 	<script type="module">
 		import { patientData } from "/data/currentData.js"
-		import speechUI from "/src/Speech/ui.js"
+		import speechUI from "/src/Speech/SpeechUI"
 		import formsUI from "/src/Forms/ui.js"
 		// console.log(patientData.sessions[0].speech);
 		let data = patientData.sessions[0].speech
 		// speechUI({ data })
 		// console.log(speechUI);
-		speechUI.draw()
+		speechUI.draw({containerId: '#app'})
 		// speechUI.update({ data })
 		// speechUI.draw()
 		speechUI.update({ data })

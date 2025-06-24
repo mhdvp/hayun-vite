@@ -15,7 +15,8 @@ import logo0 from './assets/logos/logo-0_mm_20w_22h_300p.png'
 import logo1 from  './assets/logos/logo-1.png'
 import logo2 from './assets/logos/logo-2.png'
 import Speech from './src/Speech/Speech'
-import { SpeechUI } from './src/components'
+// import { ReflexUI } from './src/components'
+import speechUI from './src/Speech/SpeechUI'
 
 const logos = [logo0, logo1, logo2]
 
@@ -25,5 +26,6 @@ const logos = [logo0, logo1, logo2]
 export {
     Audiogram, Forms, dims, officeData,
     patientData, combo_template,
-    logos, SpeechUI, Speech
+    logos,  Speech, speechUI
+
 } 
