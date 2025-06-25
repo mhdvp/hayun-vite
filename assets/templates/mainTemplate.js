@@ -97,7 +97,7 @@ const mainTemplate = {
 
     defElements: function () {
         let box = this['Header'].box
-        let style = ['user-select: none', 'direction: rtl', 'font-family: Vazir', 'font-size: 1mm'].join('; ')
+        let style = ['user-select: none', 'direction: rtl', 'font-family: Vazirmatn', 'font-size: 1mm'].join('; ')
         box.elements = [
             { type: 'image', x: 10, y: 30 },
             { type: 'line', x1: 0, y1: box.height, x2: box.width, y2: box.height },

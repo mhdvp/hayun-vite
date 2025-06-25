@@ -12,7 +12,7 @@ const units = {
     height: 30,
 
     styles: {
-        svg: 'user-select: none; direction: ltr !important; font-family: Vazir;',
+        svg: 'user-select: none; direction: ltr !important; font-family: Vazirmatn;',
         textLable: `
             font-size: 4.2;
             font-weight: bold;

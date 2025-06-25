@@ -22,7 +22,7 @@ export default class MultiText {
 
         let style, className;
         style = `
-        font-family: Vazir; 
+        font-family: Vazirmatn; 
         font-size: 1mm;
         white-space: break-spaces;
         /* font-weight: bold; */

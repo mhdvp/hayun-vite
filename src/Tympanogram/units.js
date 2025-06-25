@@ -21,7 +21,7 @@ const units = {
     compensated: false, // default is false | true
 
     styles: {
-        svg: 'user-select: none; direction: ltr !important; font-family: Vazir;',
+        svg: 'user-select: none; direction: ltr !important; font-family: Vazirmatn;',
         pressure: `
             font-size: 3;
             text-anchor: middle; 

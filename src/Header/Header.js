@@ -19,7 +19,7 @@ export default class Header {
         let x = dims.margin.left;
         let y = dims.margin.top;
 
-        const svg = putSVG({ x, y, width, height, style: 'font-family: Vazir; direction: rtl !important; user-select: none;' })
+        const svg = putSVG({ x, y, width, height, style: 'font-family: Vazirmatn; direction: rtl !important; user-select: none;' })
 
         // Logo 
         let image = document.createElementNS(svgNS, "image");

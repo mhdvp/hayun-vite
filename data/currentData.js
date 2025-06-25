@@ -66,7 +66,7 @@ const patientData = {
             },
             speech: {
                 R: { SAT: '25', SRT: '30', MCL: '55', UCL: '120', SDS: '98', },
-                L: {  SAT: '15', SRT: '20', MCL: '60', UCL: '110', SDS: '88', }
+                L: {  SAT: '15', SRT: '20', UCL: '110', SDS: '88', }
             },
             tympanogram: {
                 R: { type: "An", ECV: '2.5', SC: '1.50', MEP: '-50', G: 0.23 },

@@ -36,8 +36,8 @@ const units = {
     fToVf: { 125: 0, 250: 2, 500: 4, 750: 5.2, 1000: 6, 1500: 7.2, 2000: 8, 3000: 9.2, 4000: 10, 6000: 11.2, 8000: 12, 12000: 13.2, 16000: 14 },
     intensity: { min: -20, max: 130, step: 10 },
     styles: {
-        frequency: ['text-anchor: middle', 'dominant-baseline: hanging', 'font: 2px Vazir', 'user-select: none', 'font-weight:bold'].join('; '),
-        intensity: ['text-anchor: end', 'dominant-baseline: middle', 'font: 2px Vazir', 'user-select: none', 'font-weight:bold'].join('; '),
+        frequency: ['text-anchor: middle', 'dominant-baseline: hanging', 'font: 2px Vazirmatn', 'user-select: none', 'font-weight:bold'].join('; '),
+        intensity: ['text-anchor: end', 'dominant-baseline: middle', 'font: 2px Vazirmatn', 'user-select: none', 'font-weight:bold'].join('; '),
         mainFreqline: ['stroke: black', 'stroke-width: 0.1'].join('; '),
         semiOctavFreqline: ['stroke: black', 'stroke-width: 0.1', 'stroke-dasharray: 0.5'].join('; '),
         line: 'stroke: black; stroke-width: 0.1;',

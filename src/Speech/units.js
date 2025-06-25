@@ -20,7 +20,7 @@ const units = {
         label: `
             user-select: none;
             direction: ltr;
-            font-family: Vazir;
+            font-family: Vazirmatn;
             font-size: ${4.2};
             font-weight: 700;
             text-anchor: middle;
@@ -28,7 +28,7 @@ const units = {
         svgInput: `
             user-select: none;
             direction: ltr;
-            font-family: Vazir;
+            font-family: Vazirmatn;
             font-size: ${4.2};
             font-weight: 700;
             text-anchor: middle;

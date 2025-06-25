@@ -4,67 +4,8 @@
 <head>
 	<meta charset="UTF-8" />
 	<link rel="icon" type="image/svg+xml" href="vite.svg" />
+	<link rel="stylesheet" href="/styles-tailwind.css">
 	<link rel="stylesheet" href="/styles.css">
-	<style>
-		body {
-			font-family: Vazir;
-			user-select: none;
-		}
-
-		h1 {
-			margin: 1rem 0em 0em 0em
-		}
-
-		h2 {
-			margin: auto;
-		}
-
-		p,
-		span,
-		label {
-			font:
-				1.3rem "Fira Sans",
-				sans-serif;
-		}
-
-		h1 {
-			font: 2.5rem Vazir;
-
-		}
-
-		input[type="text"]:focus {
-			/* outline: none; */
-			/* removes the blue focus outline */
-			box-shadow: none;
-			/* removes any additional focus shadow */
-			/* border: none; */
-			/* optional: remove border if desired */
-			/* margin: 0; */
-			/* optional: reset margin if browser adds any */
-		}
-
-		label {
-			user-select: none;
-		}
-
-		.center {
-			display: flex;
-			align-items: center;
-			justify-content: space-evenly;
-		}
-
-		.blue {
-			color: blue
-		}
-
-		.red {
-			color: red;
-		}
-
-		.border {
-			border: 1px solid green;
-		}
-	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>hayun</title>
 </head>
@@ -72,7 +13,7 @@
 <body>
 
 	<div id="app"></div>
-	<button id="log">Log Current Data</button>
+	<!-- <button id="log">Log Current Data</button> -->
 
 	<script type="module">
 		import { patientData } from "/data/currentData.js"
@@ -82,7 +23,7 @@
 		let data = patientData.sessions[0].speech
 		// speechUI({ data })
 		// console.log(speechUI);
-		speechUI.draw({containerId: '#app'})
+		speechUI.draw({ containerId: '#app' })
 		// speechUI.update({ data })
 		// speechUI.draw()
 		speechUI.update({ data })
@@ -90,14 +31,14 @@
 
 
 
-		data = patientData.sessions[0]
-		formsUI({ data })
+		// data = patientData.sessions[0]
+		// formsUI({ data })
 
 
-		document.querySelector('#log').addEventListener('click', () => {
-			console.log(data.R, data.L);
+		// document.querySelector('#log').addEventListener('click', () => {
+		// 	console.log(data.R, data.L);
 
-		})
+		// })
 
 
 	</script>

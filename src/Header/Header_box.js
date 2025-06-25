@@ -54,7 +54,7 @@ export default class Header {
             user-select: none;
             direction: rtl;
             /* text-align: center; */
-            font-family: Vazir;
+            font-family: Vazirmatn;
             font-size: 0.8mm;
             font-weight: bolder;
             text-anchor: start; /*تراز افقی*/

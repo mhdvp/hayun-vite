@@ -176,7 +176,7 @@ const templCombo = {
         height = this.header.height = this.getHeight(this.header)
 
         style = `
-            font-family: Vazir, Helvetica, sans-serif !important;
+            font-family: Vazirmatn, Helvetica, sans-serif !important;
             font-size: 1.5mm;
             font-weight: bold;
             text-anchor: start; /*تراز افقی*/

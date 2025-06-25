@@ -1,243 +1,79 @@
 @font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Black-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Black-UI.woff') format('woff'),
-    url('/fonts/Vazir-Black-UI.eot') format('embedded-opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Bold-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Bold-UI.woff') format('woff'),
-    url('/fonts/Vazir-Bold-UI.eot') format('embedded-opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Medium-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Medium-UI.woff') format('woff'),
-    url('/fonts/Vazir-Medium-UI.eot') format('embedded-opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Regular-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Regular-UI.woff') format('woff'),
-    url('/fonts/Vazir-Regular-UI.eot') format('embedded-opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Light-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Light-UI.woff') format('woff'),
-    url('/fonts/Vazir-Light-UI.eot') format('embedded-opentype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Vazir';
-  src: url('/fonts/Vazir-Thin-UI.woff2') format('woff2'),
-    url('/fonts/Vazir-Thin-UI.woff') format('woff'),
-    url('/fonts/Vazir-Thin-UI.eot') format('embedded-opentype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* @font-face {
   font-family: 'Vazirmatn';
   src: url('fonts/webfonts/Vazirmatn[wght].woff2') format('woff2 supports variations'),
-       url('fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations');
+    url('fonts/webfonts/Vazirmatn[wght].woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
-} */
+}
 
-/* @font-face {
-  font-family: vazirmatn;
-  src:
-    url("fonts/Vazirmatn-Regular.woff2") format("woff2"),
-    url('fonts/Vazirmatn-Regular.woff') format('woff');
-  font-display: swap;
-} */
-
-.text-box {
-  /* font-family: Arial, Helvetica, sans-serif !important; */
-  font-size: 0.8mm;
-  /* font-weight: bold; */
-  direction: rtl !important;
+/* body {
+  font-family: Vazirmatn;
   user-select: none;
-  /* dominant-baseline: middle; /* تراز عمودی*/
+
+} */
+
+
+
+h2.side {
+  font: 1.5rem Vazirmatn;
+  font-weight: 500;
+  margin: 0rem 0em 0em 0em
+    /* all: initial; */
+    /* margin: auto; */
 }
 
-.persian {
-  font-family: Vazir;
-  /* font-size: 0.8mm; */
-  /* text-anchor: start; */
 
 
+h1.title {
+  /* all: unset; */
+  /* all: initial; */
+  font: 2em Vazirmatn;
+  font-weight: 500;
+  margin: 0rem 0em 0em 0em
 }
 
-/*تراز افقی*/
-.align {
-  text-anchor: start;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.container {
+.center {
   display: flex;
-  /* Use flexbox to align items */
   align-items: center;
-  /* Center items vertically */
+  justify-content: space-evenly;
 }
 
-.left {
-  /* background-color: lightblue; */
-  padding: 20px;
-  margin-right: 10px;
-  /* Space between the two divs */
+.blue {
+  color: blue
 }
 
-.right {
-  /* background-color: lightgreen; */
-  margin-left: 10px;
-
-  /* padding: 20px; */
+.red {
+  color: red;
 }
 
-
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
-/* a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.border {
+  border: 1px solid green;
 }
-a:hover {
-  color: #535bf2;
-} */
 
-/* body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
-
-/* h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-} */
-
-/* #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+input.user-input {
+  all: revert;
+  box-sizing: border-box;
+  border: none;
+  /* Ensures padding doesn't increase height */
+  position: absolute;
+  padding-top: 4px;
   text-align: center;
-} */
-
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-} */
-
-/* .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-} */
-/* 
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-} */
-
-/* .card {
-  padding: 2em;
-} */
-
-/* .read-the-docs {
-  color: #888;
-} */
-
-.button-form {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  /* font-family: inherit; */
-  background-color: #7472e2;
-  color: #ffffff;
-  cursor: pointer;
-  transition: border-color 0.25s;
-  border-color: #fefefe;
-
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Vazirmatn;
 }
 
-.button-form:hover {
-  background-color: #1c15e1;
-
-  border-color: #fefefe;
+input.user-input[type="text"]:focus {
+  /* removes the blue focus outline */
+  /* box-shadow: sienna; */
+  /* removes any additional focus shadow */
+  border: 2px solid saddlebrown;
+  /* optional: remove border if desired */
+  /* margin: 0; */
+  /* optional: reset margin if browser adds any */
 }
 
-/* button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-  background-color: #1c15e1;
-
-} */
-
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-} */
-
-/* hayun Styles */
-/* @import './fonts/Vazirmatn-Regular.woff2'; */
-
-
-
-/* body {
-  font-family: vazirmatn;
+/* input.restore-native {
+  all: revert;
 } */

@@ -154,20 +154,11 @@ export default class Speech {
         // استایل دهی نسبی به کانتینر
         container.style.position = 'relative'
         const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
-        const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const height = 30 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
 
         let style = `
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: crimson;
-            position: absolute;
             width: ${width}px;
             height: ${height}px;
-            border: none;
-            color: blue;
         `
         const color = (this.side === 'R') ? 'crimson' : 'blue';
         // ایجاد یک المنت اینپوت
@@ -178,6 +169,7 @@ export default class Speech {
 
         inputDims.forEach(dims => {
             const input = document.createElement('input')
+            input.className = 'user-input'
             input.name = 'SAT'
             input.type = 'text'
             input.maxLength = 4

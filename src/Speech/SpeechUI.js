@@ -6,16 +6,17 @@ class SpeechUI {
   }
 
   draw({ containerId = '#app' } = {}) {
+   
     document.querySelector(containerId).insertAdjacentHTML('beforeend', `
-    <div name="speechs">
-      <h1 class="center">Speech Tests</h1>
+    <div name="speechs" class="border">
+      <h1 class="title center">Speech Tests</h1>
       <div class="center">
         <div>
-          <h2 class="center red">Right</h2>
+          <h2 class="side center red">Right</h2>
           <section id="r-speech"></section>
         </div>
         <div>
-          <h2 class="center blue">Left</h2>
+          <h2 class="side center blue">Left</h2>
           <section id="l-speech"></section>
         </div>
       </div>
