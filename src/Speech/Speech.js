@@ -157,8 +157,18 @@ export default class Speech {
         const height = 30 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
 
         let style = `
+            all: revert;
             width: ${width}px;
             height: ${height}px;
+            box-sizing: border-box;
+            border: none;
+            /* Ensures padding doesn't increase height */
+            position: absolute;
+            padding-top: 4px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: Vazirmatn;
         `
         const color = (this.side === 'R') ? 'crimson' : 'blue';
         // ایجاد یک المنت اینپوت
@@ -169,7 +179,7 @@ export default class Speech {
 
         inputDims.forEach(dims => {
             const input = document.createElement('input')
-            input.className = 'user-input'
+            // input.className = 'user-input'
             input.name = 'SAT'
             input.type = 'text'
             input.maxLength = 4

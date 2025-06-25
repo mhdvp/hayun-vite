@@ -18,7 +18,7 @@
 h2.side {
   font: 1.5rem Vazirmatn;
   font-weight: 500;
-  margin: 0rem 0em 0em 0em
+  margin: 0rem 0em 0em 0em;
     /* all: initial; */
     /* margin: auto; */
 }
@@ -30,17 +30,17 @@ h1.title {
   /* all: initial; */
   font: 2em Vazirmatn;
   font-weight: 500;
-  margin: 0rem 0em 0em 0em
+  margin: 0rem 0em 0em 0em;
 }
 
 .center {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
 }
 
 .blue {
-  color: blue
+  color: blue;
 }
 
 .red {

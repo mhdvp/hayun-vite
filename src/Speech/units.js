@@ -35,6 +35,24 @@ const units = {
             dominant-baseline: middle; 
 
         `,
+        center: `
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        `,
+        title: `
+            font: 2em Vazirmatn;
+            font-weight: 500;
+            margin: 0rem 0em 0em 0em;
+        `,
+        side: `
+            font: 1.5rem Vazirmatn;
+            font-weight: 500;
+            margin: 0rem 0em 0em 0em;
+        `,
+        red:`color: red;`,
+        blue: `color: blue;`,
+        border:`border: 1px solid green;`,
     }
 }
 

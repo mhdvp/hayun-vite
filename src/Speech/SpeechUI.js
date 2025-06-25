@@ -1,28 +1,32 @@
 import Speech from "./Speech"
+import units from "./units"
+
 
 class SpeechUI {
   constructor() {
-    this.data = {R: '', L: ''}
+    this.data = { R: '', L: '' }
   }
 
   draw({ containerId = '#app' } = {}) {
-   
+
+    const {styles} = units
+
     document.querySelector(containerId).insertAdjacentHTML('beforeend', `
-    <div name="speechs" class="border">
-      <h1 class="title center">Speech Tests</h1>
-      <div class="center">
-        <div>
-          <h2 class="side center red">Right</h2>
-          <section id="r-speech"></section>
+      <div name="speechs" style="${styles.border}">
+        <h1 style="${styles.center + styles.title}">Speech Tests</h1>
+        <div style="${styles.center}">
+          <div>
+            <h2 style="${styles.side + styles.center + styles.red}">Right</h2>
+            <section id="r-speech"></section>
+          </div>
+          <div>
+            <h2 style="${styles.side + styles.center + styles.blue}">Left</h2>
+            <section id="l-speech"></section>
+          </div>
         </div>
-        <div>
-          <h2 class="side center blue">Left</h2>
-          <section id="l-speech"></section>
-        </div>
+        <button id="update">Update</button>
       </div>
-      <button id="update">Update</button>
-    </div>
-  `)
+    `)
 
     let dims = {
       "name": "RSpeech",
@@ -74,7 +78,7 @@ class SpeechUI {
   update({ data = {} } = {}) {
     this.rchart.update(data.R, this.rcontainer)
     this.lchart.update(data.L, this.lcontainer)
-    this.data = {R: data.R, L: data.L}
+    this.data = { R: data.R, L: data.L }
 
   }
 }
