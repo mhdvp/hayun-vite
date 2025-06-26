@@ -8,7 +8,7 @@ class SpeechUI {
 
   draw({ containerId = '#app' } = {}) {
 
-    const {styles} = units
+    const { styles } = units
 
     document.querySelector(containerId).insertAdjacentHTML('beforeend', `
       <div name="speechs" style="${styles.border}">
@@ -23,7 +23,6 @@ class SpeechUI {
             <section id="l-speech"></section>
           </div>
         </div>
-        <button id="update">Update</button>
       </div>
     `)
 
@@ -63,21 +62,24 @@ class SpeechUI {
     // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
     this.lchart.createUserInput({ container: this.lcontainer })
 
-    document.querySelector('#update').addEventListener('click', () => {
-      // مقادیر ورودی را بخوان و دیتای کلاس را آپدیت کن و آخر هم دیتای دریافتی تابع را جایگزین کن
-      // console.log(chart.data);
+   
+  }
+
+  update({ data } = {}) {
+    if (data) {
+      this.rchart.update(data.R, this.rcontainer)
+      this.lchart.update(data.L, this.lcontainer)
+      this.data = { R: data.R, L: data.L }
+    } else
+    // اگر این تابع بدون پارامتر فراخوانی شود مقادیر اینپوت کاربر گرفته و دیتاآبجکت را آپدیت کند
+    {
+      console.log('without param');
+
       this.rchart.fetchInputUserData()
       this.lchart.fetchInputUserData()
       this.data.R = this.rchart.data
       this.data.L = this.lchart.data
-
-    })
-  }
-
-  update({ data = {} } = {}) {
-    this.rchart.update(data.R, this.rcontainer)
-    this.lchart.update(data.L, this.lcontainer)
-    this.data = { R: data.R, L: data.L }
+    }
 
   }
 }

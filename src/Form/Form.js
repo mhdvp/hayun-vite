@@ -132,7 +132,17 @@ export default class Form {
         return svg
     }
 
-    update({ data, officeData, patientData, sessionIndex = 0 }) {
+    update({ officeData, patientData, sessionIndex }) {
+        // جداکردن دیتای مربوط به سکشن های مختلف
+        const currentPatientData = patientData.sessions[sessionIndex]
+        const data = {
+            audiogram: currentPatientData.audiogram,
+            speech: currentPatientData.speech,
+            tympanogram: currentPatientData.tympanogram,
+            reflex: currentPatientData.reflex,
+
+        } 
+        this.patient?.update(patientData)
         data?.audiogram?.R && this.RAudiogram?.update({ data: data.audiogram.R, side: 'R' })
         data?.audiogram?.L && this.LAudiogram?.update({ data: data.audiogram.L, side: 'L' })
         data?.speech?.R && this.RSpeech?.update(data?.speech?.R)

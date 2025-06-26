@@ -201,9 +201,6 @@ export default class Speech {
             const value = this.container.querySelector(`input[name= ${name}]`).value
             this.data[name] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
         })
-      
-        console.log(this.data);
-
     }
 
 }

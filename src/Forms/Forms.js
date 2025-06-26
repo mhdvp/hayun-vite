@@ -69,7 +69,7 @@ export default class Forms {
                     // this.selectedForm = forms[index]
                     selectedIndex = index
                     this.selectedIndex = selectedIndex
-                    this.update({ data: this.data })
+                    this.update({ data: this.data }) // با مقادیر قبلی آپدیت را انجام بده
                 })
             }) // سمی‌کالن واجب
 
@@ -110,10 +110,25 @@ export default class Forms {
     }
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
-    update({ data, officeData, patientData, sessionIndex = 0 }) {
-        // این تابع دیگه فقط با پارامتر دیتا کار میکنه
-        this.forms[this.selectedIndex].update({ data })
-        this.data = data
+    update({ data, officeData, patientData, sessionIndex } = {}) {
+        
+        
+        // پارامتر اول برای آپدیت داخلی استفاده می‌شود
+        if (data) {
+            
+            officeData = this.data.officeData
+            patientData = this.data.patientData
+            sessionIndex = this.data.sessionIndex
+        }
+        // console.log(patientData);
+        
+
+        this.forms[this.selectedIndex].update({ officeData, patientData, sessionIndex })
+
+        this.data.officeData = officeData
+        this.data.patientData = patientData
+        this.data.sessionIndex = sessionIndex
+
         // console.log('I`M FROM Forms.update METHOD !!!!!!!!!!!!!!');
         // 
         // اگر هر دو دیتا وجود داشت  ادامه بده

@@ -1,12 +1,13 @@
 import Audiogram from './src/Audiogram/Audiogram'
 import dims from './src/Audiogram/dims'
-import { officeData, patientData } from './assets/data/sampleData'
+// import { officeData, patientData } from './assets/data/sampleData'
 import Forms from './src/Forms/Forms'
 import combo_template from './assets/templates/templCombo'
 import './styles.css'
 import formsUI from './src/Forms/FormsUI'
 // import './src/style.css'
 // import './src/Speech/ui.js'
+import { currentData } from './data/currentData'
 
 
 
@@ -26,8 +27,7 @@ const logos = [logo0, logo1, logo2]
 
 
 export {
-    Audiogram, Forms, dims, officeData,
-    patientData, combo_template,
+    Audiogram, Forms, dims, currentData, combo_template,
     logos, Speech, speechUI, formsUI
 
 } 
