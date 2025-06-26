@@ -1,7 +1,6 @@
 import Speech from "./Speech"
 import units from "./units"
 
-
 class SpeechUI {
   constructor() {
     this.data = { R: '', L: '' }

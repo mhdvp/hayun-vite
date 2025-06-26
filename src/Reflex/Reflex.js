@@ -117,8 +117,6 @@ export default class Reflex {
 
     // جایگذاری داده های رفلکس
     update(data) {
-        console.log(data);
-
         for (const key in data) {
             for (const freq in data[key]) {
                 this.chart.querySelector(`text[name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";

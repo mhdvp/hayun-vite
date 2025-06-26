@@ -136,8 +136,6 @@ export default class Speech {
     }
 
     update(data, container) {
-        console.log(data);
-        
         this.data = data
         // انتخاب اینکه اینپوت های کاربر را آپدیت کنه یا اس وی جی تکست ها رو
         // بر حسب اینکه پارامتر کانتینر باشه یا نباشه

@@ -106,4 +106,8 @@ const patientData = {
 
 }
 
-export { officeData, patientData }
+const appSettingData = {
+
+}
+
+export { officeData, patientData, appSettingData }

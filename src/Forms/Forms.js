@@ -1,4 +1,4 @@
-// import '../styles.css' // برای تست منتقل شد به فایل ایندکس اصلی اچ‌تی‌ام‌ال  و برای توسعه منتقل شده به ایندکس جی اس
+// import '../../styles.css' // برای تست منتقل شد به فایل ایندکس اصلی اچ‌تی‌ام‌ال  و برای توسعه منتقل شده به ایندکس جی اس
 import printForm from "./printForm.js"
 import Form from "../Form/Form.js"
 import putGrid from "../common/putGrid.js"

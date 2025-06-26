@@ -133,7 +133,6 @@ export default class Form {
     }
 
     update({ data, officeData, patientData, sessionIndex = 0 }) {
-        console.log(data);
         data?.audiogram?.R && this.RAudiogram?.update({ data: data.audiogram.R, side: 'R' })
         data?.audiogram?.L && this.LAudiogram?.update({ data: data.audiogram.L, side: 'L' })
         data?.speech?.R && this.RSpeech?.update(data?.speech?.R)

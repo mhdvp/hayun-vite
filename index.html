@@ -4,8 +4,9 @@
 <head>
 	<meta charset="UTF-8" />
 	<link rel="icon" type="image/svg+xml" href="vite.svg" />
-	<link rel="stylesheet" href="/styles-tailwind.css">
-	<link rel="stylesheet" href="/styles.css">
+	<link rel="stylesheet" href="style-font.css">
+	<link rel="stylesheet" href="styles.css">
+	<!-- <link rel="stylesheet" href="/styles-tailwind.css"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>hayun</title>
 </head>
@@ -18,21 +19,17 @@
 	<script type="module">
 		import { patientData } from "/data/currentData.js"
 		import speechUI from "/src/Speech/SpeechUI"
-		import formsUI from "/src/Forms/ui.js"
-		// console.log(patientData.sessions[0].speech);
+		import formsUI from "/src/Forms/FormsUI.js"
 		let data = patientData.sessions[0].speech
-		// speechUI({ data })
-		// console.log(speechUI);
 		speechUI.draw({ containerId: '#app' })
-		// speechUI.update({ data })
-		// speechUI.draw()
 		speechUI.update({ data })
 
 
 
 
-		// data = patientData.sessions[0]
-		// formsUI({ data })
+		data = patientData.sessions[0]
+		formsUI.draw({ containerId: '#app' })
+		formsUI.update({ patientData, sessionIndex: 0 })
 
 
 		// document.querySelector('#log').addEventListener('click', () => {
