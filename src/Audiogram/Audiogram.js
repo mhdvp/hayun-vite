@@ -444,7 +444,7 @@ export default class Audiogram {
 		// پاک کردن نودهای سمبل دیتای قبلی در صورت وجود از نود مربوطه
 		this.svg.querySelectorAll('[data-name=symbol]').forEach(symbol => symbol.remove())
 		// پاک کردن خطوط اتصال دیتای قبلی در صورت وجود از نود مربوطه
-		this.svg.querySelectorAll('[data-name=junction]').forEach(symbol => symbol.remove())
+		this.svg.querySelectorAll('[data-name=junction]').forEach(line => line.remove())
 
 		const junctions = { AC: {}, BC: {}, side };
 		this.junctions = junctions;
