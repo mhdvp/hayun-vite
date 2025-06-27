@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/svg+xml" href="vite.svg" />
 	<link rel="stylesheet" href="style-font.css">
 	<link rel="stylesheet" href="styles.css">
-	<!-- <link rel="stylesheet" href="/styles-tailwind.css"> -->
+	<link rel="stylesheet" href="styles-tailwind.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>hayun</title>
 </head>
@@ -18,30 +18,33 @@
 
 	<script type="module">
 		import { currentData } from "/data/currentData.js"
-		import speechUI from "/src/Speech/SpeechUI"
+		import speechUI from "/src/Speech/SpeechUI.js"
 		import formsUI from "/src/Forms/FormsUI.js"
+		import reflexUI from "/src/Reflex/ReflexUI.js"
 
 		const { appSettingData, officeData, patientData } = currentData
 		let data = patientData.sessions[0].speech
 		speechUI.draw({ containerId: '#app' })
 		speechUI.update({ data })
 
-		setInterval(() => {
-			// فراخوانی متد آپدیت بدون پارامتر مقادیر وارد شده کاربر را به دیتاآبجکت جاری میفرستد
-			speechUI.update()
+		// فراخوانی متد آپدیت بدون پارامتر مقادیر وارد شده کاربر را به دیتاآبجکت جاری میفرستد
+		// setInterval(() => { speechUI.update() }, 3000);
 
-		}, 3000);
+		// Accoustic Reflexes Section
+		data = patientData.sessions[0].reflex
+		reflexUI.draw({ containerId: '#app' })
+		reflexUI.update({ data })
 
+		// formsUI Section
+		// data = patientData.sessions[0]
+		// formsUI.draw({ containerId: '#app' })
+		// formsUI.update({ patientData, sessionIndex: 0 })
 
-		data = patientData.sessions[0]
-		formsUI.draw({ containerId: '#app' })
-		formsUI.update({ patientData, sessionIndex: 0 })
+		// setInterval(() => {
+		// 	formsUI.update({ patientData, sessionIndex: 0 })
+		// 	console.log('forms update!');
 
-		setInterval(() => {
-			formsUI.update({ patientData, sessionIndex: 0 })
-			console.log('forms update!');
-
-		}, 2000)
+		// }, 2000)
 
 
 		// document.querySelector('#log').addEventListener('click', () => {

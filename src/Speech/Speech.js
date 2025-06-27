@@ -178,7 +178,7 @@ export default class Speech {
         inputDims.forEach(dims => {
             const input = document.createElement('input')
             // input.className = 'user-input'
-            input.name = 'SAT'
+            input.name = dims.name
             input.type = 'text'
             input.maxLength = 4
             input.autocomplete = 'off'
@@ -187,7 +187,6 @@ export default class Speech {
             input.style.color = color
             input.style.left = dims.x - width / 2 + 'px'
             input.style.top = dims.y - height / 2 + 'px'
-            input.name = dims.name
             container.appendChild(input)
             // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
         })

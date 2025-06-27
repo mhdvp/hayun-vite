@@ -117,10 +117,59 @@ export default class Reflex {
 
     // جایگذاری داده های رفلکس
     update(data) {
+        
+        this.data = data
+
         for (const key in data) {
             for (const freq in data[key]) {
                 this.chart.querySelector(`text[name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";
             }
         }
+    }
+
+    createUserInput({ container }) {
+        // استایل دهی نسبی به کانتینر
+        // برای قرار دادن اینپوت ها در مختصات کانتینر
+        container.style.position = 'relative'
+        const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const height = 30 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+
+        let style = `
+            all: revert;
+            width: ${width}px;
+            height: ${height}px;
+            box-sizing: border-box;
+            border: none;
+            /* Ensures padding doesn't increase height */
+            position: absolute;
+            padding-top: 4px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: Vazirmatn;
+        `
+        const color = (this.side === 'R') ? 'crimson' : 'blue';
+        // ایجاد یک المنت اینپوت
+        // let input
+        // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
+        // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
+        let inputDims = this.inputDims
+
+        inputDims.forEach(dims => {
+            const input = document.createElement('input')
+            // input.className = 'user-input'
+            input.name = dims.name
+            input.type = 'text'
+            input.maxLength = 4
+            input.autocomplete = 'off'
+            input.placeholder = '---'
+            input.style = style
+            input.style.color = color
+            input.style.left = dims.x - width / 2 + 'px'
+            input.style.top = dims.y - height / 2 + 'px'
+            container.appendChild(input)
+            // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
+        })
+        // firstInput.focus()
     }
 }

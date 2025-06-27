@@ -1,5 +1,4 @@
 import Speech from "./Speech"
-import units from "./units"
 
 class SpeechUI {
   constructor() {
@@ -7,19 +6,17 @@ class SpeechUI {
   }
 
   draw({ containerId = '#app' } = {}) {
-
-    const { styles } = units
-
+   
     document.querySelector(containerId).insertAdjacentHTML('beforeend', `
-      <div name="speechs" style="${styles.border}">
-        <h1 style="${styles.center + styles.title}">Speech Tests</h1>
-        <div style="${styles.center}">
+      <div name="speechs" class="border">
+        <h1 class="center title">Speech Tests</h1>
+        <div class="center">
           <div>
-            <h2 style="${styles.side + styles.center + styles.red}">Right</h2>
+            <h2 class="side center red">Right</h2>
             <section id="r-speech"></section>
           </div>
           <div>
-            <h2 style="${styles.side + styles.center + styles.blue}">Left</h2>
+            <h2 class="side center blue">Left</h2>
             <section id="l-speech"></section>
           </div>
         </div>
