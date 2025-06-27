@@ -169,9 +169,6 @@ export default class Speech {
             font-family: Vazirmatn;
         `
         const color = (this.side === 'R') ? 'crimson' : 'blue';
-        // ایجاد یک المنت اینپوت
-        // let input
-        // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
         // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
         let inputDims = this.inputDims
 

@@ -41,11 +41,11 @@ class ReflexUI {
         this.rchart = new Reflex({ container: this.rcontainer, dims, side: 'R' })
 
         // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
-        // this.rchart.createUserInput({ container: this.rcontainer })
+        this.rchart.createUserInput({ container: this.rcontainer })
 
         this.lcontainer = document.getElementById('l-reflex')
         this.lchart = new Reflex({ container: this.lcontainer, dims, side: 'L' })
-        // this.lchart.createUserInput({ container: this.lcontainer })
+        this.lchart.createUserInput({ container: this.lcontainer })
 
     }
 
@@ -57,12 +57,13 @@ class ReflexUI {
         } else
         // اگر این تابع بدون پارامتر فراخوانی شود مقادیر اینپوت کاربر گرفته و دیتاآبجکت را آپدیت کند
         {
-            console.log('without param');
 
-            // this.rchart.fetchInputUserData()
-            // this.lchart.fetchInputUserData()
-            // this.data.R = this.rchart.data
-            // this.data.L = this.lchart.data
+            this.rchart.fetchInputUserData()
+            this.lchart.fetchInputUserData()
+            this.data.R = this.rchart.data
+            this.data.L = this.lchart.data
+            console.log('without param', this.data.R);
+
         }
 
     }

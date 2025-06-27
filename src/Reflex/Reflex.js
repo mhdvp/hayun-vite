@@ -116,13 +116,21 @@ export default class Reflex {
     }
 
     // جایگذاری داده های رفلکس
-    update(data) {
-        
+    update(data, container) {
+
         this.data = data
+        console.log(data);
+
+        // انتخاب اینکه اینپوت های کاربر را آپدیت کنه یا اس وی جی تکست ها رو
+        // بر حسب اینکه پارامتر کانتینر باشه یا نباشه
+        const prop = container ? 'value' : 'textContent'
+        const elem = container ? 'input' : 'text';
+        !container && (container = this.chart);
 
         for (const key in data) {
             for (const freq in data[key]) {
-                this.chart.querySelector(`text[name=${key}-${freq}]`).innerHTML = data?.[key]?.[freq] || "";
+                container.querySelector(`${elem}[name=${key}-${freq}]`)[prop] = data?.[key]?.[freq] || "";
+                // container.querySelector(`${elem}[name=${label}]`)[prop] = data?.[label] || "";
             }
         }
     }
@@ -171,5 +179,22 @@ export default class Reflex {
             // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
         })
         // firstInput.focus()
+    }
+
+    // دریافت دیتای کاربر از اینپوت ها و جایگزین کردن در دیتای آبجکت کلاس
+    // تغییر این دیتا باعث تغییر دیتای جاری می‌شود. چون آبجکت ها اشاره گر هستن
+    fetchInputUserData() {
+        [500, 1000, 2000, 4000].
+            forEach(freq => {
+                const value = this.container.querySelector(`input[name=ipsi-${freq}]`).value
+                this.data.ipsi[freq] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
+            });
+
+        [500, 1000, 2000, 4000].
+            forEach(freq => {
+                const value = this.container.querySelector(`input[name=contra-${freq}]`).value
+                this.data.contra[freq] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
+            });
+
     }
 }
