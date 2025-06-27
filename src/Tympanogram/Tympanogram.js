@@ -161,12 +161,13 @@ export default class Tympanogram {
             { name: 'MEP', x: getX(-300), y: getY(compliance.min), dy: 10, dx: 11 },
             { name: 'SC', x: getX(0), y: getY(compliance.min), dy: 10, dx: 8 },
             { name: 'G', x: getX(300), y: getY(compliance.min), dy: 10, dx: 4 },
-            { name: 'type', x: getX(-500), y: getY(2.5), dx: 9, dy: 0 },
+            { name: 'type', x: getX(-490), y: getY(2.5), dx: 9, dy: 0 },
         ]
             .forEach(input => {
                 const { name, x, y, dx, dy } = input
                 putText({ container: svg, value, style, name, x, y, dx, dy })
-                this.inputDims.push({ name, x: (x + dx + padding.left) * kx, y: (y + dy + padding.top) * ky })
+                // نگهداری مختصات اینپوت ها برای استفاده بعدی 
+                this.inputDims.push({ name, x: (x + dx + padding.left + 4) * kx, y: (y + dy + padding.top) * ky })
                 // putPoint({ container: svg, x, y, dx, dy, r: 0.8, fill: 'brown' })
             });
 
@@ -232,8 +233,16 @@ export default class Tympanogram {
         }
     }
 
-    update(data) {
+    update(data, container) {
         this.data = data
+        // انتخاب اینکه اینپوت های کاربر را آپدیت کنه یا اس وی جی تکست ها رو
+        // بر حسب اینکه پارامتر کانتینر باشه یا نباشه
+        const prop = container ? 'value' : 'textContent'
+        const elem = container ? 'input' : 'text';
+        !container && (container = this.chart);
+
+        // container.querySelector(`${elem}[name=${label}]`)[prop] = data?.[label] || "";
+
 
         let { ECV, SC, MEP, G } = data
 
@@ -243,11 +252,11 @@ export default class Tympanogram {
         G && (G = (+G).toFixed(2));
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
-        this.chart.querySelector(`text[name="type"]`).innerHTML = data?.type || "-";
-        this.chart.querySelector(`text[name="ECV"]`).innerHTML = ECV || "-";
-        this.chart.querySelector(`text[name="MEP"]`).innerHTML = data?.MEP || "-";
-        this.chart.querySelector(`text[name="SC"]`).innerHTML = SC || "-";
-        this.chart.querySelector(`text[name="G"]`).innerHTML = G || "-";
+        container.querySelector(`${elem}[name="type"]`)[prop] = data?.type || "-";
+        container.querySelector(`${elem}[name="ECV"]`)[prop] = ECV || "-";
+        container.querySelector(`${elem}[name="MEP"]`)[prop] = data?.MEP || "-";
+        container.querySelector(`${elem}[name="SC"]`)[prop] = SC || "-";
+        container.querySelector(`${elem}[name="G"]`)[prop] = G || "-";
         // پاک کردن منحنی قبلی از کانتینر جاری
         // console.log(this.chart.querySelector(`path[name="curve"]`));
 
@@ -377,45 +386,54 @@ export default class Tympanogram {
         }
     }
 
-    // ایجاد اینپوت‌های کاربر در کانتینر چارت
     createUserInput({ container }) {
         // استایل دهی نسبی به کانتینر
         container.style.position = 'relative'
-        // ایجاد یک المنت اینپوت
-        let input = document.createElement('input')
-        input.name = 'SAT'
-        input.type = 'text'
-        input.maxLength = 4
-        input.autocomplete = 'off'
-        input.placeholder = '---'
-        const width = 70 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
-        const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const width = 60 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+        const height = 30 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
+
         let style = `
-            margin: 0;
-            padding: 0;
+            all: revert;
+            width: ${width}px;
+            height: ${height}px;
+            box-sizing: border-box;
+            border: none;
+            /* Ensures padding doesn't increase height */
+            position: absolute;
+            padding-top: 4px;
             text-align: center;
             font-size: 24px;
             font-weight: bold;
-            color: crimson;
-            position: absolute;
-            width: ${width}px;
-            height: ${height}px;
-            border: none;
+            font-family: Vazirmatn;
         `
-        input.style = style
-        // آماده سازی اولین نود اینپوت از داکیومنت و سپس ساختن بقیه نودها از روی آن
-        const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
+        const color = (this.side === 'R') ? 'crimson' : 'blue';
+        // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
         let inputDims = this.inputDims
-        input.style.color = (this.side === 'R') ? 'crimson' : 'blue';
 
         inputDims.forEach(dims => {
+            const input = document.createElement('input')
+            // input.className = 'user-input'
+            input.name = dims.name
+            input.type = 'text'
+            input.maxLength = 4
+            input.autocomplete = 'off'
+            input.placeholder = '---'
+            input.style = style
+            input.style.color = color
             input.style.left = dims.x - width / 2 + 'px'
             input.style.top = dims.y - height / 2 + 'px'
-            input.setAttribute('name', dims.name)
             container.appendChild(input)
-            input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
+            // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
         })
+        // firstInput.focus()
+    }
 
-        firstInput.focus()
+    // دریافت دیتای کاربر از اینپوت ها و جایگزین کردن در دیتای آبجکت کلاس
+    // تغییر این دیتا باعث تغییر دیتای جاری می‌شود. چون آبجکت ها اشاره گر هستن
+    fetchInputUserData() {
+        ['type', 'ECV', 'MEP', 'SC', 'G'].forEach(name => {
+            const value = this.container.querySelector(`input[name= ${name}]`).value
+            this.data[name] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
+        })
     }
 }

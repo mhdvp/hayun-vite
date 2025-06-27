@@ -21,6 +21,7 @@ import Speech from './src/Speech/Speech'
 // import { ReflexUI } from './src/components'
 import speechUI from './src/Speech/SpeechUI'
 import reflexUI from './src/Reflex/ReflexUI'
+import tympanogramUI from './src/Tympanogram/TympanogramUI'
 
 const logos = [logo0, logo1, logo2]
 
@@ -29,6 +30,6 @@ const logos = [logo0, logo1, logo2]
 
 export {
     Audiogram, Forms, dims, currentData, combo_template,
-    logos, Speech, speechUI,reflexUI, formsUI
+    logos, Speech, speechUI, reflexUI, tympanogramUI, formsUI
 
 } 
