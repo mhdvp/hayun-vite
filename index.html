@@ -26,15 +26,16 @@
 		const { appSettingData, officeData, patientData } = currentData
 
 		let data = patientData.sessions[0].speech
-		speechUI.draw({ containerId: '#app' })
-		speechUI.update({ data })
-		// فراخوانی متد آپدیت بدون پارامتر مقادیر وارد شده کاربر را به دیتاآبجکت جاری میفرستد
-		setInterval(() => { speechUI.update() }, 3000);
+
+		// speechUI.draw({ containerId: '#app' })
+		// speechUI.update({ data })
+		// // فراخوانی متد آپدیت بدون پارامتر مقادیر وارد شده کاربر را به دیتاآبجکت جاری میفرستد
+		// setInterval(() => { speechUI.update() }, 3000);
 
 		data = patientData.sessions[0].tympanogram
 		tympanogramUI.draw({ containerId: '#app' })
 		tympanogramUI.update({ data })
-		setInterval(() => { tympanogramUI.update() }, 3000);
+		// setInterval(() => { tympanogramUI.update() }, 2000);
 
 
 
@@ -42,15 +43,15 @@
 
 
 		// Accoustic Reflexes Section
-		data = patientData.sessions[0].reflex
-		reflexUI.draw({ containerId: '#app' })
-		reflexUI.update({ data })
-		setInterval(() => { reflexUI.update() }, 3000);
+		// data = patientData.sessions[0].reflex
+		// reflexUI.draw({ containerId: '#app' })
+		// reflexUI.update({ data })
+		// setInterval(() => { reflexUI.update() }, 3000);
 
 
 
 		// formsUI Section
-		// data = patientData.sessions[0]
+		data = patientData.sessions[0]
 		formsUI.draw({ containerId: '#app' })
 		formsUI.update({ patientData, sessionIndex: 0 })
 
@@ -58,12 +59,6 @@
 			formsUI.update({ patientData, sessionIndex: 0 })
 			console.log('forms update!');
 		}, 2000)
-
-
-		// document.querySelector('#log').addEventListener('click', () => {
-		// 	console.log(data.R, data.L);
-
-		// })
 
 
 	</script>

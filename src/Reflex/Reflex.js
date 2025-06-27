@@ -119,7 +119,6 @@ export default class Reflex {
     update(data, container) {
 
         this.data = data
-        console.log(data);
 
         // انتخاب اینکه اینپوت های کاربر را آپدیت کنه یا اس وی جی تکست ها رو
         // بر حسب اینکه پارامتر کانتینر باشه یا نباشه

@@ -253,20 +253,21 @@ export default class Tympanogram {
 
         // جایگذاری مقادیر تمپانومتری در تکست‌باکس ها
         container.querySelector(`${elem}[name="type"]`)[prop] = data?.type || "-";
-        container.querySelector(`${elem}[name="ECV"]`)[prop] = ECV || "-";
-        container.querySelector(`${elem}[name="MEP"]`)[prop] = data?.MEP || "-";
-        container.querySelector(`${elem}[name="SC"]`)[prop] = SC || "-";
-        container.querySelector(`${elem}[name="G"]`)[prop] = G || "-";
-        // پاک کردن منحنی قبلی از کانتینر جاری
-        // console.log(this.chart.querySelector(`path[name="curve"]`));
+        container.querySelector(`${elem}[name="ECV"]`)[prop] = ECV || "";
+        container.querySelector(`${elem}[name="MEP"]`)[prop] = data?.MEP || "";
+        container.querySelector(`${elem}[name="SC"]`)[prop] = SC || "";
+        container.querySelector(`${elem}[name="G"]`)[prop] = G || "";
 
-        this.chart.querySelector(`path[name="curve"]`)?.remove();
         // رسم منحنی
         this.drawCurve(data);
     }
 
     // توابع داخلی
     drawCurve(data) {
+
+        // پاک کردن منحنی قبلی از کانتینر جاری
+        this.chart.querySelector(`path[name="curve"]`)?.remove();
+
         let { type, ECV, SC, MEP, G, expanded, cp, cpp } = data
 
         // Ensure to Convert to Numbers //
@@ -425,6 +426,9 @@ export default class Tympanogram {
             container.appendChild(input)
             // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
         })
+
+        //افزودن رویداد به اینپوت ها
+        this.createUserInputEvent()
         // firstInput.focus()
     }
 
@@ -434,6 +438,17 @@ export default class Tympanogram {
         ['type', 'ECV', 'MEP', 'SC', 'G'].forEach(name => {
             const value = this.container.querySelector(`input[name= ${name}]`).value
             this.data[name] = value // جایگزین کردن پراپرتی آبجکت دیتای جاری و اینجا
+        })
+    }
+
+    createUserInputEvent() {
+        ['type', 'ECV', 'MEP', 'SC', 'G'].forEach(name => {
+            this.container.querySelector(`input[name= ${name}]`).
+                addEventListener('change', (e) => {
+                    console.log(e.target.value)
+                    this.fetchInputUserData() // همه مقادیر اینپوت ها میگیره و دیتای کلاس رو به روز میکنه
+                    this.drawCurve(this.data) // رسم مجدد منحنی با دیتای جدید
+                })
         })
     }
 }

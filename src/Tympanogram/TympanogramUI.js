@@ -53,7 +53,7 @@ class TympanogramUI {
 			</div>
 		`);
 
-		let dims = {
+		this.dims = {
 			"name": "RTympanogram",
 			"w": 100,
 			"h": 60,
@@ -68,17 +68,17 @@ class TympanogramUI {
 			"height": 60 * 6,
 		}
 
-		let data = {
-			type: "An",
-			ECV: '1.30',
-			SC: '0.80',
-			MEP: '-130',
-			G: 0.2,
-			expanded: false, // by default is false for expand pressure from -600 to +400
+		// let data = {
+		// 	type: "An",
+		// 	ECV: '1.30',
+		// 	SC: '0.80',
+		// 	MEP: '-130',
+		// 	G: 0.2,
+		// 	expanded: false, // by default is false for expand pressure from -600 to +400
 
-		}
-
-		let cp = 70, cpp = 5, extraCompliance, compensated
+		// }
+		const dims = this.dims
+		
 
 		const width = 50 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
 		const height = 25 // به دست آوردن پهنای اینپوت برای محاسبه مختصات نقطه مرکزش
@@ -100,47 +100,16 @@ class TympanogramUI {
 		// فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
 		this.rchart.createUserInput({ container: this.rcontainer })
 
-		cereateEvents(this.rcontainer, this.rchart, 'r-tympanogram')
 
 		this.lcontainer = document.getElementById('l-tympanogram')
 		this.lchart = new Tympanogram({ container: this.lcontainer, dims, side: 'L' })
 		// فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
 		this.lchart.createUserInput({ container: this.lcontainer })
 
-		cereateEvents(this.lcontainer, this.lchart, 'l-tympanogram')
+		// cereateEvents(this.lcontainer, this.lchart, 'l-tympanogram')
 
 
-		function cereateEvents(container, tympanogram, containerId) {
-			// کنترلرهای منحنی
-			container = document.querySelector(`[name=${containerId}]`)
-			container.querySelector("[name=compensated]").addEventListener("input", e => {
-				compensated = e.target.checked
-				console.log(e.target.checked);
-				dims = { ...dims, compensated }
-				tympanogram.draw({ dims })
-			})
 
-			container.querySelector("[name=extra-sc]").addEventListener("input", e => {
-				extraCompliance = e.target.checked
-				console.log(e.target.checked);
-				dims = { ...dims, extraCompliance }
-				tympanogram.draw({ dims })
-			})
-
-			container.querySelector("#cp").addEventListener("input", e => {
-				cp = e.target.value
-				console.log(cp);
-				data = { ...data, cp }
-				tympanogram.update(data)
-			})
-
-			container.querySelector("#cpp").addEventListener("input", e => {
-				cpp = e.target.value
-				console.log(cpp);
-				data = { ...data, cpp }
-				tympanogram.update(data)
-			})
-		}
 
 	}
 
@@ -149,6 +118,10 @@ class TympanogramUI {
 			this.rchart.update(data.R, this.rcontainer)
 			this.lchart.update(data.L, this.lcontainer)
 			this.data = { R: data.R, L: data.L }
+			// در اولین دیتادهی رویدادها ایجاد شود
+			this.cereateEvents(this.rcontainer, this.rchart, 'r-tympanogram', data.R)
+			this.cereateEvents(this.lcontainer, this.lchart, 'l-tympanogram', data.L)
+
 		} else
 		// اگر این تابع بدون پارامتر فراخوانی شود مقادیر اینپوت کاربر گرفته و دیتاآبجکت را آپدیت کند
 		{
@@ -158,9 +131,43 @@ class TympanogramUI {
 			this.lchart.fetchInputUserData()
 			this.data.R = this.rchart.data
 			this.data.L = this.lchart.data
-			console.log(this.data.R);
-			
+			console.log(this.data.L);
+
 		}
+	}
+
+	cereateEvents(container, tympanogram, containerId, data) {
+		// کنترلرهای منحنی
+		let cp = 70, cpp = 5, extraCompliance, compensated, dims
+		
+		container = document.querySelector(`[name=${containerId}]`)
+		container.querySelector("[name=compensated]").addEventListener("input", e => {
+			compensated = e.target.checked
+			console.log(e.target.checked);
+			dims = { ...this.dims, compensated }
+			tympanogram.draw({ dims })
+		})
+
+		container.querySelector("[name=extra-sc]").addEventListener("input", e => {
+			extraCompliance = e.target.checked
+			console.log(e.target.checked);
+			dims = { ...this.dims, extraCompliance }
+			tympanogram.draw({ dims })
+		})
+
+		container.querySelector("#cp").addEventListener("input", e => {
+			cp = e.target.value
+			console.log(cp);
+			data = { ...data, cp }
+			tympanogram.update(data)
+		})
+
+		container.querySelector("#cpp").addEventListener("input", e => {
+			cpp = e.target.value
+			console.log(cpp);
+			data = { ...data, cpp }
+			tympanogram.update(data)
+		})
 	}
 
 }
