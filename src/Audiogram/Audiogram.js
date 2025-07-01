@@ -5,18 +5,15 @@ import putRect from "../common/putRect.js";
 import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
 import getAllSymbolsSVG from "../Symbol/getAllSymbolsSVG.js";
-import mainDims from './dims.js';
+import units from './units.js';
 
 export default class Audiogram {
 	constructor({ container, side, dims, events = true }) {
 		this.container = container;
-		this.dims = {}
-		Object.assign(this.dims, mainDims)
-		// dims = { blank: false }
+		this.dims = { ...units }
+
 		// اضافه کردن ابعاد جایگزین و یا اختصاصی دیگر به آبجکت ابعاد
 		dims && Object.assign(this.dims, dims);
-		// console.log(dims);
-
 
 		this.events = events;
 		this.side = side;
@@ -72,9 +69,9 @@ export default class Audiogram {
 		this.yAxisLength = yAxisLength
 
 		// Main SVG for Audiogram
-		style = styles.svg;
+		// style = styles.svg;
 		const viewBox = [-chartPadding.left, -chartPadding.top, vbWidth, vbHeight]
-		const svg = putSVG({ container, x, y, width, height, viewBox, style })
+		const svg = putSVG({ container, x, y, width, height, viewBox, className: 'svg' })
 		this.svg = svg; // کل نودی که به کانتینر اپند میشه
 
 		// برای فرم‌های پیش چاپ نشده
@@ -96,8 +93,8 @@ export default class Audiogram {
 			for (let i = intensity.min; i <= intensity.max; i += intensity.step) {
 				const y1 = this.getY(i)
 				const y2 = y1;
-				style = (i === 0) ? styles.boldLine : styles.line;
-				putLine({ container: g, x1, y1, x2, y2, style })
+				const className = (i === 0) ? 'boldLine' : 'line';
+				putLine({ container: g, x1, y1, x2, y2, className })
 			}
 
 			svg.appendChild(g);
@@ -112,16 +109,16 @@ export default class Audiogram {
 				forEach(item => {
 					const x1 = this.getX(item.vf)
 					const x2 = x1
-					style = (item.semiOctav) ? styles.semiOctavFreqline : styles.mainFreqline;
-					(item.f === 1000) && (style = styles.boldLine);
-					putLine({ container: g, x1, y1, x2, y2, style })
+					let className = (item.semiOctav) ? 'semiOctavFreqline' : 'mainFreqline';
+					(item.f === 1000) && (className = 'boldLine');
+					putLine({ container: g, x1, y1, x2, y2, className })
 				});
 
 			svg.appendChild(g);
 
 			// برچسب های اعداد فرکانس
-			style = styles.frequency
-			g = putG({ container: svg, style });
+			// style = styles.frequency
+			g = putG({ container: svg, className: 'frequency' });
 			const y = this.getY(-25)
 
 			frequencies.
@@ -129,14 +126,14 @@ export default class Audiogram {
 					const value = item.f
 					const x = this.getX(item.vf)
 					!item.semiOctav && item.f != 125 && item.f != 16000 &&
-						putText({ container: g, value, x, y, });
+						putText({ container: g, value, x, y });
 				});
 
 			svg.appendChild(g);
 
 			// رسم اعداد شدت محور عمودی
 			style = styles.intensity
-			g = putG({ container: svg, style });
+			g = putG({ container: svg, className: 'intensity' });
 			const x = this.getX(-0.1)
 
 			for (let i = -10; i <= 120; i += 10) {
@@ -144,9 +141,7 @@ export default class Audiogram {
 				const value = i
 				putText({ container: g, x, y, value })
 			}
-
 			svg.appendChild(g);
-
 		}
 		// یک بوردر راهنمای توسعه برای اس‌ وی جی به تمام پهنا و ارتفاع رسم می‌کنیم
 		// این مربع مرزی را آخرین ایجاد میکنیم تا بالاترین لایه باشد و روی ریودادها درست عمل کند
@@ -178,9 +173,8 @@ export default class Audiogram {
 		// برای قابل فوکوس کردن چارت ادیوگرام و دریافت رویدادهای صفحه کلید
 		this.svg.setAttribute('tabindex', 1)
 		this.svg.focus({ focusVisible: true });
-
-		this.svg.style.outline = 'none';
-
+		// کادر سیاه دور المنتی که فوکوس باعثش میشه
+		// this.svg.style.outline = 'none';
 
 		// نقطه راهنما
 		const pointer = putPoint({ container: this.svg, x: 0, y: 0, r: 4, color: 'black' });

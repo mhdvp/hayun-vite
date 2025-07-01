@@ -120,3 +120,51 @@ input.user-input[type="text"]:focus {
 
   border-color: #fefefe;
 }
+
+/* Audiogram */
+.svg {
+  direction: ltr;
+  font-family: Vazirmatn;
+  user-select: none;
+}
+
+.frequency {
+  text-anchor: middle;
+  dominant-baseline: hanging;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.intensity {
+  text-anchor: end;
+  dominant-baseline: middle;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.mainFreqline {
+  stroke: black;
+  stroke-width: 1;
+}
+
+.semiOctavFreqline {
+  stroke: black;
+  stroke-width: 1;
+  stroke-dasharray: 4;
+}
+
+.boldLine {
+  stroke: black;
+  stroke-width: 3;
+}
+
+svg .line {
+  stroke: black;
+  stroke-width: 1;
+}
+
+.juncDashLine {
+  stroke-width: 1;
+  stroke-opacity: 0.8;
+  stroke-dasharray: 4;
+}
