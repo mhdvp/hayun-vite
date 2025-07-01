@@ -135,7 +135,9 @@ export default class Form {
     update({ officeData, patientData, sessionIndex }) {
         // جداکردن دیتای مربوط به سکشن های مختلف
 
-        const { title, logos, selectedLogoIndex, addresses, tels, selectedAddressIndex, selectedTelIndex } = officeData
+        const
+            { title, logos, selectedLogoIndex, addresses, tels, selectedAddressIndex, selectedTelIndex }
+                = officeData
         const { name, lastName, age, referrer } = patientData
         const currentPatientData = patientData.sessions[sessionIndex]
         const { audiogram, speech, tympanogram, reflex, history, report } = currentPatientData
