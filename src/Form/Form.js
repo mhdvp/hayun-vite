@@ -134,15 +134,24 @@ export default class Form {
 
     update({ officeData, patientData, sessionIndex }) {
         // جداکردن دیتای مربوط به سکشن های مختلف
-        const currentPatientData = patientData.sessions[sessionIndex]
-        const data = {
-            audiogram: currentPatientData.audiogram,
-            speech: currentPatientData.speech,
-            tympanogram: currentPatientData.tympanogram,
-            reflex: currentPatientData.reflex,
 
-        } 
-        this.patient?.update(patientData)
+        const { title, logos, selectedLogoIndex, addresses, tels, selectedAddressIndex, selectedTelIndex } = officeData
+        const { name, lastName, age, referrer } = patientData
+        const currentPatientData = patientData.sessions[sessionIndex]
+        const { audiogram, speech, tympanogram, reflex, history, report } = currentPatientData
+
+        const data = {
+            header: { title, logo: logos[selectedLogoIndex] },
+            patient: { name, lastName, age, referrer },
+            audiogram, speech, tympanogram, reflex, history, report,
+            footer: { address: addresses[selectedAddressIndex], tel: tels[selectedTelIndex] },
+        }
+
+        this.header?.update(data.header)
+        this.patient?.update(data.patient)
+        this.history?.update(data.history)
+        this.report?.update(data.report)
+        this.footer?.update(data.footer)
         data?.audiogram?.R && this.RAudiogram?.update({ data: data.audiogram.R, side: 'R' })
         data?.audiogram?.L && this.LAudiogram?.update({ data: data.audiogram.L, side: 'L' })
         data?.speech?.R && this.RSpeech?.update(data?.speech?.R)
@@ -197,57 +206,7 @@ export default class Form {
             this.data.history = session.history
         }
         // }
-        // if (keys.includes("audiogram")) {
-        if (session.audiogram) {
-            this.RAudiogram?.update({ data: session.audiogram?.R, side: 'R' })
-            this.LAudiogram?.update({ data: session.audiogram?.L, side: 'L' })
-        }
-        this.data.audiogram = session.audiogram
-        // }
-        // if (keys.includes("speech")) {
-        console.log(session.speech.R.SAT);
-
-        if (
-            // JSON.stringify(this.data.speech) !== JSON.stringify(session.speech) &&
-            session.speech &&
-            Object.keys(session.speech).length !== 0) {
-            console.log('FROM updatas speech');
-
-            this.RSpeech?.update(session.speech?.R)
-            this.LSpeech?.update(session.speech?.L)
-        }
-        this.data.speech = session.speech
-        // }
-        // if (keys.includes("tympanogram")) {
-        if (
-            session.tympanogram &&
-            Object.keys(session.tympanogram).length !== 0) {
-
-            this.RTympanogram?.update(session.tympanogram?.R)
-            this.LTympanogram?.update(session.tympanogram?.L)
-        }
-        this.data.tympanogram = session.tympanogram;
-        // }
-        // if (keys.includes("reflex")) {
-        if (
-            session.reflex && Object.keys(session.reflex).length !== 0) {
-
-            this.RReflex?.update(session.reflex?.R)
-            this.LReflex?.update(session.reflex?.L)
-        }
-        this.data.reflex = session.reflex;
-        // }
-        // if (keys.includes("report")) {
-        if (session.report) {
-            this.report?.update(session.report)
-            this.data.report = session.report
-        }
-        // }
-        // if (keys.includes("footer")) {
-        if (data.footer) {
-            this.footer?.update(data?.footer)
-            this.data.footer = data.footer
-        }
+      
 
         */
     }

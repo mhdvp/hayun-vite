@@ -248,12 +248,7 @@ export default class Audiogram {
 		let y = 0
 		// ایجاد یک سکشن جداگانه بلاک در بالای جدول ادیوگرام برای چارت سمبل ها
 		const div = document.createElement('div')
-		div.style = `
-			display: flex;
-			justify-content: center; /* horizontal */
-			align-items: center;     /* vertical */
-			border: 1px solid green;
-   	 	`
+		div.className = 'center'
 		const svg = putSVG({ container: div, width, height, x, y });
 		svg.style.cursor = 'pointer'; // Change to pointer cursor
 		// let container = symbolsChart
@@ -279,13 +274,13 @@ export default class Audiogram {
 		this.currentSymbolName = this.side + '_AC';
 		this.symbol = { current: { side: this.side, type: 'AC' }, last: {} }
 		this.lastSymbolName = this.currentSymbolName;
-		rect[this.currentSymbolName].style = 'fill: yellow; stroke: brown;'
+		rect[this.currentSymbolName].style = 'fill: blanchedalmond; stroke: brown;'
 
 		svg.onclick = (e) => {
 			this.currentSymbolName = e.target.dataset.name
 			// رنگی کردن مربع دور سمبل
 			rect[this.lastSymbolName].style = 'fill: none; stroke: brown;'
-			rect[this.currentSymbolName].style = 'fill: yellow; stroke: brown;'
+			rect[this.currentSymbolName].style = 'fill: blanchedalmond; stroke: brown;'
 			this.lastSymbolName = this.currentSymbolName
 		}
 		this.container.appendChild(div)

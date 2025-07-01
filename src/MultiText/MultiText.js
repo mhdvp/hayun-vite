@@ -79,6 +79,8 @@ export default class MultiText {
     }
 
     update(data) {
+        console.log(data);
+        
         this.inputs.forEach(input => {
             let value = data?.[input.name];
             const textInput = this.container.querySelector(`text[name=${input.name}]`)

@@ -1,5 +1,5 @@
 const officeData = {
-    name: "دفتر ارزیابی شنوایی و سمعک سروش",
+    title: "دفتر ارزیابی شنوایی و سمعک سروش",
     // logo: "/static/media/Daco_1154502.04df6740fbd1f11c99f8.png",
     logos:
         [
@@ -9,8 +9,8 @@ const officeData = {
 
     addresses: ["مشهد، خیابان عارف، عارف ۲، ساختمان سینا، طبقه اول"],
     selectedAddressIndex: 0,
-    tels: ["051 38442592", "051 38445232"],
-    selectedTelIndex: 1,
+    tels: ["051-38442592", "051-38445232"],
+    selectedTelIndex: 0,
     audiologists: [
         {
             name: "مهدی",

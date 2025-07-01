@@ -1,6 +1,5 @@
-import { officeData, patientData } from "../../assets/data/sampleData";
-import templAudiometry from "../../assets/templates/templAudiometry";
-import templCombo from "../../assets/templates/templCombo";
+import templAudiometry from "./templates/templAudiometry";
+import templCombo from "./templates/templCombo";
 import Forms from "./Forms";
 
 class formsUI {

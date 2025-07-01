@@ -168,3 +168,10 @@ svg .line {
   stroke-opacity: 0.8;
   stroke-dasharray: 4;
 }
+
+/* Symbols Chart*/
+.quad {
+  fill: none;
+  stroke: blanchedalmond
+
+}

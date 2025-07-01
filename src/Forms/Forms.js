@@ -5,8 +5,8 @@ import putGrid from "../common/putGrid.js"
 
 const svgNS = "http://www.w3.org/2000/svg"
 
-import templCombo from "../../assets/templates/templCombo.js"  // این در حقیقیت یک تمپلت هست
-import templAudiometry from "../../assets/templates/templAudiometry.js"
+// import templCombo from "../templates/templCombo.js"  // این در حقیقیت یک تمپلت هست
+// import templAudiometry from "../assets/templates/templAudiometry.js"
 
 // کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {

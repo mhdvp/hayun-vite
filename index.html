@@ -28,9 +28,9 @@
 		const { appSettingData, officeData, patientData } = currentData
 
 		let data
-		data = patientData.sessions[0].audiogram
-		audiogramUI.draw({ containerId: '#app' })
-		audiogramUI.update({ data })
+		// data = patientData.sessions[0].audiogram
+		// audiogramUI.draw({ containerId: '#app' })
+		// audiogramUI.update({ data })
 
 
 		// data = patientData.sessions[0].speech
@@ -60,7 +60,7 @@
 		// formsUI Section
 		data = patientData.sessions[0]
 		formsUI.draw({ containerId: '#app' })
-		formsUI.update({ patientData, sessionIndex: 0 })
+		formsUI.update({ officeData, patientData, sessionIndex: 0 })
 
 		// setInterval(() => {
 		// 	formsUI.update({ patientData, sessionIndex: 0 })
