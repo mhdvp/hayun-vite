@@ -173,49 +173,10 @@ svg .line {
 .quad {
   fill: none;
   stroke: blanchedalmond
+
 }
 
-/* for Print Form */
-@page {
-
-  size: a4;
-  margin: 0;
-  padding: 0;
-  break-inside: avoid;
-  height: 100%;
-}
-
-@media print {
-
-  header,
-  footer {
-    display: none;
-  }
-
-  button {
-    display: none !important;
-  }
-
-  svg {
-    margin: 0;
-    padding: 0;
-    break-inside: avoid;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    break-inside: avoid;
-  }
-
-  html {
-    margin: 0;
-    padding: 0;
-    break-inside: avoid;
-  }
-
-  .no-print {
-    display: none;
-  }
-
+.iframe1 {
+    font-size: large;
+    color: #1c15e1;
 }
