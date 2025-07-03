@@ -29,18 +29,19 @@
 		const { appSettingData, officeData, patientData } = currentData
 
 		let data
-		const RAudiogram = new Audiogram({ container: document.getElementById('app'), side: 'R',dims: {width: 800, height: 800} })
+		// const RAudiogram = new Audiogram({ container: document.getElementById('app'), side: 'R',dims: {width: 800, height: 800} })
 
 		// data = patientData.sessions[0].audiogram
 		// audiogramUI.draw({ containerId: '#app' })
 		// audiogramUI.update({ data })
 
 
-		// data = patientData.sessions[0].speech
-		// speechUI.draw({ containerId: '#app' })
-		// speechUI.update({ data })
+		data = patientData.sessions[0].speech
+		speechUI.draw({ containerId: '#app' })
+		speechUI.update({ data })
+
 		// // فراخوانی متد آپدیت بدون پارامتر مقادیر وارد شده کاربر را به دیتاآبجکت جاری میفرستد
-		// setInterval(() => { speechUI.update() }, 3000);
+		setInterval(() => { speechUI.update() }, 3000);
 
 		// data = patientData.sessions[0].tympanogram
 		// tympanogramUI.draw({ containerId: '#app' })

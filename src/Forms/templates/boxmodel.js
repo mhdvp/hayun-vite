@@ -42,18 +42,18 @@ const boxmodel = {
             width: this.width / 2, height: 100,
             box: { container: '', margin: { top: 2, right: 2, bottom: 2, left: 2 } },
         }
-        // this['Right Speech'] = {
-        //     name: 'RSpeech', container: '',
-        //     width: this.width / 2, height: 20,
-        //     display: 'inline',
-        //     container: '', // later SVG node Section
-        //     box: { container: '', margin: { top: 2, right: 2, bottom: 2, left: 2 } },
-        // }
-        // this['Left Speech'] = {
-        //     name: 'LSpeech', container: '',
-        //     width: this.width / 2, height: 20,
-        //     box: { container: '', margin: { top: 2, right: 2, bottom: 2, left: 2 } },
-        // }
+        this['Right Speech'] = {
+            name: 'RSpeech', container: '',
+            width: this.width / 2, height: 20,
+            display: 'inline',
+            container: '', // later SVG node Section
+            box: { container: '', margin: { top: 2, right: 2, bottom: 2, left: 2 } },
+        }
+        this['Left Speech'] = {
+            name: 'LSpeech', container: '',
+            width: this.width / 2, height: 20,
+            box: { container: '', margin: { top: 2, right: 2, bottom: 2, left: 2 } },
+        }
 
     },
 
@@ -63,7 +63,7 @@ const boxmodel = {
             this['Patient Info'],
             this['History'],
             this['Right Audiogram'], this['Left Audiogram'],
-            // this['Right Speech'], this['Left Speech']
+            this['Right Speech'], this['Left Speech']
 
         ];
 
@@ -124,7 +124,7 @@ const boxmodel = {
 
         box = this['Right Audiogram'].box
 
-        // box = this['Right Speech'].box
+        box = this['Right Speech'].box
         // box.elements = ["SAT", "SRT", "MCL", "UCL", "SDS"];
         // box.name = this['Right Speech'].name;
 

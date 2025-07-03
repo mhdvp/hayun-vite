@@ -15,7 +15,6 @@ const units = {
     // viewBox: [0, 0, 100, 20],
     // واحد پیکسل، میلیمتر، ...
 
-
     styles: {
         label: `
             user-select: none;

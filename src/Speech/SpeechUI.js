@@ -1,4 +1,4 @@
-import Speech from "./Speech"
+import Speech from "./Speech_Box"
 
 class SpeechUI {
   constructor() {
@@ -6,7 +6,7 @@ class SpeechUI {
   }
 
   draw({ containerId = '#app' } = {}) {
-   
+
     document.querySelector(containerId).insertAdjacentHTML('beforeend', `
       <div name="speechs" class="border">
         <h1 class="center title">Speech Tests</h1>
@@ -47,19 +47,21 @@ class SpeechUI {
     }
 
     this.rcontainer = document.getElementById('r-speech')
-    this.rchart = new Speech({ container: this.rcontainer, dims, side: 'R' })
+    let box = { container: this.rcontainer, width: 600, height: 100, margin: { left: 1, right: 1, top: 1, bottom: 1 } }
+    this.rchart = new Speech({ box, side: 'R' })
 
     // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
     this.rchart.createUserInput({ container: this.rcontainer })
 
 
     this.lcontainer = document.getElementById('l-speech')
-    this.lchart = new Speech({ container: this.lcontainer, dims, side: 'L' })
+    box = { container: this.lcontainer, width: 600, height: 100, margin: { left: 1, right: 1, top: 1, bottom: 1 } }
+    this.lchart = new Speech({ box, side: 'L' })
 
     // فراخوانی متد ایجاد اینپوت روی چارت اسپیچ
     this.lchart.createUserInput({ container: this.lcontainer })
 
-   
+
   }
 
   update({ data } = {}) {
@@ -70,7 +72,7 @@ class SpeechUI {
     } else
     // اگر این تابع بدون پارامتر فراخوانی شود مقادیر اینپوت کاربر گرفته و دیتاآبجکت را آپدیت کند
     {
-      console.log('without param');
+      console.log('without param', this.data);
 
       this.rchart.fetchInputUserData()
       this.lchart.fetchInputUserData()

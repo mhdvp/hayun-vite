@@ -2,7 +2,7 @@
 import Header from "../Header/Header_box.js";
 import Reflex from "../Reflex/Reflex.js";
 import Sections from "./Sections.js";
-import Speech from "../Speech/Speech.js";
+import Speech from "../Speech/Speech_Box.js";
 import Tympanogram from "../Tympanogram/Tympanogram.js";
 import putRect from "../common/putRect.js";
 import Audiogram from "../Audiogram/Audiogram_Box_New.js";
@@ -47,9 +47,9 @@ export default class Form {
                 // case 'LAudiogram':
                 //     // const LAudiogram = new Audiogram({ container: box.container, side: 'L', dims: box, events: false })
                 //     break;
-                // case 'RSpeech':
-                //     const RSpeech = new Speech({ box })
-                //     break;
+                case 'RSpeech':
+                    const RSpeech = new Speech({ box })
+                    break;
 
                 default:
                     break;
