@@ -19,15 +19,18 @@
 	<script type="module">
 		import { currentData } from "/data/currentData.js"
 		import speechUI from "/src/Speech/SpeechUI.js"
-		import formsUI from "/src/Forms/FormsUI.js"
+		import formsUI from "/src/Forms/FormsUI_Box.js"
 		import reflexUI from "/src/Reflex/ReflexUI.js"
 		import tympanogramUI from "/src/Tympanogram/TympanogramUI"
 		import audiogramUI from "/src/Audiogram/AudiogramUI"
+		import Audiogram from "/src/Audiogram/Audiogram_Box_New"
 
 
 		const { appSettingData, officeData, patientData } = currentData
 
 		let data
+		const RAudiogram = new Audiogram({ container: document.getElementById('app'), side: 'R',dims: {width: 800, height: 800} })
+
 		// data = patientData.sessions[0].audiogram
 		// audiogramUI.draw({ containerId: '#app' })
 		// audiogramUI.update({ data })

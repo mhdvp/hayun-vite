@@ -1,11 +1,13 @@
-import Header from "../Header/Header.js";
+// سکشن دور باکس را گرفته است. و باکس دور چارت را گرفته است
+import Header from "../Header/Header_box.js";
 import Reflex from "../Reflex/Reflex.js";
 import Sections from "./Sections.js";
 import Speech from "../Speech/Speech.js";
 import Tympanogram from "../Tympanogram/Tympanogram.js";
 import putRect from "../common/putRect.js";
-import AudiogramChart from "../Audiogram/Audiogram.js";
-import MultiText from "../MultiText/MultiText.js";
+import Audiogram from "../Audiogram/Audiogram_Box_New.js";
+import MultiText from "../MultiText/MultiText_box.js";
+import putSVG from "../common/putSVG.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Form {
@@ -14,93 +16,46 @@ export default class Form {
         this.container = container;
         this.mode = mode;
         this.data = {};
-        let { width, height, margin, paper } = template;
-        this.svg = this.create({ paper, margin }); // اس‌وی‌جی مادر فرم را صفحه نامگذاری میکنیم بذاریم همون اس‌وی‌جی؟
+        let { width, height, margin, paper, sectionsArray } = template;
+
+        this.svg = this.createForm({ paper, margin }); // اس‌وی‌جی مادر فرم را صفحه نامگذاری میکنیم بذاریم همون اس‌وی‌جی؟
         this.svg.style.display = 'none';
-        let dims;
+
         // خطوط نقطه چین مارجین فرم
         putRect({ container: this.svg, x: 0, y: 0, width, height, className: 'no-print form-margin' })
 
-        const sections = new Sections({ container: this.svg, dims: template });
-        this.sections = sections;
+        // ایجاد سکشن ها و باکس‌ها
+        sectionsArray.forEach(section => {
 
-        if (sections.header) {
-            this.header = new Header({ container: sections.header })
-            this.header.draw({ dims: template.header });
-        }
-        if (sections.patient) {
-            dims = template.patient;
-            this.patient = new MultiText({ container: sections.patient, dims });
-        }
-        if (sections.history) {
-            dims = template.history;
-            this.history = new MultiText({ container: sections.history, dims })
-            // this.history.draw({ dims: template.history });
-        }
-        if (sections['Audiogram Titles']) {
-            dims = template['Audiogram Titles'];
-            new MultiText({ container: sections['Audiogram Titles'], dims });
-        }
-        if (sections.RAudiogram) {
-            this.RAudiogram = new AudiogramChart({
-                container: sections.RAudiogram,
-                dims: template.RAudiogram,
-                side: 'R',
-                events: false
-            })
-        }
-        if (sections.LAudiogram) {
-            this.LAudiogram = new AudiogramChart({
-                container: sections.LAudiogram,
-                dims: template.LAudiogram,
-                side: 'L',
-                events: false
-            })
-        }
-        if (sections['Speech Titles']) {
-            dims = template['Speech Titles'];
-            const titles = new MultiText({ container: sections['Speech Titles'], dims });
-        }
-        if (sections['RSpeech']) {
-            dims = template.RSpeech
-            this.RSpeech = new Speech({ container: sections.RSpeech, side: 'R', dims })
-        }
-        if (sections.LSpeech) {
-            dims = template.LSpeech
-            this.LSpeech = new Speech({ container: sections.LSpeech, side: 'L', dims })
-        }
-        if (sections['Tympanogram Titles']) {
-            dims = template['Tympanogram Titles'];
-            new MultiText({ container: sections['Tympanogram Titles'], dims });
-        }
-        if (sections.RTympanogram) {
-            dims = template.RTympanogram
-            this.RTympanogram = new Tympanogram({ container: sections.RTympanogram, side: 'R', dims })
-        }
-        if (sections.LTympanogram) {
-            dims = template.LTympanogram
-            this.LTympanogram = new Tympanogram({ container: sections.LTympanogram, side: 'L', dims })
-        }
-        if (sections['Reflex Titles']) {
-            dims = template['Reflex Titles'];
-            const titles = new MultiText({ container: sections['Reflex Titles'], dims });
-        }
-        if (sections.RReflex) {
-            dims = template.RReflex
-            this.RReflex = new Reflex({ container: sections.RReflex, side: 'R', dims })
-        }
-        if (sections.LReflex) {
-            dims = template.LReflex
-            this.LReflex = new Reflex({ container: sections.LReflex, side: 'L', dims })
-        }
-        if (sections.report) {
-            dims = template.report;
-            this.report = new MultiText({ container: sections.report, dims })
-        }
-        if (sections.footer) {
-            dims = template.footer;
-            this.footer = new MultiText({ container: sections.footer, dims })
-        }
+            this.createSection(section)
+            this.createBox(section)
+
+            const box = section.box
+
+            switch (section.name) {
+                // case 'header':
+                //     const header = new Header({ box })
+                //     break;
+                // case 'patientInfo':
+                //     const patientInfo = new MultiText({ box })
+                //     break;
+                // case 'history':
+                //     break;
+                case 'RAudiogram':
+                    const RAudiogram = new Audiogram({ box, container: box.container, side: 'R', events: false, dims: box })
+                    break;
+                // case 'LAudiogram':
+                //     // const LAudiogram = new Audiogram({ container: box.container, side: 'L', dims: box, events: false })
+                //     break;
+                // case 'RSpeech':
+                //     const RSpeech = new Speech({ box })
+                //     break;
+
+                default:
+                    break;
+            }
+        });
+
 
         this.container.appendChild(this.svg);
 
@@ -108,14 +63,14 @@ export default class Form {
         this.svg.onclick = e => console.log(e.target.dataset['name'])
     }
 
-    create({ paper, margin }) {
+    createForm({ paper, margin }) {
         const { width, height } = paper;
         const { left, top } = margin;
         const backgroundImage = this.template.backgroundImage;
         let svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("viewBox", [-left, -top, width, height])
         svg.style = "background-color: BlanchedAlmond;"
-       
+
         if (backgroundImage) {
             let image = document.createElementNS(svgNS, "image")
             image.setAttribute('class', 'no-print')
@@ -127,6 +82,28 @@ export default class Form {
             svg.appendChild(image)
         }
         return svg
+    }
+
+    // Sections With Brown Color Border
+    createSection(section) {
+        const { width, height, top, left } = section;
+        const style = ['fill: transparent', 'stroke: brown', 'stroke-width: 0.2'].join(';')
+        const container = putSVG({ container: this.svg, x: left, y: top, width, height })
+
+        putRect({ container, x: 0, y: 0, width, height, style })
+
+        // اضافه کردن پراپرتی اس‌وی‌جی به آبجکت سکشن
+        section['container'] = container;
+    }
+
+    // Boxes Width Blue Color Border
+    createBox(section) {
+        const { width, height, margin } = section.box
+        const style = ['fill: transparent', 'stroke: blue', 'stroke-width: 0.2'].join(';')
+        const container = putSVG({ container: section.container, x: margin.left, y: margin.top, width, height })
+        putRect({ container, x: 0, y: 0, width, height, style })
+
+        section.box.container = container
     }
 
     update({ officeData, patientData, sessionIndex }) {
@@ -210,5 +187,4 @@ export default class Form {
         */
     }
 
-   
 }

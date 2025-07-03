@@ -1,5 +1,0 @@
-import speechUI from "/src/Speech/SpeechUI.js"
-import formsUI from "/src/Forms/FormsUI.js"
-import reflexUI from "/src/Reflex/ReflexUI.js"
-import tympanogramUI from "/src/Tympanogram/TympanogramUI"
-import audiogramUI from "/src/Audiogram/AudiogramUI"

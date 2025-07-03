@@ -175,6 +175,15 @@ svg .line {
   stroke: blanchedalmond
 }
 
+/* Form Styles */
+.form-margin {
+  stroke: black;
+  stroke-width: 0.3;
+  stroke-opacity: 0.5;
+  stroke-dasharray: 0.5;
+  fill: transparent;
+}
+
 /* for Print Form */
 @page {
 

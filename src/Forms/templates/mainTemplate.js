@@ -9,7 +9,6 @@ const mainTemplate = {
     paper: { type: 'A4', width: 210, height: 297, orientation: 'portrait' },
     margin: { left: 5, top: 5, right: 5, bottom: 5 },
 
-
     calcDims: function () {
         this.width = this.paper.width - (this.margin.left + this.margin.right);
         this.height = this.paper.height - (this.margin.top + this.margin.bottom);
@@ -112,7 +111,6 @@ const mainTemplate = {
 
 
     },
-
 
 }
 

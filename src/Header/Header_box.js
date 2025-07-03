@@ -35,9 +35,6 @@ export default class Header {
 
         });
 
-
-
-
         // Logo 
         let image = document.createElementNS(svgNS, "image");
         image.setAttribute("data-name", "officeLogo")

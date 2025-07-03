@@ -1,20 +1,21 @@
+import putText from "../common/putText";
+
+
 export default class MultiText {
     constructor({ box }) {
         this.box = box;
         this.container = box.container;
-        // this.draw({ box })
+        this.draw({ box })
+        console.log(box);
+
 
     }
-
-
-
 
     draw({ box }) {
         // همه چیز را توی کانتینر باکس آبجکت رسم کن
         const { container, elements, width, height } = box
-        console.log(box);
 
-        elements.forEach(element => {
+        elements?.forEach(element => {
             const { name, value, x, y, style } = element;
 
             switch (element.type) {
