@@ -30,10 +30,11 @@ export default class Speech {
         let { styles, vbWidth, vbHeight } = units;
         let cx, cy, pcx, pcy
 
+
         // کل چارت
         vbHeight = (vbWidth * h) / w // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
-        const svg = putSVG({ x, y, width: w, height: h, viewBox })
+        const svg = putSVG({ x: 0, y: 0, width: w, height: h, viewBox })
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
         width = vbWidth; // ثابت می‌ماند همیشه
         height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
@@ -174,7 +175,7 @@ export default class Speech {
         // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
         let inputDims = this.inputDims
         // console.log(inputDims);
-        
+
 
         inputDims.forEach(dims => {
             const input = document.createElement('input')

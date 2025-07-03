@@ -41,6 +41,8 @@ export default class Audiogram {
 
 		let x = dims.margin.left
 		let y = dims.margin.top
+		x=0
+		y=0
 
 		this.symbolDims = symbolDims;
 		this.vf = vf;
