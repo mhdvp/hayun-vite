@@ -7,7 +7,7 @@ import putPoint from "../common/putPoint.js";
 const svgNS = "http://www.w3.org/2000/svg";
 
 export default class Speech {
-    constructor({ container, side = 'R', box }) {
+    constructor({ box, side }) {
         this.container = box.container;
         this.side = side;
         this.data = {}
@@ -17,7 +17,6 @@ export default class Speech {
 
     draw({ box }) {
         let { container, width, height, margin, name } = box
-
 
         // دریافت اطلاعات مختصات چاپ ورودی ها به جز عادی محاسبه شده 
         // this.inputs = (dims?.forceInsert) ? dims?.forceInputs : dims.inputs
@@ -29,12 +28,14 @@ export default class Speech {
         let y = margin.top;
         let { styles, vbWidth, vbHeight } = units;
         let cx, cy, pcx, pcy
-
+        // در مدل باکس مارجین قبلا تعریف شده پس 
+        x = 0
+        y = 0
 
         // کل چارت
         vbHeight = (vbWidth * h) / w // متناسب سازی ارتفاع ویباکس با پهنا و ارتفاع ورودی
         const viewBox = [0, 0, vbWidth, vbHeight].join(' ');
-        const svg = putSVG({ x: 0, y: 0, width: w, height: h, viewBox })
+        const svg = putSVG({ x, y, width: w, height: h, viewBox })
         // این خط شد دو خط کد طلایی که مشکل سایز فونت در دیسپلی و کاغذ رو حل کرد
         width = vbWidth; // ثابت می‌ماند همیشه
         height = vbHeight // با نسبت پهنا و ارتفاع ورودی تغییر میکند 
@@ -78,21 +79,21 @@ export default class Speech {
             }
         }
 
-        style = styles.label;
+        // style = styles.label;
         // برچسب های سطر اول
         // برای فرم های پیش چاپ شده انجام نمیشود
         // !dims.hideContext &&
-        matrix[0].forEach((cell, index) =>
-            putText({
-                container: svg, value: labels[index],
-                x: cell.cx, y: cell.cy, dx: 0, dy: 1, style
-            }));
+        matrix[0].forEach((cell, index) => putText({
+            container: svg, value: labels[index],
+            x: cell.cx, y: cell.cy, dx: 0, dy: 1, className: 'chart-label'
+        }));
 
-        style = styles.svgInput
-        style += (this.side === 'R') ? 'fill: red;' : 'fill: blue;';
+        // style = styles.svgInput
+        const color = (this.side === 'R') ? 'red-fill' : 'blue-fill';
 
         const inputBox = {
-            width: width / 5 * 0.80, height: height / 2 * 0.95,
+            width: width / 5 * 0.80,
+            height: height / 2 * 0.95,
             rx: width / 100
         }
         // محاسبه کمان گردی بر اساس مقدار پهنا
@@ -105,12 +106,12 @@ export default class Speech {
             putRect({
                 container: svg, cx: cell.cx, cy: cell.cy, dx, dy,
                 width: inputBox.width, height: inputBox.height,
-                rx: inputBox.rx,
+                rx: inputBox.rx, className: 'transparent'
             });
             // اینپوت‌های نگهداری مقادیر که بعدا توسط متد آپدیت مقدارگذاری می‌شوند
             // if (!dims.forceInsert) {
             // putPoint({ container: svg, x: cell.cx, y: cell.cy, r: 0.5, dx, dy })
-            putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dx, dy, style, name: labels[index] });
+            putText({ container: svg, value: "", x: cell.cx, y: cell.cy, dx, dy, className: 'chart-input ' + color, name: labels[index] });
             // مختصات مرکز باکس ها رو توی یک پراپرتی کلاس میذاریم
             // که بتونیم برای المنت های اینپوت بعدا استفاده کنیم
             this.inputDims.push({ name: labels[index], x: (cell.cx + dx) * kx, y: (cell.cy + dy) * ky })
@@ -128,13 +129,11 @@ export default class Speech {
         // مربع احاطه‌کننده کل جدول برای راهنمای توسعه
         style = 'fill: transparent; stroke: green; stroke-width: 0.5;';
         let className = 'no-print'
-        putRect({ container: svg, x: 0, y: 0, width, height, style, name: 'RSpeech' })
+        putRect({ container: svg, x: 0, y: 0, width, height, className: 'transparent', name: 'RSpeech' })
         this.chart = svg;
         // اگر متد خودش کانتینر داشت در کانتینر خودش افزوده بشه
         const parent = container ? container : this.container
         parent.appendChild(svg);
-
-        // تبدیل مختصات ویوباکس به مختصات پیکسلی
 
     }
 
@@ -174,8 +173,6 @@ export default class Speech {
         const color = (this.side === 'R') ? 'crimson' : 'blue';
         // const firstInput = input // نگهداری اولین اینپوت برای برگشت و فوکوس کردن بهش
         let inputDims = this.inputDims
-        // console.log(inputDims);
-
 
         inputDims.forEach(dims => {
             const input = document.createElement('input')
@@ -190,7 +187,6 @@ export default class Speech {
             input.style.left = dims.x - width / 2 + 'px'
             input.style.top = dims.y - height / 2 + 'px'
             container.appendChild(input)
-            // input = input.cloneNode() // در آخر  یک المنت اضافه ایجاد شده است - باگ بی آزار
         })
         // firstInput.focus()
     }

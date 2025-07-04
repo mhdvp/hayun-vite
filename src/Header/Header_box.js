@@ -1,16 +1,13 @@
+import putImage from "../common/putImage.js";
 import putLine from "../common/putLine.js";
-import putRect from "../common/putRect.js";
-import putSVG from "../common/putSVG.js";
 import putText from "../common/putText.js";
 const svgNS = "http://www.w3.org/2000/svg";
-
 
 export default class Header {
     constructor({ box }) {
         this.box = box;
         this.container = box.container;
         this.draw({ box })
-
     }
 
     draw({ box }) {
@@ -18,34 +15,27 @@ export default class Header {
         const { container, elements, width, height } = box
 
         elements.forEach(element => {
-            const { name, value, x, y, style } = element;
+            const { name, value, x, y, x1, y1, x2, y2, style, width, className } = element;
 
             switch (element.type) {
                 case 'label':
-                    // const { value, x, y, style } = element
-                    putText({ container, value, x, y, style })
+                    putText({ container, value, x, y, className })
                     break;
                 case 'input':
-                    putText({ container, x, y, style, name });
-
+                    putText({ container, x, y, name, className });
+                    break;
+                case 'line':
+                    putLine({ container, x1, y1, x2, y2, className: 'line' });
+                    break;
+                case 'image':
+                    // Logo 
+                    putImage({ container: this.container, name, width, height, x, y })
                     break;
                 default:
                     break;
             }
 
         });
-
-        // Logo 
-        let image = document.createElementNS(svgNS, "image");
-        image.setAttribute("data-name", "officeLogo")
-        image.setAttribute("width", "17");
-        image.setAttribute("height", height - 1);
-        image.setAttribute("x", width - 16);
-        image.setAttribute("y", 0.5);
-        this.container.appendChild(image);
-
-        this.update({ officeName: 'دفتر ارزیابی شنوایی و خدمات سمعک سروش' })
-
 
         let style = `
             user-select: none;
@@ -58,12 +48,17 @@ export default class Header {
             dominant-baseline: auto; /* تراز عمودی*/  
         `;
 
-        // this.container.appendChild(svg);
     }
 
     update(data) {
-        this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
-        this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";
-        this.container.querySelector("[data-name=officeLogo]").setAttribute("href", data?.officeLogo || "");
+        const { title, logo } = data
+        // const logo = logos[selectedLogoIndex]
+        this.container.querySelector("[name=title]").innerHTML = title || "";
+        this.container.querySelector("[name=date]").innerHTML = data?.createDate || "";
+        this.container.querySelector("[name=logo]")?.setAttribute("href", logo || "");
+
+        // this.container.querySelector("[data-name=officeName]").innerHTML = data?.officeName || "";
+        // this.container.querySelector("[data-name=date]").innerHTML = data?.createDate || "";
+        // this.container.querySelector("[data-name=officeLogo]").setAttribute("href", data?.officeLogo || "");
     }
 }

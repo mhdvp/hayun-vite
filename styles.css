@@ -226,5 +226,73 @@ svg .line {
   .no-print {
     display: none;
   }
+}
 
+/* Form Elements */
+.form {
+  user-select: none;
+  direction: rtl;
+  font-family: Vazirmatn;
+  background-color: BlanchedAlmond;
+}
+
+.section-border {
+  fill: transparent;
+  stroke: brown;
+  stroke-width: 0.2;
+}
+
+.box-border {
+  fill: transparent;
+  stroke: darkblue;
+  stroke-width: 0.2;
+}
+
+.header-title {
+  font-size: 1.5mm;
+  font-weight: 600;
+}
+
+.common-label {
+  font-size: 1mm;
+  font-weight: 600;
+}
+
+.common-text {
+  font-size: 1mm;
+  font-weight: normal;
+}
+
+
+.chart {
+  font-family: Vazirmatn;
+  direction: ltr;
+
+}
+
+.transparent {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 0.2;
+}
+
+.chart-label {
+  font-size: 1mm;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.chart-input {
+  font-size: 1mm;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.red-fill {
+  fill: red;
+}
+
+.blue-fill {
+  fill: blue;
 }

@@ -4,7 +4,7 @@ const svgNS = "http://www.w3.org/2000/svg";
 
 export default function putRect({
     container, x, y, cx, cy, dx = 0, dy = 0, rx, width, height,
-    style = 'fill: transparent; stroke: black; stroke-width: 0.2;', name, className
+    style, name, className
 }
 ) {
     let rect = document.createElementNS(svgNS, "rect");
@@ -15,7 +15,7 @@ export default function putRect({
     y && rect.setAttribute("y", y + dy);
     rect.setAttribute("width", width);
     rect.setAttribute("height", height);
-    rect.setAttribute("style", style);
+    style && rect.setAttribute("style", style);
     className && rect.setAttribute("class", className);
     name && rect.setAttribute("data-name", name);
     container && container.appendChild(rect);

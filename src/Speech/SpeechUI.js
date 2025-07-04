@@ -72,7 +72,7 @@ class SpeechUI {
     } else
     // اگر این تابع بدون پارامتر فراخوانی شود مقادیر اینپوت کاربر گرفته و دیتاآبجکت را آپدیت کند
     {
-      console.log('without param', this.data);
+      // console.log('without param', this.data);
 
       this.rchart.fetchInputUserData()
       this.lchart.fetchInputUserData()

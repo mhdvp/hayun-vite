@@ -16,24 +16,6 @@ const units = {
     // واحد پیکسل، میلیمتر، ...
 
     styles: {
-        label: `
-            user-select: none;
-            direction: ltr;
-            font-family: Vazirmatn;
-            font-size: ${4.2};
-            font-weight: 700;
-            text-anchor: middle;
-        `,
-        svgInput: `
-            user-select: none;
-            direction: ltr;
-            font-family: Vazirmatn;
-            font-size: ${4.2};
-            font-weight: 700;
-            text-anchor: middle;
-            dominant-baseline: middle; 
-
-        `,
         center: `
             display: flex;
             align-items: center;

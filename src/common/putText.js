@@ -10,8 +10,8 @@ export default function putText(
     style && (text.style = style);
     text.setAttribute("x", x + dx);
     text.setAttribute("y", y + dy);
-    text.textContent = value;
-    container.appendChild(text);
+    value && (text.textContent = value);
+    container && container.appendChild(text);
     return text;
 }
 

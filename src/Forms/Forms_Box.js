@@ -1,14 +1,10 @@
-// import '../../styles.css' // برای تست منتقل شد به فایل ایندکس اصلی اچ‌تی‌ام‌ال  و برای توسعه منتقل شده به ایندکس جی اس
+// کلاس جدید که فرم‌های مختلف را نمایش میدهد
 import printForm from "./printForm.js"
 import Form from "../Form/Form_Box.js"
 import putGrid from "../common/putGrid.js"
-
 const svgNS = "http://www.w3.org/2000/svg"
+// import '../../styles.css' // برای تست منتقل شد به فایل ایندکس اصلی اچ‌تی‌ام‌ال  و برای توسعه منتقل شده به ایندکس جی اس
 
-// import templCombo from "../templates/templCombo.js"  // این در حقیقیت یک تمپلت هست
-// import templAudiometry from "../assets/templates/templAudiometry.js"
-
-// کلاس جدید که فرم‌های مختلف را نمایش میدهد
 export default class Forms {
     constructor({ assets, container, templates, defaultTemplateIndex = 0, mode = 'production' } = {}) {
         // console.log('I`M FROM Forms.constructor METHOD !!!!!!!!!!!!!!');
@@ -31,40 +27,36 @@ export default class Forms {
 
         // اضافه کردن دکمه به دیو فرم
         let className = 'button-form persian';
-        const btns = [];
+        const buttons = [];
 
-        templates.
-            forEach((template, index) => {
-
-                this.mode == 'develop' &&
-                    (btns[index] = this.putButton({ container: div, text: template.label, className }))
-                this.forms.push(new Form({ container, template, mode: this.mode }))
-            })
-
+        templates.forEach((template, index) => {
+            this.mode == 'develop' &&
+                (buttons[index] = this.putButton({ container: div, text: template.label, className }))
+            this.forms.push(new Form({ container, template, mode: this.mode }))
+        })
 
         // انتخاب فرم پیش‌فرض  
         let selectedIndex = defaultTemplateIndex
         this.selectedIndex = selectedIndex // برای استفاده در متد آپدیت
 
         forms[selectedIndex].svg.style.display = 'block'
-        // this.selectedForm = this.forms[selectedIndex] // سمی‌کالن واجب
 
         this.mode == 'develop' &&
-            (btns[selectedIndex].style.backgroundColor = ' #1c15e1')  // اگر عبارت اول توی پرانتز باشه سمی‌کالن واجب
+            (buttons[selectedIndex].style.backgroundColor = ' #1c15e1')  // اگر عبارت اول توی پرانتز باشه سمی‌کالن واجب
 
         // به ازای هر فرم یک دکمه هم به دیو بالای فرم اضافه میکند در حالت دولوپ
         // افزودن  دکمه مربوطه به فرمها به دام
         this.mode == 'develop' &&
-            btns.forEach((btn, index) => {
+            buttons.forEach((btn, index) => {
                 btn.addEventListener('click', () => {
                     // Hide All forms
                     forms.forEach((form, i) => {
                         form.svg.style.display = 'none'
-                        btns[i].style.backgroundColor = ' #7472e2'
+                        buttons[i].style.backgroundColor = ' #7472e2'
                     })
 
                     forms[index].svg.style.display = 'block'
-                    btns[index].style.backgroundColor = ' #1c15e1'
+                    buttons[index].style.backgroundColor = ' #1c15e1'
 
                     // this.selectedForm = forms[index]
                     selectedIndex = index
@@ -80,7 +72,6 @@ export default class Forms {
 
     // افزودن چهار دکمه چاپ صفحه فرم انتخاب شده و تاگل پنهان یا نمایش
     addButtons({ container, className, svg }) {
-
         // تعریف دکمه و رویداد دکمه چاپ صفحه فرم نمایشی
         this.putButton({ container, text: 'چاپ', className })
             .addEventListener('click', () => {
@@ -89,13 +80,13 @@ export default class Forms {
 
         // دکمه و رویداد نمایش و پنهان خطوط سکشن
         this.putButton({ container, text: 'Show/Hide Section Borders', className })
-            .addEventListener('click', () => {
+            .addEventListener('mouseenter', () => {
                 this.toggleDisplay({ container: svg, borderName: 'section-border' })
             });
 
         // دکمه و رویداد نمایش و پنهان خطوط بوردر
         this.putButton({ container, text: 'Show/Hide Box Borders', className })
-            .addEventListener('click', () => {
+            .addEventListener('mouseenter', () => {
                 this.toggleDisplay({ container: svg, borderName: 'box-border' })
             });
 
@@ -111,17 +102,16 @@ export default class Forms {
 
     // این تابع یک بار از بیرون کلاس فراخوانی میشه و یک بار وقتی از داخل تمپلت فرم را عوض میکنیم
     update({ data, officeData, patientData, sessionIndex } = {}) {
-        
-        
+
         // پارامتر اول برای آپدیت داخلی استفاده می‌شود
         if (data) {
-            
+
             officeData = this.data.officeData
             patientData = this.data.patientData
             sessionIndex = this.data.sessionIndex
         }
         // console.log(patientData);
-        
+
 
         this.forms[this.selectedIndex].update({ officeData, patientData, sessionIndex })
 
